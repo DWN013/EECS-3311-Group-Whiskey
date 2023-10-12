@@ -7,6 +7,8 @@ import co.yorku.nutrifit.profile.impl.ProfileHandler;
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDatabase implements UserDatabaseInterface {
 
@@ -15,11 +17,13 @@ public class UserDatabase implements UserDatabaseInterface {
             + "name TEXT, "
             + "sex TEXT, "
             + "height TEXT, "
-            + "age INTEGER)";
+            + "age INTEGER);";
 
-    private String INSERT_USER = "INSERT INTO profiles (name, sex, height, age) VALUES (?, ?, ?, ?)";
+    private String INSERT_USER = "INSERT INTO profiles (name, sex, height, age) VALUES (?, ?, ?, ?);";
 
-    private String GET_USER = "SELECT * FROM profiles WHERE id=?";
+    private String GET_USER = "SELECT * FROM profiles WHERE id=?;";
+
+    private String GET_LAST_INSERTED_USER = "SELECT * FROM profiles;";
 
     private Connection databaseConnection;
 
@@ -36,7 +40,7 @@ public class UserDatabase implements UserDatabaseInterface {
 
         try {
             Class.forName("org.sqlite.JDBC");
-            databaseConnection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
+            this.databaseConnection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
             System.out.println("Established connection with sqlite database.");
         } catch (Exception e) {
             e.printStackTrace();
@@ -47,7 +51,7 @@ public class UserDatabase implements UserDatabaseInterface {
     @Override
     public void setupDatabase() {
         try {
-            PreparedStatement preparedStatement = databaseConnection.prepareStatement(CREATE_TABLE);
+            PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(CREATE_TABLE);
             preparedStatement.execute();
             preparedStatement.close();
         } catch (Exception e) {
@@ -56,18 +60,55 @@ public class UserDatabase implements UserDatabaseInterface {
     }
 
     @Override
-    public void setupProfile(Profile profile) {
+    public int setupProfile(Profile profile) {
+        int id = -1;
         try {
-            PreparedStatement preparedStatement = databaseConnection.prepareStatement(INSERT_USER);
+            PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(INSERT_USER);
             preparedStatement.setString(1, profile.getName());
             preparedStatement.setString(2, profile.getSex());
             preparedStatement.setString(3, profile.getHeight());
             preparedStatement.setInt(4, profile.getAge());
             preparedStatement.execute();
             preparedStatement.close();
+
+            preparedStatement = this.databaseConnection.prepareStatement(GET_LAST_INSERTED_USER);
+
+            ResultSet data = preparedStatement.executeQuery();
+            while (data != null && data.next()) {
+                id = Math.max(id, data.getInt("id"));
+            }
+            preparedStatement.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return id;
+    }
+
+    @Override
+    public List<Profile> getAllProfiles() {
+
+        List<Profile> profiles = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(GET_LAST_INSERTED_USER);
+
+            ResultSet data = preparedStatement.executeQuery();
+            while (data != null && data.next()) {
+                int id = data.getInt("id");
+                String name = data.getString("name");
+                String sex = data.getString("sex");
+                String height = data.getString("height");
+                int age = data.getInt("age");
+
+                profiles.add(new ProfileHandler(this, id, name, sex, height, age));
+            }
+            preparedStatement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return profiles;
     }
 
     @Override
@@ -76,19 +117,20 @@ public class UserDatabase implements UserDatabaseInterface {
         Profile profile = null;
 
         try {
-            PreparedStatement preparedStatement = databaseConnection.prepareStatement(GET_USER);
+            PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(GET_USER);
             preparedStatement.setInt(1, id);
 
             ResultSet data = preparedStatement.executeQuery();
 
             while (data != null && data.next()) {
 
+                int userId = data.getInt("id");
                 String name = data.getString("name");
                 String sex = data.getString("sex");
                 String height = data.getString("height");
                 int age = data.getInt("age");
 
-                profile = new ProfileHandler(this, name, sex, height, age);
+                profile = new ProfileHandler(this, userId, name, sex, height, age);
                 break;
             }
 

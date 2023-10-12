@@ -2,6 +2,8 @@ package co.yorku.nutrifit.database.userdata;
 
 import co.yorku.nutrifit.profile.Profile;
 
+import java.util.List;
+
 public class UserDatabaseAdapter implements UserDatabaseInterface {
 
     private UserDatabaseInterface userDatabaseInterface;
@@ -16,8 +18,13 @@ public class UserDatabaseAdapter implements UserDatabaseInterface {
     }
 
     @Override
-    public void setupProfile(Profile profile) {
-        this.userDatabaseInterface.setupProfile(profile);
+    public int setupProfile(Profile profile) {
+        return this.userDatabaseInterface.setupProfile(profile);
+    }
+
+    @Override
+    public List<Profile> getAllProfiles() {
+        return this.userDatabaseInterface.getAllProfiles();
     }
 
     @Override

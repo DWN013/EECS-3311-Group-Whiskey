@@ -9,13 +9,15 @@ public class ProfileHandler implements Profile {
 
     private UserDatabaseInterface userDatabaseInterface;
 
+    private int id;
     private String name;
     private String sex;
     private String height;
     private int age;
 
-    public ProfileHandler(UserDatabaseInterface userDatabaseInterface, String name, String sex, String height, int age) {
+    public ProfileHandler(UserDatabaseInterface userDatabaseInterface, int id, String name, String sex, String height, int age) {
         this.userDatabaseInterface = userDatabaseInterface;
+        this.id = id;
         this.name = name;
         this.sex = sex;
         this.height = height;
@@ -25,6 +27,11 @@ public class ProfileHandler implements Profile {
     @Override
     public void setupProfile() {
         this.userDatabaseInterface.setupProfile(this);
+    }
+
+    @Override
+    public int getId() {
+        return this.id;
     }
 
     @Override

@@ -6,6 +6,8 @@ public interface Profile extends EventListener {
 
     void setupProfile();
 
+    int getId();
+
     String getName();
 
     String getSex();
