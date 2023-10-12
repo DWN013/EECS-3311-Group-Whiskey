@@ -1,6 +1,6 @@
 package co.yorku.nutrifit.database.nutrient;
 
-public class NFDatabaseAdapter {
+public class NFDatabaseAdapter implements NFDatabaseInterface {
 
     private NFDatabaseInterface nfDatabaseInterface;
 
