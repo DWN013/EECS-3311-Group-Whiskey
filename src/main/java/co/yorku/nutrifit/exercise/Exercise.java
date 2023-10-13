@@ -1,4 +1,9 @@
 package co.yorku.nutrifit.exercise;
+import co.yorku.nutrifit.event.EventListener;
 
-public interface Exercise {
+//This is the interface for the exercise class
+public interface Exercise extends EventListener{
+
+
+
 }
