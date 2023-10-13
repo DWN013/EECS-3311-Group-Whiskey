@@ -12,8 +12,6 @@ public class NutriFit {
 
     public static void main(String[] args) {
 
-        System.out.println("Hello");
-
         UserDatabaseInterface userDatabaseAdapter = new UserDatabaseAdapter(new UserDatabase());
         userDatabaseAdapter.setupDatabase();
 
