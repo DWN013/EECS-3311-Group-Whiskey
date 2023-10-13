@@ -16,4 +16,9 @@ public class ExerciseHandler implements Exercise {
         this.weightLossCalculator = weightLossCalculator;
         this.userDatabaseInterface = userDatabaseInterface;
     }
+
+    @Override
+    public void onEvent(String eventType, String data) {
+
+    }
 }
