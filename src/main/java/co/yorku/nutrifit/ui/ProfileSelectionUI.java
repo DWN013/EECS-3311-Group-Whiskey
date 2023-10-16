@@ -30,8 +30,6 @@ public class ProfileSelectionUI extends JFrame {
         JPanel newProfilePanel = new JPanel(new GridLayout(9, 2));
         JLabel nameLabel = new JLabel("Name:");
         JTextField nameField = new JTextField(20);  // Use the global field
-        JLabel sexLabel = new JLabel("Sex:");
-        JTextField sexField = new JTextField(5);     // Use the global field
         JLabel heightLabel = new JLabel("Height (cm):");
         JTextField heightField = new JTextField(5); // Use the global field
         JLabel ageLabel = new JLabel("Age:");
@@ -40,23 +38,26 @@ public class ProfileSelectionUI extends JFrame {
         JTextField weightField = new JTextField(5);     // Use the global field
         JButton submitButton = new JButton("Submit");
 
-        JLabel empty = new JLabel(" ");
 
         String[] metricOrImperial = new String[2];
         metricOrImperial[0] = "Metric";
         metricOrImperial[1] = "Imperial";
         JComboBox metricOrImperalJComboBox = new JComboBox(metricOrImperial);
 
+        String[] isMalOrFemale = new String[2];
+        isMalOrFemale[0] = "Male";
+        isMalOrFemale[1] = "Female";
+        JComboBox maleOrFemale = new JComboBox(isMalOrFemale);
+
         // Add action listener to the Submit button in the new profile layout
         submitButton.addActionListener(e -> {
             // Get user input from fields in the new profile layout
             String name = nameField.getText();
-            String sex = sexField.getText();
             String heightText = heightField.getText();
             String ageText = ageField.getText();
 
             // Validate input
-            if (name.isEmpty() || sex.isEmpty() || heightText.isEmpty() || ageText.isEmpty()) {
+            if (name.isEmpty() || heightText.isEmpty() || ageText.isEmpty()) {
                 // Handle empty fields
                 JOptionPane.showMessageDialog(null, "Please fill in all fields.");
                 return; // Stop processing if any field is empty
@@ -67,6 +68,7 @@ public class ProfileSelectionUI extends JFrame {
             int age;
             float weight;
             boolean isMetric = metricOrImperial[metricOrImperalJComboBox.getSelectedIndex()].equalsIgnoreCase("Metric");
+            boolean isMale = metricOrImperial[maleOrFemale.getSelectedIndex()].equalsIgnoreCase("Male");
 
             try {
                 age = Integer.parseInt(ageText);
@@ -80,7 +82,7 @@ public class ProfileSelectionUI extends JFrame {
 
             int userid = userDatabaseInterface.setupProfile(new ProfileHandler(
                     userDatabaseInterface,
-                    -1, name, sex, height, age, weight, isMetric
+                    -1, name, isMale, height, age, weight, isMetric
             ));
 
 
@@ -100,12 +102,10 @@ public class ProfileSelectionUI extends JFrame {
         newProfilePanel.add(list);
         newProfilePanel.add(loadProfile);
         newProfilePanel.add(metricOrImperalJComboBox);
-        newProfilePanel.add(empty);
+        newProfilePanel.add(maleOrFemale);
 
         newProfilePanel.add(nameLabel);
         newProfilePanel.add(nameField);
-        newProfilePanel.add(sexLabel);
-        newProfilePanel.add(sexField);
         newProfilePanel.add(heightLabel);
         newProfilePanel.add(heightField);
         newProfilePanel.add(ageLabel);

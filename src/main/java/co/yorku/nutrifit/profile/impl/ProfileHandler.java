@@ -11,13 +11,13 @@ public class ProfileHandler implements Profile {
 
     private int id;
     private String name;
-    private String sex;
+    private boolean sex;
     private float height;
     private int age;
     private float weight;
     private boolean isMetric;
 
-    public ProfileHandler(UserDatabaseInterface userDatabaseInterface, int id, String name, String sex, float height, int age, float weight, boolean isMetric) {
+    public ProfileHandler(UserDatabaseInterface userDatabaseInterface, int id, String name, boolean sex, float height, int age, float weight, boolean isMetric) {
         this.userDatabaseInterface = userDatabaseInterface;
         this.id = id;
         this.name = name;
@@ -44,7 +44,7 @@ public class ProfileHandler implements Profile {
     }
 
     @Override
-    public String getSex() {
+    public boolean isMale() {
         return this.sex;
     }
 
