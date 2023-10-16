@@ -15,13 +15,13 @@ public class UserDatabase implements UserDatabaseInterface {
     private String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS profiles ("
             + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "name TEXT, "
-            + "sex BOOL, "
+            + "isMale BOOL, "
             + "height FLOAT, "
             + "age INTEGER,"
             + "weight FLOAT,"
             + "isMetric BOOL);";
 
-    private String INSERT_USER = "INSERT INTO profiles (name, sex, height, age, weight, isMetric) " +
+    private String INSERT_USER = "INSERT INTO profiles (name, isMale, height, age, weight, isMetric) " +
             "VALUES (?, ?, ?, ?, ?, ?);";
 
     private String GET_USER = "SELECT * FROM profiles WHERE id=?;";
@@ -102,7 +102,7 @@ public class UserDatabase implements UserDatabaseInterface {
             while (data != null && data.next()) {
                 int id = data.getInt("id");
                 String name = data.getString("name");
-                boolean isMale = data.getBoolean("sex");
+                boolean isMale = data.getBoolean("isMale");
                 float height = data.getFloat("height");
                 int age = data.getInt("age");
                 float weight = data.getFloat("weight");
@@ -133,7 +133,7 @@ public class UserDatabase implements UserDatabaseInterface {
 
                 int userId = data.getInt("id");
                 String name = data.getString("name");
-                boolean isMale = data.getBoolean("sex");
+                boolean isMale = data.getBoolean("isMale");
                 float height = data.getFloat("height");
                 int age = data.getInt("age");
                 float weight = data.getFloat("weight");

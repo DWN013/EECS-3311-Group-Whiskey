@@ -11,17 +11,17 @@ public class ProfileHandler implements Profile {
 
     private int id;
     private String name;
-    private boolean sex;
+    private boolean isMale;
     private float height;
     private int age;
     private float weight;
     private boolean isMetric;
 
-    public ProfileHandler(UserDatabaseInterface userDatabaseInterface, int id, String name, boolean sex, float height, int age, float weight, boolean isMetric) {
+    public ProfileHandler(UserDatabaseInterface userDatabaseInterface, int id, String name, boolean isMale, float height, int age, float weight, boolean isMetric) {
         this.userDatabaseInterface = userDatabaseInterface;
         this.id = id;
         this.name = name;
-        this.sex = sex;
+        this.isMale = isMale;
         this.height = height;
         this.age = age;
         this.weight = weight;
@@ -45,7 +45,7 @@ public class ProfileHandler implements Profile {
 
     @Override
     public boolean isMale() {
-        return this.sex;
+        return this.isMale;
     }
 
     @Override
