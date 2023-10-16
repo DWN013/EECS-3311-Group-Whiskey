@@ -12,16 +12,20 @@ public class ProfileHandler implements Profile {
     private int id;
     private String name;
     private String sex;
-    private String height;
+    private float height;
     private int age;
+    private float weight;
+    private boolean isMetric;
 
-    public ProfileHandler(UserDatabaseInterface userDatabaseInterface, int id, String name, String sex, String height, int age) {
+    public ProfileHandler(UserDatabaseInterface userDatabaseInterface, int id, String name, String sex, float height, int age, float weight, boolean isMetric) {
         this.userDatabaseInterface = userDatabaseInterface;
         this.id = id;
         this.name = name;
         this.sex = sex;
         this.height = height;
         this.age = age;
+        this.weight = weight;
+        this.isMetric = isMetric;
     }
 
     @Override
@@ -45,13 +49,23 @@ public class ProfileHandler implements Profile {
     }
 
     @Override
-    public String getHeight() {
+    public float getHeight() {
         return this.height;
     }
 
     @Override
     public int getAge() {
         return this.age;
+    }
+
+    @Override
+    public float getWeight() {
+        return this.weight;
+    }
+
+    @Override
+    public boolean isMetric() {
+        return this.isMetric;
     }
 
     // Always keep at the bottom, it comes from the event handler (has 0 impact on function, my ocd)

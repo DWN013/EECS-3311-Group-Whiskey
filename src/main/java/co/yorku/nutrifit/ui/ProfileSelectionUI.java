@@ -27,7 +27,7 @@ public class ProfileSelectionUI extends JFrame {
         JButton loadProfile = new JButton("Load Selected Profile");
 
         // Create components for the new profile layout
-        JPanel newProfilePanel = new JPanel(new GridLayout(6, 2));
+        JPanel newProfilePanel = new JPanel(new GridLayout(9, 2));
         JLabel nameLabel = new JLabel("Name:");
         JTextField nameField = new JTextField(20);  // Use the global field
         JLabel sexLabel = new JLabel("Sex:");
@@ -36,7 +36,16 @@ public class ProfileSelectionUI extends JFrame {
         JTextField heightField = new JTextField(5); // Use the global field
         JLabel ageLabel = new JLabel("Age:");
         JTextField ageField = new JTextField(5);     // Use the global field
+        JLabel weightLabel = new JLabel("Weight:");
+        JTextField weightField = new JTextField(5);     // Use the global field
         JButton submitButton = new JButton("Submit");
+
+        JLabel empty = new JLabel(" ");
+
+        String[] metricOrImperial = new String[2];
+        metricOrImperial[0] = "Metric";
+        metricOrImperial[1] = "Imperial";
+        JComboBox metricOrImperalJComboBox = new JComboBox(metricOrImperial);
 
         // Add action listener to the Submit button in the new profile layout
         submitButton.addActionListener(e -> {
@@ -54,10 +63,15 @@ public class ProfileSelectionUI extends JFrame {
             }
 
             // Parse input values
+            float height;
             int age;
+            float weight;
+            boolean isMetric = metricOrImperial[metricOrImperalJComboBox.getSelectedIndex()].equalsIgnoreCase("Metric");
 
             try {
                 age = Integer.parseInt(ageText);
+                height = Float.parseFloat(heightText);
+                weight = Float.parseFloat(heightText);
             } catch (NumberFormatException ex) {
                 // Handle invalid input
                 JOptionPane.showMessageDialog(null, "Invalid input for height or age.");
@@ -66,7 +80,7 @@ public class ProfileSelectionUI extends JFrame {
 
             int userid = userDatabaseInterface.setupProfile(new ProfileHandler(
                     userDatabaseInterface,
-                    -1, name, sex, heightText, age
+                    -1, name, sex, height, age, weight, isMetric
             ));
 
 
@@ -85,6 +99,8 @@ public class ProfileSelectionUI extends JFrame {
 
         newProfilePanel.add(list);
         newProfilePanel.add(loadProfile);
+        newProfilePanel.add(metricOrImperalJComboBox);
+        newProfilePanel.add(empty);
 
         newProfilePanel.add(nameLabel);
         newProfilePanel.add(nameField);
@@ -94,6 +110,8 @@ public class ProfileSelectionUI extends JFrame {
         newProfilePanel.add(heightField);
         newProfilePanel.add(ageLabel);
         newProfilePanel.add(ageField);
+        newProfilePanel.add(weightLabel);
+        newProfilePanel.add(weightField);
         newProfilePanel.add(submitButton);
 
         getContentPane().add(newProfilePanel);

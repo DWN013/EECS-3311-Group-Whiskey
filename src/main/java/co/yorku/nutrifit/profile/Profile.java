@@ -12,8 +12,12 @@ public interface Profile extends EventListener {
 
     String getSex();
 
-    String getHeight();
+    float getHeight();
 
     int getAge();
+
+    float getWeight();
+
+    boolean isMetric();
 
 }
