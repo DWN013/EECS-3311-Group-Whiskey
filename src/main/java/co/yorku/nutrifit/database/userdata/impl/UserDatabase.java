@@ -15,11 +15,14 @@ public class UserDatabase implements UserDatabaseInterface {
     private String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS profiles ("
             + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
             + "name TEXT, "
-            + "sex TEXT, "
-            + "height TEXT, "
-            + "age INTEGER);";
+            + "isMale BOOL, "
+            + "height FLOAT, "
+            + "age INTEGER,"
+            + "weight FLOAT,"
+            + "isMetric BOOL);";
 
-    private String INSERT_USER = "INSERT INTO profiles (name, sex, height, age) VALUES (?, ?, ?, ?);";
+    private String INSERT_USER = "INSERT INTO profiles (name, isMale, height, age, weight, isMetric) " +
+            "VALUES (?, ?, ?, ?, ?, ?);";
 
     private String GET_USER = "SELECT * FROM profiles WHERE id=?;";
 
@@ -65,9 +68,11 @@ public class UserDatabase implements UserDatabaseInterface {
         try {
             PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(INSERT_USER);
             preparedStatement.setString(1, profile.getName());
-            preparedStatement.setString(2, profile.getSex());
-            preparedStatement.setString(3, profile.getHeight());
+            preparedStatement.setBoolean(2, profile.isMale());
+            preparedStatement.setFloat(3, profile.getHeight());
             preparedStatement.setInt(4, profile.getAge());
+            preparedStatement.setFloat(5, profile.getWeight());
+            preparedStatement.setBoolean(6, profile.isMetric());
             preparedStatement.execute();
             preparedStatement.close();
 
@@ -97,11 +102,13 @@ public class UserDatabase implements UserDatabaseInterface {
             while (data != null && data.next()) {
                 int id = data.getInt("id");
                 String name = data.getString("name");
-                String sex = data.getString("sex");
-                String height = data.getString("height");
+                boolean isMale = data.getBoolean("isMale");
+                float height = data.getFloat("height");
                 int age = data.getInt("age");
+                float weight = data.getFloat("weight");
+                boolean isMetric = data.getBoolean("isMetric");
 
-                profiles.add(new ProfileHandler(this, id, name, sex, height, age));
+                profiles.add(new ProfileHandler(this, id, name, isMale, height, age, weight, isMetric));
             }
             preparedStatement.close();
         } catch (Exception e) {
@@ -126,11 +133,13 @@ public class UserDatabase implements UserDatabaseInterface {
 
                 int userId = data.getInt("id");
                 String name = data.getString("name");
-                String sex = data.getString("sex");
-                String height = data.getString("height");
+                boolean isMale = data.getBoolean("isMale");
+                float height = data.getFloat("height");
                 int age = data.getInt("age");
+                float weight = data.getFloat("weight");
+                boolean isMetric = data.getBoolean("isMetric");
 
-                profile = new ProfileHandler(this, userId, name, sex, height, age);
+                profile = new ProfileHandler(this, userId, name, isMale, height, age, weight, isMetric);
                 break;
             }
 
