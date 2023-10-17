@@ -1,7 +1,6 @@
 package co.yorku.nutrifit.ui;
 
 import co.yorku.nutrifit.database.userdata.UserDatabaseInterface;
-import co.yorku.nutrifit.meal.impl.MealHandler;
 import co.yorku.nutrifit.profile.Profile;
 import co.yorku.nutrifit.ui.visualizerui.PieChartVisualizer;
 
@@ -40,7 +39,7 @@ public class NutriFitMainUI extends JFrame {
         });
 
 
-        
+
         logMeal.addActionListener(e -> {
             System.out.println("User clicked the log meal button");
 
@@ -49,7 +48,7 @@ public class NutriFitMainUI extends JFrame {
 
             // Create a new MealHandler instance and add its panel
 
-            MealHandler mealHandler = new MealHandler(userDatabaseInterface);
+            MealInputUI mealHandler = new MealInputUI(userDatabaseInterface);
             setSize(350,200);
             getContentPane().add(mealHandler.getPanel());
 

@@ -1,30 +1,27 @@
-package co.yorku.nutrifit.meal.impl;
+package co.yorku.nutrifit.ui;
 
 import co.yorku.nutrifit.database.userdata.UserDatabaseInterface;
-import co.yorku.nutrifit.meal.Ingredients;
-import co.yorku.nutrifit.meal.Meal;
-import co.yorku.nutrifit.profile.impl.ProfileHandler;
+import javax.swing.*;
+import java.awt.*;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.swing.*;
-import java.awt.*;
-import java.util.List;
-
-public class MealHandler implements Meal {
+public class MealInputUI  {
 
     private UserDatabaseInterface userDatabaseInterface;
     private JPanel mealPanel;
-    private List<Ingredients> ingredientsList;
+
     private Map<String, String> ingredientsMap;
 
 
-    public MealHandler(UserDatabaseInterface userDatabaseInterface) {
+    public MealInputUI(UserDatabaseInterface userDatabaseInterface) {
         this.userDatabaseInterface = userDatabaseInterface;
         this.ingredientsMap = new HashMap<>();
-        this.ingredientsList = new ArrayList<>();
+
         this.mealPanel = createPanel();
 
 
@@ -37,7 +34,6 @@ public class MealHandler implements Meal {
     public JPanel createPanel() {
         JPanel mealPanel = new JPanel(new GridLayout(6, 2));
 
-//        JPanel mealPanel = new JPanel(new GridLayout(6, 2));
 
         JLabel dateLabel = new JLabel("Date (dd-MM-yyyy):");
         JTextField dateField = new JTextField(20);
@@ -56,7 +52,6 @@ public class MealHandler implements Meal {
         JButton addIngredientButton = new JButton("Add Ingredient");
         JButton submitButton = new JButton("Submit");
 
-        //mealPanel.setPreferredSize(new Dimension(400, 300));
 
         addIngredientButton.addActionListener(e -> {
             String ingredient = ingredientsField.getText();
@@ -130,10 +125,7 @@ public class MealHandler implements Meal {
 
 
         // Add the ingredient details to the panel
-        for (Ingredients ingr : ingredientsList) {
-            mealPanel.add(new JLabel("Ingredient: " + ingr.getName()));
-            mealPanel.add(new JLabel("Quantity: " + ingr.getQuantity()));
-        }
+
 
         mealPanel.revalidate();
         mealPanel.repaint();
