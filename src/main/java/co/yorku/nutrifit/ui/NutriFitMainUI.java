@@ -1,21 +1,11 @@
 package co.yorku.nutrifit.ui;
 
 import co.yorku.nutrifit.database.userdata.UserDatabaseInterface;
-import co.yorku.nutrifit.database.userdata.objects.ExerciseLog;
-import co.yorku.nutrifit.database.userdata.objects.Intensity;
-import co.yorku.nutrifit.database.userdata.objects.MealLog;
-import co.yorku.nutrifit.database.userdata.objects.MealType;
+import co.yorku.nutrifit.meal.impl.MealHandler;
 import co.yorku.nutrifit.profile.Profile;
 import co.yorku.nutrifit.ui.visualizerui.PieChartVisualizer;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class NutriFitMainUI extends JFrame {
 
@@ -38,6 +28,7 @@ public class NutriFitMainUI extends JFrame {
             pieChartVisualizer.setVisible(true);
 
         });
+
         //ActionListener function to open log exercise via. log exercise button
         logExercise.addActionListener(e -> {
 
@@ -47,7 +38,25 @@ public class NutriFitMainUI extends JFrame {
             new ExerciseInputUI(userDatabaseInterface, userId);
 
         });
-        logMeal.addActionListener(e -> System.out.println("User clicked the log meal button"));
+
+
+        
+        logMeal.addActionListener(e -> {
+            System.out.println("User clicked the log meal button");
+
+            // Remove the current panel
+            getContentPane().remove(south);
+
+            // Create a new MealHandler instance and add its panel
+
+            MealHandler mealHandler = new MealHandler(userDatabaseInterface);
+            setSize(350,200);
+            getContentPane().add(mealHandler.getPanel());
+
+            revalidate(); // Revalidate the content pane to reflect the changes
+        });
+
+
 
         south.add(visualize);
         south.add(logExercise);
