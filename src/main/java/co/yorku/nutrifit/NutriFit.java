@@ -7,9 +7,12 @@ import co.yorku.nutrifit.profile.Profile;
 import co.yorku.nutrifit.profile.impl.ProfileHandler;
 import co.yorku.nutrifit.ui.NutriFitMainUI;
 import co.yorku.nutrifit.ui.ProfileSelectionUI;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class NutriFit {
 
+    public static Gson GSON = new GsonBuilder().create(); // TODO: put this somewhere else
     public static void main(String[] args) {
 
         UserDatabaseInterface userDatabaseAdapter = new UserDatabaseAdapter(new UserDatabase());

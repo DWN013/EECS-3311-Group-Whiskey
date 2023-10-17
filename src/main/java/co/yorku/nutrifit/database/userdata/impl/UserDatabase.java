@@ -1,17 +1,22 @@
 package co.yorku.nutrifit.database.userdata.impl;
 
+import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.database.userdata.UserDatabaseInterface;
 import co.yorku.nutrifit.database.userdata.objects.ExerciseLog;
 import co.yorku.nutrifit.database.userdata.objects.Intensity;
 import co.yorku.nutrifit.database.userdata.objects.MealLog;
+import co.yorku.nutrifit.database.userdata.objects.MealType;
 import co.yorku.nutrifit.profile.Profile;
 import co.yorku.nutrifit.profile.impl.ProfileHandler;
+import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class UserDatabase implements UserDatabaseInterface {
 
@@ -44,9 +49,20 @@ public class UserDatabase implements UserDatabaseInterface {
     private String INSERT_USER_EXERCISE = "INSERT INTO user_exercise_logs (userId, date, timeSpentInSeconds, typeOfExercise, intensity) " +
             "VALUES (?, ?, ?, ?, ?);";
 
-
     private String GET_USER_EXERCISE_LOGS = "SELECT * FROM user_exercise_logs WHERE userId=? AND date BETWEEN ? and ?;";
 
+    // Meal Logging
+
+    private String CREATE_MEALS_TABLE = "CREATE TABLE IF NOT EXISTS user_meal_logs ("
+            + "userId INTEGER NOT NULL, "
+            + "date DATETIME NOT NULL, "
+            + "mealType VARCHAR(12) NOT NULL, "
+            + "ingredients TEXT NOT NULL);";
+
+    private String INSERT_USER_MEAL = "INSERT INTO user_meal_logs (userId, date, mealType, ingredients) " +
+            "VALUES (?, ?, ?, ?);";
+
+    private String GET_USER_MEAL_LOGS = "SELECT * FROM user_meal_logs WHERE userId=? AND date BETWEEN ? and ?;";
     private Connection databaseConnection;
 
     public UserDatabase() {
@@ -76,7 +92,12 @@ public class UserDatabase implements UserDatabaseInterface {
             PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(this.CREATE_USER_TABLE);
             preparedStatement.execute();
             preparedStatement.close();
+
             preparedStatement = this.databaseConnection.prepareStatement(this.CREATE_EXERCISE_TABLE);
+            preparedStatement.execute();
+            preparedStatement.close();
+
+            preparedStatement = this.databaseConnection.prepareStatement(this.CREATE_MEALS_TABLE);
             preparedStatement.execute();
             preparedStatement.close();
         } catch (Exception e) {
@@ -207,8 +228,6 @@ public class UserDatabase implements UserDatabaseInterface {
             e.printStackTrace();
             return null; // SOme error occured
         }
-
-
         return logs;
     }
 
@@ -234,13 +253,58 @@ public class UserDatabase implements UserDatabaseInterface {
     }
 
     @Override
-    public List<MealLog> getUserMealLogs(int userId) {
-        return null;
+    public List<MealLog> getUserMealLogs(int userId, java.util.Date fromDate, java.util.Date toDate) {
+
+        List<MealLog> logs = new ArrayList<>();
+
+        try {
+
+            PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(this.GET_USER_MEAL_LOGS);
+
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setDate(2, new Date(fromDate.getTime()));
+            preparedStatement.setDate(3, new Date(toDate.getTime()));
+
+            ResultSet results = preparedStatement.executeQuery();
+
+            if (results != null) {
+                while (results.next()) {
+
+                    java.util.Date date = new java.util.Date(results.getDate("date").getTime());
+                    MealType mealType = MealType.valueOf(results.getString("mealType"));
+                    Map<String, Integer> ingredients = NutriFit.GSON.fromJson(results.getString("ingredients"), new TypeToken<Map<String, Integer>>() {}.getType());
+
+                    logs.add(new MealLog(date, mealType, ingredients));
+                }
+
+                results.close();
+            }
+
+            preparedStatement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null; // SOme error occured
+        }
+        return logs;
     }
 
     @Override
     public boolean addUserMealLog(int userId, MealLog mealLog) {
-        return false;
+
+        try {
+            PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(this.INSERT_USER_MEAL);
+            preparedStatement.setInt(1, userId);
+            preparedStatement.setDate(2, new Date(mealLog.getDate().getTime()));
+            preparedStatement.setString(3, mealLog.getMealType().toString());
+            preparedStatement.setString(4, NutriFit.GSON.toJson(mealLog.getIngredientsAndQuantities()));
+            preparedStatement.execute();
+            preparedStatement.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        return true;
     }
 
     @Override

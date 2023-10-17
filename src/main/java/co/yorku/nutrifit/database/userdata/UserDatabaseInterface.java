@@ -21,7 +21,7 @@ public interface UserDatabaseInterface {
 
     boolean addUserExerciseLog(int userId, ExerciseLog exerciseLog);
 
-    List<MealLog> getUserMealLogs(int userId);
+    List<MealLog> getUserMealLogs(int userId, Date fromDate, Date toDate);
 
     boolean addUserMealLog(int userId, MealLog mealLog);
 

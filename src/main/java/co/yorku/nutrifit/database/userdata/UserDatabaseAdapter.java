@@ -46,8 +46,8 @@ public class UserDatabaseAdapter implements UserDatabaseInterface {
     }
 
     @Override
-    public List<MealLog> getUserMealLogs(int userId) {
-        return this.userDatabaseInterface.getUserMealLogs(userId);
+    public List<MealLog> getUserMealLogs(int userId, Date fromDate, Date toDate) {
+        return this.userDatabaseInterface.getUserMealLogs(userId, fromDate, toDate);
     }
 
     @Override
