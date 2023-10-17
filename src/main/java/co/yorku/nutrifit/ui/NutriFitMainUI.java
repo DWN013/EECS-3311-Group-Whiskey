@@ -7,6 +7,7 @@ import co.yorku.nutrifit.ui.visualizerui.PieChartVisualizer;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 public class NutriFitMainUI extends JFrame {
 
@@ -30,7 +31,15 @@ public class NutriFitMainUI extends JFrame {
             pieChartVisualizer.setVisible(true);
 
         });
-        logExercise.addActionListener(e -> System.out.println("User clicked the log exercise button"));
+        //ActionListener function to open log exercise via. log exercise button
+        logExercise.addActionListener(e -> {
+
+            //debug info
+            System.out.println("User clicked the log exercise button");
+            //Creates a new window for logging exercise data
+            new ExerciseInputUI(userDatabaseInterface, userId);
+
+        });
         logMeal.addActionListener(e -> System.out.println("User clicked the log meal button"));
 
         south.add(visualize);
