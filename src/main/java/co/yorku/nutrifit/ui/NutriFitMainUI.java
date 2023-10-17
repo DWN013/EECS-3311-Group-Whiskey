@@ -1,6 +1,8 @@
 package co.yorku.nutrifit.ui;
 
 import co.yorku.nutrifit.database.userdata.UserDatabaseInterface;
+import co.yorku.nutrifit.database.userdata.objects.ExerciseLog;
+import co.yorku.nutrifit.database.userdata.objects.Intensity;
 import co.yorku.nutrifit.profile.Profile;
 import co.yorku.nutrifit.ui.visualizerui.PieChartVisualizer;
 
@@ -8,6 +10,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class NutriFitMainUI extends JFrame {
 
