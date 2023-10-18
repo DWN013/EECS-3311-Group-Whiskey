@@ -5,7 +5,7 @@ import co.yorku.nutrifit.exercise.Exercise;
 import co.yorku.nutrifit.exercise.calculators.ExerciseCalculator;
 import co.yorku.nutrifit.exercise.calculators.WeightLossCalculator;
 
-public class ExerciseHandler implements Exercise {
+public class ExerciseHandler {
 
     private ExerciseCalculator exerciseCalculator;
     private WeightLossCalculator weightLossCalculator;
@@ -17,8 +17,4 @@ public class ExerciseHandler implements Exercise {
         this.userDatabaseInterface = userDatabaseInterface;
     }
 
-    @Override
-    public void onEvent(String eventType, String data) {
-
-    }
 }

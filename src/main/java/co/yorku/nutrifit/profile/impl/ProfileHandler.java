@@ -66,9 +66,4 @@ public class ProfileHandler implements IProfile {
         return this.isMetric;
     }
 
-    // Always keep at the bottom, it comes from the event handler (has 0 impact on function, my ocd)
-    @Override
-    public void onEvent(String eventType, String data) {
-
-    }
 }
