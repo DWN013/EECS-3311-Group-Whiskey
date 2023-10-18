@@ -4,8 +4,13 @@ import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.object.ActivityType;
 import co.yorku.nutrifit.object.Exercise;
 import co.yorku.nutrifit.object.Intensity;
+import co.yorku.nutrifit.object.Meal;
 import co.yorku.nutrifit.profile.IProfile;
 import com.toedter.calendar.JDateChooser;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.*;
@@ -34,7 +39,7 @@ public class ExerciseInputUI extends JFrame{
         JTextField timeField = new JTextField(5);
         //Exercise input
         JLabel exerciseLabel = new JLabel("Exercise");
-        JComboBox<String> exerciseComboBox = new JComboBox<>();
+        JComboBox<ActivityType> exerciseComboBox = new JComboBox<>(ActivityType.values());
         //Intensity combo box
         JLabel intensityLabel = new JLabel("Intensity");
         JComboBox<Intensity> intensityComboBox = new JComboBox<>(Intensity.values());
@@ -43,13 +48,11 @@ public class ExerciseInputUI extends JFrame{
         JTextField secondsField = new JTextField(6);
 
 
-
         //Save button for saving to DB
         JButton saveButton = new JButton("Save");
         //Action listener for save button
         saveButton.addActionListener(e -> {
-            String selectedDate = ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText();
-            String selectedExercise = (String) exerciseComboBox.getSelectedItem();
+            ActivityType activityType = (ActivityType) exerciseComboBox.getSelectedItem();
             int totalCaloriesBurned = 100; //TODO: Calculate this
 
             Date formattedDateTime = dateChooser.getDate();
@@ -59,8 +62,14 @@ public class ExerciseInputUI extends JFrame{
 
             System.out.println(new Date(formattedDateTime.getTime()).toString());
 
-            Exercise exerciseObj = new Exercise(formattedDateTime, Integer.parseInt(secondsField.getText()), ActivityType.JOGGING, (Intensity) intensityComboBox.getSelectedItem(), totalCaloriesBurned);
+            Exercise exerciseObj = new Exercise(formattedDateTime, Integer.parseInt(secondsField.getText()), activityType, (Intensity) intensityComboBox.getSelectedItem(), totalCaloriesBurned);
 
+            userDatabaseInterface.addUserExerciseLog(
+                    profile.getId(),
+                    exerciseObj
+            );
+
+            JOptionPane.showMessageDialog(null, "Exercise Logging Successful!");
 
             //Insert more data here
             //Call Database Adapter to save data
@@ -79,6 +88,8 @@ public class ExerciseInputUI extends JFrame{
 
         newExercisePanel.add(dateLabel);
         newExercisePanel.add(dateChooser);
+        newExercisePanel.add(exerciseLabel);
+        newExercisePanel.add(exerciseComboBox);
         newExercisePanel.add(timeLabel);
         newExercisePanel.add(timeField);
         newExercisePanel.add(intensityLabel);
