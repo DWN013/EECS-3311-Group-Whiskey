@@ -5,14 +5,14 @@ import java.util.Date;
 public class Exercise {
     private Date date;
     private int timeSpentInSeconds;
-    private String typeOfExercise;
+    private ActivityType activityType;
     private Intensity intensity;
     private int totalCaloriesBurned;
 
-    public Exercise(Date date, int timeSpentInSeconds, String typeOfExercise, Intensity intensity, int totalCaloriesBurned) {
+    public Exercise(Date date, int timeSpentInSeconds, ActivityType activityType, Intensity intensity, int totalCaloriesBurned) {
         this.date = date;
         this.timeSpentInSeconds = timeSpentInSeconds;
-        this.typeOfExercise = typeOfExercise;
+        this.activityType = activityType;
         this.intensity = intensity;
         this.totalCaloriesBurned = totalCaloriesBurned;
     }
@@ -25,8 +25,8 @@ public class Exercise {
         return timeSpentInSeconds;
     }
 
-    public String getTypeOfExercise() {
-        return typeOfExercise;
+    public ActivityType getActivityType() {
+        return activityType;
     }
 
     public Intensity getIntensity() {

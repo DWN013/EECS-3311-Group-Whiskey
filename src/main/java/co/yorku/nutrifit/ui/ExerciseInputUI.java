@@ -1,6 +1,7 @@
 package co.yorku.nutrifit.ui;
 
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
+import co.yorku.nutrifit.object.ActivityType;
 import co.yorku.nutrifit.object.Exercise;
 import co.yorku.nutrifit.object.Intensity;
 import co.yorku.nutrifit.profile.IProfile;
@@ -58,7 +59,7 @@ public class ExerciseInputUI extends JFrame{
 
             System.out.println(new Date(formattedDateTime.getTime()).toString());
 
-            Exercise exerciseObj = new Exercise(formattedDateTime, Integer.parseInt(secondsField.getText()), "do this", (Intensity) intensityComboBox.getSelectedItem(), totalCaloriesBurned);
+            Exercise exerciseObj = new Exercise(formattedDateTime, Integer.parseInt(secondsField.getText()), ActivityType.JOGGING, (Intensity) intensityComboBox.getSelectedItem(), totalCaloriesBurned);
 
 
             //Insert more data here
