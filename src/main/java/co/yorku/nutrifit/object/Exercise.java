@@ -1,18 +1,20 @@
-package co.yorku.nutrifit.database.userdata.objects;
+package co.yorku.nutrifit.object;
 
 import java.util.Date;
 
-public class ExerciseLog {
+public class Exercise {
     private Date date;
     private int timeSpentInSeconds;
     private String typeOfExercise;
     private Intensity intensity;
+    private int totalCaloriesBurned;
 
-    public ExerciseLog(Date date, int timeSpentInSeconds, String typeOfExercise, Intensity intensity) {
+    public Exercise(Date date, int timeSpentInSeconds, String typeOfExercise, Intensity intensity, int totalCaloriesBurned) {
         this.date = date;
         this.timeSpentInSeconds = timeSpentInSeconds;
         this.typeOfExercise = typeOfExercise;
         this.intensity = intensity;
+        this.totalCaloriesBurned = totalCaloriesBurned;
     }
 
     public Date getDate() {
@@ -29,5 +31,9 @@ public class ExerciseLog {
 
     public Intensity getIntensity() {
         return intensity;
+    }
+
+    public int getTotalCaloriesBurned() {
+        return totalCaloriesBurned;
     }
 }

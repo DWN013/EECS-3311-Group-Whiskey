@@ -1,17 +1,17 @@
 package co.yorku.nutrifit.ui;
 
-import co.yorku.nutrifit.database.userdata.UserDatabaseInterface;
-import co.yorku.nutrifit.profile.Profile;
+import co.yorku.nutrifit.database.userdata.IUserDatabase;
+import co.yorku.nutrifit.profile.IProfile;
 import co.yorku.nutrifit.ui.visualizerui.PieChartVisualizer;
 
 import javax.swing.*;
 
 public class NutriFitMainUI extends JFrame {
 
-    public NutriFitMainUI(UserDatabaseInterface userDatabaseInterface, int userId) {
+    public NutriFitMainUI(IUserDatabase userDatabaseInterface, int userId) {
         super("Home Page");
 
-        Profile profile = userDatabaseInterface.getProfile(userId);
+        IProfile profile = userDatabaseInterface.getProfile(userId);
 
         JPanel south = new JPanel();
 
@@ -47,9 +47,7 @@ public class NutriFitMainUI extends JFrame {
 
             // Create a new MealHandler instance and add its panel
 
-            MealInputUI mealHandler = new MealInputUI(userDatabaseInterface);
-            setSize(350,200);
-            getContentPane().add(mealHandler.getPanel());
+            new MealInputUI(userDatabaseInterface);
 
             revalidate(); // Revalidate the content pane to reflect the changes
         });

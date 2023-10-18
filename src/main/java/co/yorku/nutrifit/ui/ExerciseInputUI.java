@@ -1,7 +1,7 @@
 package co.yorku.nutrifit.ui;
 
-import co.yorku.nutrifit.database.userdata.UserDatabaseInterface;
-import co.yorku.nutrifit.profile.Profile;
+import co.yorku.nutrifit.database.userdata.IUserDatabase;
+import co.yorku.nutrifit.profile.IProfile;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -12,10 +12,10 @@ import java.awt.*;
 public class ExerciseInputUI extends JFrame{
 
     //ExerciseUI actions
-    public ExerciseInputUI(UserDatabaseInterface userDatabaseInterface, int userId){
+    public ExerciseInputUI(IUserDatabase userDatabaseInterface, int userId){
         //Title of window that opens when "Log Exercise" button pressed
         super("Exercise UI");
-        Profile profile = userDatabaseInterface.getProfile(userId);
+        IProfile profile = userDatabaseInterface.getProfile(userId);
         //Debug line
         System.out.println("Loaded exercise input for " + profile.getId() + " -> " + profile.getName());
 

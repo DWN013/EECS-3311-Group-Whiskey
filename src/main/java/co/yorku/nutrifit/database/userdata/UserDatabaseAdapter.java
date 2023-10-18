@@ -1,17 +1,17 @@
 package co.yorku.nutrifit.database.userdata;
 
-import co.yorku.nutrifit.database.userdata.objects.ExerciseLog;
-import co.yorku.nutrifit.database.userdata.objects.MealLog;
-import co.yorku.nutrifit.profile.Profile;
+import co.yorku.nutrifit.object.Exercise;
+import co.yorku.nutrifit.object.Meal;
+import co.yorku.nutrifit.profile.IProfile;
 
 import java.util.Date;
 import java.util.List;
 
-public class UserDatabaseAdapter implements UserDatabaseInterface {
+public class UserDatabaseAdapter implements IUserDatabase {
 
-    private UserDatabaseInterface userDatabaseInterface;
+    private IUserDatabase userDatabaseInterface;
 
-    public UserDatabaseAdapter(UserDatabaseInterface userDatabaseInterface) {
+    public UserDatabaseAdapter(IUserDatabase userDatabaseInterface) {
         this.userDatabaseInterface = userDatabaseInterface;
     }
 
@@ -21,37 +21,37 @@ public class UserDatabaseAdapter implements UserDatabaseInterface {
     }
 
     @Override
-    public int setupProfile(Profile profile) {
+    public int setupProfile(IProfile profile) {
         return this.userDatabaseInterface.setupProfile(profile);
     }
 
     @Override
-    public List<Profile> getAllProfiles() {
+    public List<IProfile> getAllProfiles() {
         return this.userDatabaseInterface.getAllProfiles();
     }
 
     @Override
-    public Profile getProfile(int userId) {
+    public IProfile getProfile(int userId) {
         return this.userDatabaseInterface.getProfile(userId);
     }
 
     @Override
-    public List<ExerciseLog> getUserExerciseLogs(int userId, Date fromDate, Date toDate) {
+    public List<Exercise> getUserExerciseLogs(int userId, Date fromDate, Date toDate) {
         return this.userDatabaseInterface.getUserExerciseLogs(userId, fromDate, toDate);
     }
 
     @Override
-    public boolean addUserExerciseLog(int userId, ExerciseLog exerciseLog) {
+    public boolean addUserExerciseLog(int userId, Exercise exerciseLog) {
         return this.userDatabaseInterface.addUserExerciseLog(userId, exerciseLog);
     }
 
     @Override
-    public List<MealLog> getUserMealLogs(int userId, Date fromDate, Date toDate) {
+    public List<Meal> getUserMealLogs(int userId, Date fromDate, Date toDate) {
         return this.userDatabaseInterface.getUserMealLogs(userId, fromDate, toDate);
     }
 
     @Override
-    public boolean addUserMealLog(int userId, MealLog mealLog) {
+    public boolean addUserMealLog(int userId, Meal mealLog) {
         return this.userDatabaseInterface.addUserMealLog(userId, mealLog);
     }
 

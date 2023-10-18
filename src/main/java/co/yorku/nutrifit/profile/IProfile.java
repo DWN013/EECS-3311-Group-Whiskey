@@ -1,8 +1,8 @@
 package co.yorku.nutrifit.profile;
 
-import co.yorku.nutrifit.event.EventListener;
+import co.yorku.nutrifit.event.IEventListener;
 
-public interface Profile extends EventListener {
+public interface IProfile extends IEventListener {
 
     void setupProfile();
 

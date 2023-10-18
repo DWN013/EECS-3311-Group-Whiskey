@@ -1,9 +1,9 @@
 package co.yorku.nutrifit.visualizer.impl;
 
-import co.yorku.nutrifit.visualizer.Visualizer;
+import co.yorku.nutrifit.visualizer.IVisualizer;
 import co.yorku.nutrifit.visualizer.calulcators.AvgUserFoodPlateCalculator;
 
-public class AvgUserPlateVisualizer implements Visualizer {
+public class AvgUserPlateVisualizer implements IVisualizer {
 
     private AvgUserFoodPlateCalculator avgUserFoodPlateCalculator;
 

@@ -1,6 +1,6 @@
 package co.yorku.nutrifit.exercise.calculators;
 
-import co.yorku.nutrifit.profile.Profile;
+import co.yorku.nutrifit.profile.IProfile;
 
 //Metric = Kg (weight), centi (height), milli et.
 //Imperial = Feet, Inches and pounds
@@ -17,7 +17,7 @@ public class BMRCalculator {
 		
 	}
 	
-	public int getBMR(Profile p)
+	public int getBMR(IProfile p)
 	{
 		double bmr = 0.0;
 		boolean gender = p.isMale();

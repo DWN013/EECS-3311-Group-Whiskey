@@ -1,5 +1,5 @@
 package co.yorku.nutrifit.event;
 
-public interface EventListener {
+public interface IEventListener {
     void onEvent(String eventType, String data);
 }
