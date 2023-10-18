@@ -3,6 +3,7 @@ package co.yorku.nutrifit.ui;
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.profile.IProfile;
 import com.toedter.calendar.JDateChooser;
+import java.util.Date;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,14 +26,31 @@ public class ExerciseInputUI extends JFrame{
         JLabel dateLabel = new JLabel("Date");
         JDateChooser dateChooser = new JDateChooser();
         dateChooser.setDateFormatString("yyyy-MM-dd");
+        //Time the user did this at, (make a variable later of type Date)
+        JLabel timeLabel = new JLabel("Time (24:00)");
+        JTextField timeField = new JTextField(5);
         //Exercise input
-        JLabel exerciseLabel = new JLabel("Exercise Done:");
+        JLabel exerciseLabel = new JLabel("Exercise");
         JComboBox<String> exerciseComboBox = new JComboBox<>();
+        //Intensity combo box
+        JLabel intensityLabel = new JLabel("Intensity");
+        JComboBox<Intensity> intensityComboBox = new JComboBox<>(Intensity.values());
+        //Time in seconds
+        JLabel secondsLabel = new JLabel("Seconds");
+        JTextField secondsField = new JTextField(6);
+
+        //public Date(int year, int month, int date) {
+        //        this(year, month, date, 0, 0, 0);
+        //    }
+        Date formattedDateTime = dateChooser.getDate();
+        //formattedDateTime.setTime();
+        String temp = "";
+        ExerciseLog exerciseObj = new ExerciseLog(formattedDateTime, secondsField, temp, (Intensity) intensityComboBox.getSelectedItem());
+
+
 
         //Save button for saving to DB
         JButton saveButton = new JButton("Save");
-
-
         //Action listener for save button
         saveButton.addActionListener(e -> {
             String selectedDate = ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText();
@@ -45,7 +63,7 @@ public class ExerciseInputUI extends JFrame{
             if (saved) {
                 JOptionPane.showMessageDialog(this, "Data saved successfully!");
             } else {
-                JOptionPane.showMessageDialog(this, "Error saving data to DB, might have ligma.");
+                JOptionPane.showMessageDialog(this, "Error saving data to DB, might have Ligma.");
             }
             */
 
@@ -54,6 +72,12 @@ public class ExerciseInputUI extends JFrame{
 
         newExercisePanel.add(dateLabel);
         newExercisePanel.add(dateChooser);
+        newExercisePanel.add(timeLabel);
+        newExercisePanel.add(timeField);
+        newExercisePanel.add(intensityLabel);
+        newExercisePanel.add(intensityComboBox);
+        newExercisePanel.add(secondsLabel);
+        newExercisePanel.add(secondsField);
         newExercisePanel.add(saveButton);
 
 
