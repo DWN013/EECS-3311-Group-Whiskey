@@ -22,8 +22,7 @@ public class NutriFitMainUI extends JFrame {
         visualize.addActionListener(e -> {
 
             PieChartVisualizer pieChartVisualizer = new PieChartVisualizer();
-            pieChartVisualizer.setSize(900, 600);
-            pieChartVisualizer.pack();
+            pieChartVisualizer.setSize(1300, 600);
             pieChartVisualizer.setVisible(true);
 
         });
@@ -63,7 +62,6 @@ public class NutriFitMainUI extends JFrame {
 
         getContentPane().add(south);
 
-        setSize(900, 600);
         pack();
         setVisible(true);
     }
