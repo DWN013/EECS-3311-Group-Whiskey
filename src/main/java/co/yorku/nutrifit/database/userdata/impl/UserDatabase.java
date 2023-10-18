@@ -1,12 +1,12 @@
 package co.yorku.nutrifit.database.userdata.impl;
 
 import co.yorku.nutrifit.NutriFit;
-import co.yorku.nutrifit.database.userdata.UserDatabaseInterface;
-import co.yorku.nutrifit.database.userdata.objects.ExerciseLog;
-import co.yorku.nutrifit.database.userdata.objects.Intensity;
-import co.yorku.nutrifit.database.userdata.objects.MealLog;
-import co.yorku.nutrifit.database.userdata.objects.MealType;
-import co.yorku.nutrifit.profile.Profile;
+import co.yorku.nutrifit.database.userdata.IUserDatabase;
+import co.yorku.nutrifit.object.Exercise;
+import co.yorku.nutrifit.object.Intensity;
+import co.yorku.nutrifit.object.Meal;
+import co.yorku.nutrifit.object.MealType;
+import co.yorku.nutrifit.profile.IProfile;
 import co.yorku.nutrifit.profile.impl.ProfileHandler;
 import com.google.gson.reflect.TypeToken;
 
@@ -14,21 +14,20 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class UserDatabase implements UserDatabaseInterface {
+public class UserDatabase implements IUserDatabase {
 
     // User
     private String CREATE_USER_TABLE = "CREATE TABLE IF NOT EXISTS profiles ("
-            + "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + "name TEXT, "
-            + "isMale BOOL, "
-            + "height FLOAT, "
-            + "age INTEGER,"
-            + "weight FLOAT,"
-            + "isMetric BOOL);";
+            + "id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "
+            + "name TEXT NOT NULL, "
+            + "isMale BOOL NOT NULL, "
+            + "height FLOAT NOT NULL, "
+            + "age INTEGER NOT NULL,"
+            + "weight FLOAT NOT NULL,"
+            + "isMetric BOOL NOT NULL);";
 
     private String INSERT_USER = "INSERT INTO profiles (name, isMale, height, age, weight, isMetric) " +
             "VALUES (?, ?, ?, ?, ?, ?);";
@@ -43,11 +42,13 @@ public class UserDatabase implements UserDatabaseInterface {
             + "userId INTEGER NOT NULL, "
             + "date DATETIME NOT NULL, "
             + "timeSpentInSeconds INTEGER NOT NULL, "
-            + "typeOfExercise VARCAR(64), "
-            + "intensity VARCAR(12));";
+            + "typeOfExercise VARCAR(64) NOT NULL, "
+            + "intensity VARCAR(12) NOT NULL,"
+            + "totalCaloriesBurned INTEGER NOT NULL);";
 
-    private String INSERT_USER_EXERCISE = "INSERT INTO user_exercise_logs (userId, date, timeSpentInSeconds, typeOfExercise, intensity) " +
-            "VALUES (?, ?, ?, ?, ?);";
+    private String INSERT_USER_EXERCISE = "INSERT INTO user_exercise_logs " +
+            "(userId, date, timeSpentInSeconds, typeOfExercise, intensity, totalCaloriesBurned) " +
+            "VALUES (?, ?, ?, ?, ?, ?);";
 
     private String GET_USER_EXERCISE_LOGS = "SELECT * FROM user_exercise_logs WHERE userId=? AND date BETWEEN ? and ?;";
 
@@ -57,10 +58,11 @@ public class UserDatabase implements UserDatabaseInterface {
             + "userId INTEGER NOT NULL, "
             + "date DATETIME NOT NULL, "
             + "mealType VARCHAR(12) NOT NULL, "
-            + "ingredients TEXT NOT NULL);";
+            + "ingredients TEXT NOT NULL,"
+            + "totalMealCalories INTEGER NOT NULL);";
 
-    private String INSERT_USER_MEAL = "INSERT INTO user_meal_logs (userId, date, mealType, ingredients) " +
-            "VALUES (?, ?, ?, ?);";
+    private String INSERT_USER_MEAL = "INSERT INTO user_meal_logs (userId, date, mealType, ingredients, totalMealCalories) " +
+            "VALUES (?, ?, ?, ?, ?);";
 
     private String GET_USER_MEAL_LOGS = "SELECT * FROM user_meal_logs WHERE userId=? AND date BETWEEN ? and ?;";
     private Connection databaseConnection;
@@ -106,7 +108,7 @@ public class UserDatabase implements UserDatabaseInterface {
     }
 
     @Override
-    public int setupProfile(Profile profile) {
+    public int setupProfile(IProfile profile) {
         int id = -1;
         try {
             PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(this.INSERT_USER);
@@ -134,9 +136,9 @@ public class UserDatabase implements UserDatabaseInterface {
     }
 
     @Override
-    public List<Profile> getAllProfiles() {
+    public List<IProfile> getAllProfiles() {
 
-        List<Profile> profiles = new ArrayList<>();
+        List<IProfile> profiles = new ArrayList<>();
 
         try {
             PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(this.GET_LAST_INSERTED_USER);
@@ -162,9 +164,9 @@ public class UserDatabase implements UserDatabaseInterface {
     }
 
     @Override
-    public Profile getProfile(int id) {
+    public IProfile getProfile(int id) {
 
-        Profile profile = null;
+        IProfile profile = null;
 
         try {
             PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(this.GET_USER);
@@ -195,9 +197,9 @@ public class UserDatabase implements UserDatabaseInterface {
     }
 
     @Override
-    public List<ExerciseLog> getUserExerciseLogs(int userId, java.util.Date fromDate, java.util.Date toDate) {
+    public List<Exercise> getUserExerciseLogs(int userId, java.util.Date fromDate, java.util.Date toDate) {
 
-        List<ExerciseLog> logs = new ArrayList<>();
+        List<Exercise> logs = new ArrayList<>();
 
         try {
 
@@ -216,8 +218,9 @@ public class UserDatabase implements UserDatabaseInterface {
                     int timeSpentInSeconds = results.getInt("timeSpentInSeconds");
                     String typeOfExercise = results.getString("typeOfExercise");
                     Intensity intensity = Intensity.valueOf(results.getString("intensity"));
+                    int totalCaloriesBurned = results.getInt("totalCaloriesBurned");
 
-                    logs.add(new ExerciseLog(date, timeSpentInSeconds, typeOfExercise, intensity));
+                    logs.add(new Exercise(date, timeSpentInSeconds, typeOfExercise, intensity, totalCaloriesBurned));
                 }
 
                 results.close();
@@ -233,7 +236,7 @@ public class UserDatabase implements UserDatabaseInterface {
 
 
     @Override
-    public boolean addUserExerciseLog(int userId, ExerciseLog exerciseLog) {
+    public boolean addUserExerciseLog(int userId, Exercise exerciseLog) {
 
         try {
             PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(this.INSERT_USER_EXERCISE);
@@ -242,6 +245,7 @@ public class UserDatabase implements UserDatabaseInterface {
             preparedStatement.setInt(3, exerciseLog.getTimeSpentInSeconds());
             preparedStatement.setString(4, exerciseLog.getTypeOfExercise());
             preparedStatement.setString(5, exerciseLog.getIntensity().toString());
+            preparedStatement.setInt(6, exerciseLog.getTotalCaloriesBurned());
             preparedStatement.execute();
             preparedStatement.close();
         } catch (Exception e) {
@@ -253,9 +257,9 @@ public class UserDatabase implements UserDatabaseInterface {
     }
 
     @Override
-    public List<MealLog> getUserMealLogs(int userId, java.util.Date fromDate, java.util.Date toDate) {
+    public List<Meal> getUserMealLogs(int userId, java.util.Date fromDate, java.util.Date toDate) {
 
-        List<MealLog> logs = new ArrayList<>();
+        List<Meal> logs = new ArrayList<>();
 
         try {
 
@@ -273,8 +277,9 @@ public class UserDatabase implements UserDatabaseInterface {
                     java.util.Date date = new java.util.Date(results.getDate("date").getTime());
                     MealType mealType = MealType.valueOf(results.getString("mealType"));
                     Map<String, Integer> ingredients = NutriFit.GSON.fromJson(results.getString("ingredients"), new TypeToken<Map<String, Integer>>() {}.getType());
+                    int totalMealCalories = results.getInt("totalMealCalories");
 
-                    logs.add(new MealLog(date, mealType, ingredients));
+                    logs.add(new Meal(date, mealType, ingredients, totalMealCalories));
                 }
 
                 results.close();
@@ -289,7 +294,7 @@ public class UserDatabase implements UserDatabaseInterface {
     }
 
     @Override
-    public boolean addUserMealLog(int userId, MealLog mealLog) {
+    public boolean addUserMealLog(int userId, Meal mealLog) {
 
         try {
             PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(this.INSERT_USER_MEAL);
@@ -297,6 +302,7 @@ public class UserDatabase implements UserDatabaseInterface {
             preparedStatement.setDate(2, new Date(mealLog.getDate().getTime()));
             preparedStatement.setString(3, mealLog.getMealType().toString());
             preparedStatement.setString(4, NutriFit.GSON.toJson(mealLog.getIngredientsAndQuantities()));
+            preparedStatement.setInt(5, mealLog.getTotalMealCalories());
             preparedStatement.execute();
             preparedStatement.close();
         } catch (Exception e) {

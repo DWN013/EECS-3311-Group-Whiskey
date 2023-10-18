@@ -1,4 +1,4 @@
-package co.yorku.nutrifit.database.userdata.objects;
+package co.yorku.nutrifit.object;
 
 public enum MealType {
     BREAKFAST, LUNCH, DINNER, SNACK

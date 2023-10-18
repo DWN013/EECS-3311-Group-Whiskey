@@ -1,6 +1,6 @@
 package co.yorku.nutrifit.database.nutrient.impl;
 
-import co.yorku.nutrifit.database.nutrient.NFDatabaseInterface;
+import co.yorku.nutrifit.database.nutrient.INFDatabase;
 
-public class NFDatabase implements NFDatabaseInterface {
+public class NFDatabase implements INFDatabase {
 }

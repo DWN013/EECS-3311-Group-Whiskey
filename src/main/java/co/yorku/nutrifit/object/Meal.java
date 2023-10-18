@@ -1,18 +1,19 @@
-package co.yorku.nutrifit.database.userdata.objects;
+package co.yorku.nutrifit.object;
 
 import java.util.Date;
 import java.util.Map;
 
-public class MealLog {
-
+public class Meal {
     private Date date;
     private MealType mealType;
     private Map<String, Integer> ingredientsAndQuantities;
+    private int totalMealCalories;
 
-    public MealLog(Date date, MealType mealType, Map<String, Integer> ingredientsAndQuantities) {
+    public Meal(Date date, MealType mealType, Map<String, Integer> ingredientsAndQuantities, int totalMealCalories) {
         this.date = date;
         this.mealType = mealType;
         this.ingredientsAndQuantities = ingredientsAndQuantities;
+        this.totalMealCalories = totalMealCalories;
     }
 
     public Date getDate() {
@@ -25,5 +26,9 @@ public class MealLog {
 
     public Map<String, Integer> getIngredientsAndQuantities() {
         return ingredientsAndQuantities;
+    }
+
+    public int getTotalMealCalories() {
+        return totalMealCalories;
     }
 }

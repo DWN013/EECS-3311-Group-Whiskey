@@ -1,26 +1,24 @@
 package co.yorku.nutrifit.ui;
 
-import co.yorku.nutrifit.database.userdata.UserDatabaseInterface;
-import co.yorku.nutrifit.profile.Profile;
+import co.yorku.nutrifit.database.userdata.IUserDatabase;
+import co.yorku.nutrifit.profile.IProfile;
 import co.yorku.nutrifit.profile.impl.ProfileHandler;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.util.List;
 
 public class ProfileSelectionUI extends JFrame {
 
-    public ProfileSelectionUI(UserDatabaseInterface userDatabaseInterface) {
+    public ProfileSelectionUI(IUserDatabase userDatabaseInterface) {
         super("Profile");
 
-        List<Profile> allProfiles = userDatabaseInterface.getAllProfiles();
+        List<IProfile> allProfiles = userDatabaseInterface.getAllProfiles();
 
         String[] listItems = new String[allProfiles.size()];
         for (int i = 0; i < allProfiles.size(); i++) {
-            Profile profile = allProfiles.get(i);
+            IProfile profile = allProfiles.get(i);
             listItems[i] = "#" + profile.getId() + ": " + profile.getName();
         }
         JComboBox list = new JComboBox(listItems);
@@ -94,7 +92,7 @@ public class ProfileSelectionUI extends JFrame {
         });
 
         loadProfile.addActionListener(e -> {
-            Profile selectedIndex = allProfiles.get(list.getSelectedIndex());
+            IProfile selectedIndex = allProfiles.get(list.getSelectedIndex());
             new NutriFitMainUI(userDatabaseInterface, selectedIndex.getId());
             dispatchEvent(new WindowEvent(ProfileSelectionUI.this, WindowEvent.WINDOW_CLOSING));
         });

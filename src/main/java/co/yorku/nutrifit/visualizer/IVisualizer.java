@@ -1,4 +1,4 @@
 package co.yorku.nutrifit.visualizer;
 
-public interface Visualizer {
+public interface IVisualizer {
 }
