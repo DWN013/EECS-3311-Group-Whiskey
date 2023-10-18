@@ -2,23 +2,10 @@ package co.yorku.nutrifit.ui;
 
 import co.yorku.nutrifit.database.userdata.UserDatabaseInterface;
 import co.yorku.nutrifit.profile.Profile;
-
+import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Date;
-import java.util.Properties;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import org.jdatepicker.JDatePicker;
-import org.jdatepicker.impl.UtilDateModel;
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilCalendarModel;
-import com.toedter.calendar.JDateChooser;
 
 
 //Interface details to input user exercise information

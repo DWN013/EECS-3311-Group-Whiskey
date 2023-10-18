@@ -44,9 +44,6 @@
         </plugins>
     </build>
 
-    <repositories>
-    </repositories>
-
     <dependencies>
         <dependency>
             <groupId>org.jfree</groupId>
@@ -59,9 +56,19 @@
             <version>3.34.0</version>
         </dependency>
         <dependency>
-            <groupId>net.sourceforge.jdatepicker</groupId>
+            <groupId>org.jdatepicker</groupId>
             <artifactId>jdatepicker</artifactId>
-            <version>1.3.2</version>
+            <version>1.3.4</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/.libs/jdatepicker-1.3.4.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jcalender</groupId>
+            <artifactId>jcalender</artifactId>
+            <version>1.4</version>
+            <scope>system</scope>
+            <systemPath>${basedir}/.libs/jcalendar-1.4.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
