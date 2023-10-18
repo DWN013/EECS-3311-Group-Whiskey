@@ -2,6 +2,7 @@ package co.yorku.nutrifit.ui;
 
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.object.MealType;
+import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
@@ -20,8 +21,10 @@ public class MealInputUI extends JFrame {
 
         JPanel mealPanel = new JPanel(new GridLayout(6, 2));
 
-        JLabel dateLabel = new JLabel("Date (dd-MM-yyyy):");
-        JTextField dateField = new JTextField(20);
+        //Date selection drop down  menu
+        JLabel dateLabel = new JLabel("Date");
+        JDateChooser dateChooser = new JDateChooser();
+        dateChooser.setDateFormatString("yyyy-MM-dd");
 
         JLabel mealTypeLabel = new JLabel("Meal Type:");
         JComboBox<MealType> mealTypeDropdown = new JComboBox<>(MealType.values());
@@ -52,7 +55,7 @@ public class MealInputUI extends JFrame {
 
             ingredientsMap.put(ingredient, quantity);
             ingredientsField.setText("");
-            updatePanel(mealPanel, dateLabel, dateField, mealTypeLabel, mealTypeDropdown, ingredientsLabel, ingredientsField, quantityLabel, quantityDropdown);
+            updatePanel(mealPanel, dateLabel, dateChooser, mealTypeLabel, mealTypeDropdown, ingredientsLabel, ingredientsField, quantityLabel, quantityDropdown);
             mealPanel.add(addIngredientButton);
             mealPanel.add(submitButton);
         });
@@ -60,7 +63,7 @@ public class MealInputUI extends JFrame {
 
         submitButton.addActionListener(e -> {
             // Get user input from fields in the new profile layout
-            String dateText = dateField.getText();
+            String dateText = ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText();
             MealType mealType = (MealType) mealTypeDropdown.getSelectedItem();
 
 
@@ -92,7 +95,7 @@ public class MealInputUI extends JFrame {
         });
 
         // Add the components to the mealPanel
-        updatePanel(mealPanel, dateLabel, dateField, mealTypeLabel, mealTypeDropdown, ingredientsLabel, ingredientsField, quantityLabel, quantityDropdown);
+        updatePanel(mealPanel, dateLabel, dateChooser, mealTypeLabel, mealTypeDropdown, ingredientsLabel, ingredientsField, quantityLabel, quantityDropdown);
         mealPanel.add(addIngredientButton);
         mealPanel.add(submitButton);
 
@@ -103,10 +106,10 @@ public class MealInputUI extends JFrame {
         setVisible(true);
     }
 
-    private void updatePanel(JPanel mealPanel, JLabel dateLabel, JTextField dateField, JLabel mealTypeLabel, JComboBox<MealType> mealTypeDropdown, JLabel ingredientsLabel, JTextField ingredientsField, JLabel quantityLabel, JSpinner quantityDropdown) {
+    private void updatePanel(JPanel mealPanel, JLabel dateLabel, JDateChooser dateChooser, JLabel mealTypeLabel, JComboBox<MealType> mealTypeDropdown, JLabel ingredientsLabel, JTextField ingredientsField, JLabel quantityLabel, JSpinner quantityDropdown) {
         mealPanel.removeAll();
         mealPanel.add(dateLabel);
-        mealPanel.add(dateField);
+        mealPanel.add(dateChooser);
         mealPanel.add(mealTypeLabel);
         mealPanel.add(mealTypeDropdown);
         mealPanel.add(ingredientsLabel);
@@ -119,6 +122,4 @@ public class MealInputUI extends JFrame {
         mealPanel.revalidate();
         mealPanel.repaint();
     }
-
-
 }
