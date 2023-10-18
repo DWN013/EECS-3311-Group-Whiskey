@@ -17,46 +17,29 @@ public class NutriFitMainUI extends JFrame {
 
         JButton visualize = new JButton("Visualize Data");
         JButton logExercise = new JButton("Log Exercise");
+        JButton showExerciseLog = new JButton("Show Exercise Log");
         JButton logMeal = new JButton("Log Meal");
+        JButton showMealLog = new JButton("Show Meal Log");
 
         visualize.addActionListener(e -> {
-
             PieChartVisualizer pieChartVisualizer = new PieChartVisualizer();
             pieChartVisualizer.setSize(1300, 600);
             pieChartVisualizer.setVisible(true);
-
         });
 
         //ActionListener function to open log exercise via. log exercise button
-        logExercise.addActionListener(e -> {
-
-            //debug info
-            System.out.println("User clicked the log exercise button");
-            //Creates a new window for logging exercise data
-            new ExerciseInputUI(userDatabaseInterface, userId);
-
-        });
-
-
-
-        logMeal.addActionListener(e -> {
-            System.out.println("User clicked the log meal button");
-
-            // Remove the current panel
-            getContentPane().remove(south);
-
-            // Create a new MealHandler instance and add its panel
-
-            new MealInputUI(userDatabaseInterface);
-
-            revalidate(); // Revalidate the content pane to reflect the changes
-        });
+        logExercise.addActionListener(e -> new ExerciseInputUI(userDatabaseInterface, userId));
+        showExerciseLog.addActionListener(e -> new ExerciseDisplayUI(userDatabaseInterface, profile));
+        showMealLog.addActionListener(e -> new MealDisplayUI(userDatabaseInterface, profile));
+        logMeal.addActionListener(e -> new MealInputUI(userDatabaseInterface, profile));
 
 
 
         south.add(visualize);
         south.add(logExercise);
+        south.add(showExerciseLog);
         south.add(logMeal);
+        south.add(showMealLog);
 
         getContentPane().add(south);
 

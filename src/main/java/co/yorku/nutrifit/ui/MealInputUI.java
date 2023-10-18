@@ -1,8 +1,10 @@
 package co.yorku.nutrifit.ui;
 
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
+import co.yorku.nutrifit.object.Meal;
 import co.yorku.nutrifit.object.MealType;
 import com.toedter.calendar.JDateChooser;
+import co.yorku.nutrifit.profile.IProfile;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +19,7 @@ public class MealInputUI extends JFrame {
 
     private Map<String, Integer> ingredientsMap = new HashMap<>();
 
-    public MealInputUI(IUserDatabase userDatabaseInterface) {
+    public MealInputUI(IUserDatabase userDatabaseInterface, IProfile profile) {
 
         JPanel mealPanel = new JPanel(new GridLayout(6, 2));
 
@@ -78,9 +80,20 @@ public class MealInputUI extends JFrame {
                 DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                 Date date = df.parse(dateText);
                 // Handle the parsed date object here
+
+                userDatabaseInterface.addUserMealLog(
+                        profile.getId(),
+                        new Meal(
+                                date,
+                                mealType,
+                                ingredientsMap,
+                                100 // TODO: calculate this
+                        )
+                );
             } catch (ParseException ex) {
                 // Handle invalid input
                 JOptionPane.showMessageDialog(null, "Invalid date input. Please use the format dd-MM-yyyy.");
+                return;
             }
 
             JOptionPane.showMessageDialog(null, "Meal Logging Successful!");
