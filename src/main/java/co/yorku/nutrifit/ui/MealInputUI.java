@@ -28,6 +28,9 @@ public class MealInputUI extends JFrame {
         JDateChooser dateChooser = new JDateChooser();
         dateChooser.setDateFormatString("yyyy-MM-dd");
 
+        JLabel timeLabel = new JLabel("Time (24:00)");
+        JTextField timeField = new JTextField(5);
+
         JLabel mealTypeLabel = new JLabel("Meal Type:");
         JComboBox<MealType> mealTypeDropdown = new JComboBox<>(MealType.values());
 
@@ -57,7 +60,7 @@ public class MealInputUI extends JFrame {
 
             ingredientsMap.put(ingredient, quantity);
             ingredientsField.setText("");
-            updatePanel(mealPanel, dateLabel, dateChooser, mealTypeLabel, mealTypeDropdown, ingredientsLabel, ingredientsField, quantityLabel, quantityDropdown);
+            updatePanel(mealPanel, dateLabel, dateChooser, timeLabel, timeField, mealTypeLabel, mealTypeDropdown, ingredientsLabel, ingredientsField, quantityLabel, quantityDropdown);
             mealPanel.add(addIngredientButton);
             mealPanel.add(submitButton);
         });
@@ -65,50 +68,32 @@ public class MealInputUI extends JFrame {
 
         submitButton.addActionListener(e -> {
             // Get user input from fields in the new profile layout
-            String dateText = ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText();
             MealType mealType = (MealType) mealTypeDropdown.getSelectedItem();
 
+            Date formattedDateTime = dateChooser.getDate();
+            String[] timeSplit = timeField.getText().split(":");
+            formattedDateTime.setHours(Integer.parseInt(timeSplit[0]));
+            formattedDateTime.setMinutes(Integer.parseInt(timeSplit[1]));
 
-            // Validate input
-            if (dateText.isEmpty()) {
-                // Handle empty fields
-                JOptionPane.showMessageDialog(null, "Please fill in all fields.");
-                return; // Stop processing if any field is empty
-            }
-
-            try {
-                DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                Date date = df.parse(dateText);
-                // Handle the parsed date object here
-
-                userDatabaseInterface.addUserMealLog(
-                        profile.getId(),
-                        new Meal(
-                                date,
-                                mealType,
-                                ingredientsMap,
-                                100 // TODO: calculate this
-                        )
-                );
-            } catch (ParseException ex) {
-                // Handle invalid input
-                JOptionPane.showMessageDialog(null, "Invalid date input. Please use the format dd-MM-yyyy.");
-                return;
-            }
+            // Code that logs the meal log
+            // ****DO NOT DELETE****
+            userDatabaseInterface.addUserMealLog(
+                    profile.getId(),
+                    new Meal(
+                            formattedDateTime,
+                            mealType,
+                            ingredientsMap,
+                            100 // TODO: calculate this
+                    )
+            );
 
             JOptionPane.showMessageDialog(null, "Meal Logging Successful!");
-            System.out.println("Date: " + dateText);
-            System.out.println("Meal Type: " + mealType);
-            System.out.println("Map of Ingredients and Quantities:");
-            for (Map.Entry<String, Integer> entry : ingredientsMap.entrySet()) {
-                System.out.println(entry.getKey() + " : " + entry.getValue());
-            }
 
 
         });
 
         // Add the components to the mealPanel
-        updatePanel(mealPanel, dateLabel, dateChooser, mealTypeLabel, mealTypeDropdown, ingredientsLabel, ingredientsField, quantityLabel, quantityDropdown);
+        updatePanel(mealPanel, dateLabel, dateChooser, timeLabel, timeField, mealTypeLabel, mealTypeDropdown, ingredientsLabel, ingredientsField, quantityLabel, quantityDropdown);
         mealPanel.add(addIngredientButton);
         mealPanel.add(submitButton);
 
@@ -119,10 +104,12 @@ public class MealInputUI extends JFrame {
         setVisible(true);
     }
 
-    private void updatePanel(JPanel mealPanel, JLabel dateLabel, JDateChooser dateChooser, JLabel mealTypeLabel, JComboBox<MealType> mealTypeDropdown, JLabel ingredientsLabel, JTextField ingredientsField, JLabel quantityLabel, JSpinner quantityDropdown) {
+    private void updatePanel(JPanel mealPanel, JLabel dateLabel, JDateChooser dateChooser, JLabel timeLabel, JTextField timeField, JLabel mealTypeLabel, JComboBox<MealType> mealTypeDropdown, JLabel ingredientsLabel, JTextField ingredientsField, JLabel quantityLabel, JSpinner quantityDropdown) {
         mealPanel.removeAll();
         mealPanel.add(dateLabel);
         mealPanel.add(dateChooser);
+        mealPanel.add(timeLabel);
+        mealPanel.add(timeField);
         mealPanel.add(mealTypeLabel);
         mealPanel.add(mealTypeDropdown);
         mealPanel.add(ingredientsLabel);
