@@ -64,6 +64,8 @@ public class ExerciseInputUI extends JFrame{
 
             Exercise exerciseObj = new Exercise(formattedDateTime, Integer.parseInt(secondsField.getText()), activityType, (Intensity) intensityComboBox.getSelectedItem(), totalCaloriesBurned);
 
+            // Code that logs the exercise logs
+            // ****DO NOT DELETE****
             userDatabaseInterface.addUserExerciseLog(
                     profile.getId(),
                     exerciseObj
