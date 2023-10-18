@@ -2,10 +2,7 @@ package co.yorku.nutrifit.database.userdata.impl;
 
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
-import co.yorku.nutrifit.object.Exercise;
-import co.yorku.nutrifit.object.Intensity;
-import co.yorku.nutrifit.object.Meal;
-import co.yorku.nutrifit.object.MealType;
+import co.yorku.nutrifit.object.*;
 import co.yorku.nutrifit.profile.IProfile;
 import co.yorku.nutrifit.profile.impl.ProfileHandler;
 import com.google.gson.reflect.TypeToken;
@@ -42,12 +39,12 @@ public class UserDatabase implements IUserDatabase {
             + "userId INTEGER NOT NULL, "
             + "date DATETIME NOT NULL, "
             + "timeSpentInSeconds INTEGER NOT NULL, "
-            + "typeOfExercise VARCAR(64) NOT NULL, "
+            + "activityType VARCAR(64) NOT NULL, "
             + "intensity VARCAR(12) NOT NULL,"
             + "totalCaloriesBurned INTEGER NOT NULL);";
 
     private String INSERT_USER_EXERCISE = "INSERT INTO user_exercise_logs " +
-            "(userId, date, timeSpentInSeconds, typeOfExercise, intensity, totalCaloriesBurned) " +
+            "(userId, date, timeSpentInSeconds, activityType, intensity, totalCaloriesBurned) " +
             "VALUES (?, ?, ?, ?, ?, ?);";
 
     private String GET_USER_EXERCISE_LOGS = "SELECT * FROM user_exercise_logs WHERE userId=? AND date BETWEEN ? and ?;";
@@ -216,11 +213,11 @@ public class UserDatabase implements IUserDatabase {
 
                     java.util.Date date = new java.util.Date(results.getDate("date").getTime());
                     int timeSpentInSeconds = results.getInt("timeSpentInSeconds");
-                    String typeOfExercise = results.getString("typeOfExercise");
+                    ActivityType activityType = ActivityType.valueOf(results.getString("activityType"));
                     Intensity intensity = Intensity.valueOf(results.getString("intensity"));
                     int totalCaloriesBurned = results.getInt("totalCaloriesBurned");
 
-                    logs.add(new Exercise(date, timeSpentInSeconds, typeOfExercise, intensity, totalCaloriesBurned));
+                    logs.add(new Exercise(date, timeSpentInSeconds, activityType, intensity, totalCaloriesBurned));
                 }
 
                 results.close();
@@ -243,7 +240,7 @@ public class UserDatabase implements IUserDatabase {
             preparedStatement.setInt(1, userId);
             preparedStatement.setDate(2, new Date(exerciseLog.getDate().getTime()));
             preparedStatement.setInt(3, exerciseLog.getTimeSpentInSeconds());
-            preparedStatement.setString(4, exerciseLog.getTypeOfExercise());
+            preparedStatement.setString(4, exerciseLog.getActivityType().toString());
             preparedStatement.setString(5, exerciseLog.getIntensity().toString());
             preparedStatement.setInt(6, exerciseLog.getTotalCaloriesBurned());
             preparedStatement.execute();

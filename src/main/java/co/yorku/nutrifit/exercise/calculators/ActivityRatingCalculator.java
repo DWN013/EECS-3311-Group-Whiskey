@@ -9,4 +9,7 @@ public class ActivityRatingCalculator {
     public ActivityRatingCalculator(Exercise exercise) {
         this.exercise = exercise;
     }
+
+    // This class calculates how active am I
+
 }
