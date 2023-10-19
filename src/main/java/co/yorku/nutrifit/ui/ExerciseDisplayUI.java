@@ -6,6 +6,7 @@ import co.yorku.nutrifit.object.Meal;
 import co.yorku.nutrifit.profile.IProfile;
 
 import javax.swing.*;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ public class ExerciseDisplayUI extends JFrame {
         Date toDate = new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(9999999));
 
         List<Exercise> exercises = iUserDatabase.getUserExerciseLogs(iProfile.getId(), fromDate, toDate);
+        exercises.sort(Comparator.comparingLong(lhs -> lhs.getDate().getTime()));
         String[] data = exercises.isEmpty() ? new String[] { "No Exercises Logged" } : new String[exercises.size()];
 
         int index = 0;

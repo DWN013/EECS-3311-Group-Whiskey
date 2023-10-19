@@ -2,6 +2,7 @@ package co.yorku.nutrifit.ui;
 
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.profile.IProfile;
+import co.yorku.nutrifit.ui.visualizerui.BarChartVisualizer;
 import co.yorku.nutrifit.ui.visualizerui.PieChartVisualizer;
 
 import javax.swing.*;
@@ -15,14 +16,14 @@ public class NutriFitMainUI extends JFrame {
 
         JPanel south = new JPanel();
 
-        JButton visualize = new JButton("Visualize Data");
+        JButton visualize = new JButton("Visualize Calories Burned");
         JButton logExercise = new JButton("Log Exercise");
         JButton showExerciseLog = new JButton("Show Exercise Log");
         JButton logMeal = new JButton("Log Meal");
         JButton showMealLog = new JButton("Show Meal Log");
 
         visualize.addActionListener(e -> {
-            PieChartVisualizer pieChartVisualizer = new PieChartVisualizer();
+            BarChartVisualizer pieChartVisualizer = new BarChartVisualizer(userDatabaseInterface, profile);
             pieChartVisualizer.setSize(1300, 600);
             pieChartVisualizer.setVisible(true);
         });

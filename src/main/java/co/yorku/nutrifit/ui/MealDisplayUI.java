@@ -5,6 +5,7 @@ import co.yorku.nutrifit.object.Meal;
 import co.yorku.nutrifit.profile.IProfile;
 
 import javax.swing.*;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +21,7 @@ public class MealDisplayUI extends JFrame {
         Date toDate = new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(9999999));
 
         List<Meal> meals = iUserDatabase.getUserMealLogs(iProfile.getId(), fromDate, toDate);
+        meals.sort(Comparator.comparingLong(lhs -> lhs.getDate().getTime()));
         String[] data = meals.isEmpty() ? new String[] { "No Meals Logged" } : new String[meals.size()];
 
         int index = 0;

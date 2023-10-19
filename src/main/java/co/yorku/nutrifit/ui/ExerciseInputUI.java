@@ -85,19 +85,6 @@ public class ExerciseInputUI extends JFrame{
 
             JOptionPane.showMessageDialog(null, "Exercise Logging Successful!");
 
-            //Insert more data here
-            //Call Database Adapter to save data
-            /*
-            boolean saved = userDatabaseInterface.CREATE_EXERCISE_TABLE(profile.getId(), profile.getName(), profile.getSex(), profile.getHeight(),
-                    profile.getAge(), selectedDate, selectedExercise);
-            if (saved) {
-                JOptionPane.showMessageDialog(this, "Data saved successfully!");
-            } else {
-                JOptionPane.showMessageDialog(this, "Error saving data to DB, might have Ligma.");
-            }
-            */
-
-
         });
 
         newExercisePanel.add(dateLabel);
