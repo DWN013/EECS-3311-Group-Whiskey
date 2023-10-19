@@ -3,14 +3,11 @@ package co.yorku.nutrifit.ui;
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.object.Meal;
 import co.yorku.nutrifit.object.MealType;
-import com.toedter.calendar.JDateChooser;
 import co.yorku.nutrifit.profile.IProfile;
+import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;

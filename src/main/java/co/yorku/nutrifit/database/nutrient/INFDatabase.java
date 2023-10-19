@@ -1,8 +1,11 @@
 package co.yorku.nutrifit.database.nutrient;
 
+import co.yorku.nutrifit.object.NutrientInfo;
+
 public interface INFDatabase {
 
-    // getting nutrient info
-    //
+    void setupDatabase();
+
+    NutrientInfo getNutrientInfo(String ingredient);
 
 }

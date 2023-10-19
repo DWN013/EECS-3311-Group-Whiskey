@@ -1,5 +1,8 @@
 package co.yorku.nutrifit;
 
+import co.yorku.nutrifit.database.nutrient.INFDatabase;
+import co.yorku.nutrifit.database.nutrient.NFDatabaseAdapter;
+import co.yorku.nutrifit.database.nutrient.impl.NFDatabase;
 import co.yorku.nutrifit.database.userdata.UserDatabaseAdapter;
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.database.userdata.impl.UserDatabase;
@@ -15,14 +18,10 @@ public class NutriFit {
         IUserDatabase userDatabaseAdapter = new UserDatabaseAdapter(new UserDatabase());
         userDatabaseAdapter.setupDatabase();
 
-//        Profile profile = new ProfileHandler(userDatabaseAdapter, "karan", "male", "100 feet", 21);
-//        profile.setupProfile();
-//
-//        profile = new ProfileHandler(userDatabaseAdapter, "alex", "male", "200 feet", 1000);
-//        profile.setupProfile();
+        INFDatabase infDatabase = new NFDatabaseAdapter(new NFDatabase());
+        infDatabase.setupDatabase();
 
-
-        new ProfileSelectionUI(userDatabaseAdapter);
+        new ProfileSelectionUI(userDatabaseAdapter, infDatabase);
 
     }
 

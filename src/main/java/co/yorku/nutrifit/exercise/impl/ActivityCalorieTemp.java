@@ -1,5 +1,8 @@
 package co.yorku.nutrifit.exercise.impl;
 
+import co.yorku.nutrifit.object.ActivityType;
+import co.yorku.nutrifit.object.Intensity;
+
 public class ActivityCalorieTemp {
 	
 	private float [] [] [] activityCalorieList = { 
@@ -33,24 +36,24 @@ public class ActivityCalorieTemp {
 		 * */
 	}
 	
-	public float getCalorie(int exercise, int intensity, double weight) //Assuming weight = pounds
+	public float getCaloriesBurnedForActivityType(ActivityType activityType, Intensity intensity, float weight) //Assuming weight = pounds
 	{
 		float value = 0;
 		if (weight <= 130)
 		{
-			value = activityCalorieList[exercise][intensity][0];
+			value = activityCalorieList[activityType.ordinal()][intensity.ordinal()][0];
 		}
 		else if (weight <= 155)
 		{
-			value = activityCalorieList[exercise][intensity][1];
+			value = activityCalorieList[activityType.ordinal()][intensity.ordinal()][1];
 		}
 		else if (weight <= 180)
 		{
-			value = activityCalorieList[exercise][intensity][2];
+			value = activityCalorieList[activityType.ordinal()][intensity.ordinal()][2];
 		}
 		else
 		{
-			value = activityCalorieList[exercise][intensity][3];
+			value = activityCalorieList[activityType.ordinal()][intensity.ordinal()][3];
 		}
 		
 		value = value / 3600.00f; //because these values are calories burnt for an hour of doing this exercise, we divide by the number of seconds in an hour to get calories burnt per second 

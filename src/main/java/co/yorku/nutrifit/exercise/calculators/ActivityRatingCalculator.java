@@ -1,12 +1,12 @@
 package co.yorku.nutrifit.exercise.calculators;
 
-import co.yorku.nutrifit.exercise.Exercise;
+import co.yorku.nutrifit.exercise.IExercise;
 
 public class ActivityRatingCalculator {
 
-    private Exercise exercise;
+    private IExercise exercise;
 
-    public ActivityRatingCalculator(Exercise exercise) {
+    public ActivityRatingCalculator(IExercise exercise) {
         this.exercise = exercise;
     }
 

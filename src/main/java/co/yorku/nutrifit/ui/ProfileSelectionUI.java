@@ -1,5 +1,6 @@
 package co.yorku.nutrifit.ui;
 
+import co.yorku.nutrifit.database.nutrient.INFDatabase;
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.profile.IProfile;
 import co.yorku.nutrifit.profile.impl.ProfileHandler;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class ProfileSelectionUI extends JFrame {
 
-    public ProfileSelectionUI(IUserDatabase userDatabaseInterface) {
+    public ProfileSelectionUI(IUserDatabase userDatabaseInterface, INFDatabase infDatabase) {
         super("Profile");
 
         List<IProfile> allProfiles = userDatabaseInterface.getAllProfiles();

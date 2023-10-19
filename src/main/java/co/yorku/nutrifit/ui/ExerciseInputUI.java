@@ -1,6 +1,11 @@
 package co.yorku.nutrifit.ui;
 
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
+import co.yorku.nutrifit.exercise.IExercise;
+import co.yorku.nutrifit.exercise.calculators.ExerciseCalculator;
+import co.yorku.nutrifit.exercise.calculators.WeightLossCalculator;
+import co.yorku.nutrifit.exercise.impl.ActivityCalorieTemp;
+import co.yorku.nutrifit.exercise.impl.ExerciseHandler;
 import co.yorku.nutrifit.object.ActivityType;
 import co.yorku.nutrifit.object.Exercise;
 import co.yorku.nutrifit.object.Intensity;
@@ -25,6 +30,7 @@ public class ExerciseInputUI extends JFrame{
         //Title of window that opens when "Log Exercise" button pressed
         super("Exercise UI");
         IProfile profile = userDatabaseInterface.getProfile(userId);
+        IExercise exercise = new ExerciseHandler(new ExerciseCalculator(), new WeightLossCalculator());
         //Debug line
         System.out.println("Loaded exercise input for " + profile.getId() + " -> " + profile.getName());
 
@@ -53,16 +59,22 @@ public class ExerciseInputUI extends JFrame{
         //Action listener for save button
         saveButton.addActionListener(e -> {
             ActivityType activityType = (ActivityType) exerciseComboBox.getSelectedItem();
-            int totalCaloriesBurned = 100; //TODO: Calculate this
+            Intensity intensity = (Intensity) intensityComboBox.getSelectedItem();
+            int durationInSeconds = Integer.parseInt(secondsField.getText());
+            int totalCaloriesBurned = exercise.getTotalCaloriesBurned(activityType, intensity, durationInSeconds, profile);
 
             Date formattedDateTime = dateChooser.getDate();
             String[] timeSplit = timeField.getText().split(":");
             formattedDateTime.setHours(Integer.parseInt(timeSplit[0]));
             formattedDateTime.setMinutes(Integer.parseInt(timeSplit[1]));
 
-            System.out.println(new Date(formattedDateTime.getTime()).toString());
+            System.out.println(new Date(formattedDateTime.getTime()));
 
-            Exercise exerciseObj = new Exercise(formattedDateTime, Integer.parseInt(secondsField.getText()), activityType, (Intensity) intensityComboBox.getSelectedItem(), totalCaloriesBurned);
+            Exercise exerciseObj = new Exercise(formattedDateTime,
+                    durationInSeconds,
+                    activityType,
+                    intensity,
+                    totalCaloriesBurned);
 
             // Code that logs the exercise logs
             // ****DO NOT DELETE****
@@ -102,7 +114,6 @@ public class ExerciseInputUI extends JFrame{
 
 
         getContentPane().add(newExercisePanel);
-
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(250, 220);
         setVisible(true);
