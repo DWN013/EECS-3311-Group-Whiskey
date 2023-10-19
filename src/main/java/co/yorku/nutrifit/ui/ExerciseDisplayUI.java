@@ -32,7 +32,7 @@ public class ExerciseDisplayUI extends JFrame {
 
         add(new JList(data));
         pack();
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
 

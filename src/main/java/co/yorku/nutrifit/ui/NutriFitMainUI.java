@@ -33,8 +33,6 @@ public class NutriFitMainUI extends JFrame {
         showMealLog.addActionListener(e -> new MealDisplayUI(userDatabaseInterface, profile));
         logMeal.addActionListener(e -> new MealInputUI(userDatabaseInterface, profile));
 
-
-
         south.add(visualize);
         south.add(logExercise);
         south.add(showExerciseLog);
