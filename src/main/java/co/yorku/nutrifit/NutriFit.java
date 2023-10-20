@@ -7,6 +7,7 @@ import co.yorku.nutrifit.database.userdata.UserDatabaseAdapter;
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.database.userdata.impl.UserDatabase;
 import co.yorku.nutrifit.event.EventManager;
+import co.yorku.nutrifit.profile.IProfile;
 import co.yorku.nutrifit.ui.ProfileSelectionUI;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,24 +19,52 @@ public class NutriFit {
     public static NutriFit getInstance() { return i; }
 
     // Some stuff
-    public static Gson GSON = new GsonBuilder().create(); // TODO: put this somewhere else
-    private EventManager eventManager = new EventManager();
+    public Gson gson; // TODO: put this somewhere else
+    private EventManager eventManager;
+
+    private IProfile loadedProfile;
+    private IUserDatabase iUserDatabase;
+    private INFDatabase infDatabase;
 
     public NutriFit() {
         NutriFit.i = this;
 
-        IUserDatabase userDatabaseAdapter = new UserDatabaseAdapter(new UserDatabase());
-        userDatabaseAdapter.setupDatabase();
+        this.gson = new GsonBuilder().create();
+        this.eventManager = new EventManager();
 
-        INFDatabase infDatabase = new NFDatabaseAdapter(new NFDatabase());
-        infDatabase.setupDatabase();
+        this.iUserDatabase = new UserDatabaseAdapter(new UserDatabase());
+        this.iUserDatabase.setupDatabase();
 
-        new ProfileSelectionUI(userDatabaseAdapter, infDatabase);
+        this.infDatabase = new NFDatabaseAdapter(new NFDatabase());
+        this.infDatabase.setupDatabase();
+
+        ProfileSelectionUI.getInstance().showToUser();
+    }
+
+    public Gson getGson() {
+        return gson;
     }
 
     public EventManager getEventManager() {
         return eventManager;
     }
+
+    public IUserDatabase getUserDatabase() {
+        return iUserDatabase;
+    }
+
+    public INFDatabase getNutrientDatabase() {
+        return infDatabase;
+    }
+
+    public IProfile getLoadedProfile() {
+        return loadedProfile;
+    }
+
+    public void setLoadedProfile(IProfile loadedProfile) {
+        this.loadedProfile = loadedProfile;
+    }
+
 
     public static void main(String[] args) {
         new NutriFit();

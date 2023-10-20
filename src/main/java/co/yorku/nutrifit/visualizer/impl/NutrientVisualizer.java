@@ -18,7 +18,7 @@ public class NutrientVisualizer extends IVisualizer {
     }
 
     @Override
-    protected DefaultCategoryDataset getDataset() {
+    public DefaultCategoryDataset getJFreeChartDataObject() {
         // TODO: Add Data here
         return defaultCategoryDataset;
     }

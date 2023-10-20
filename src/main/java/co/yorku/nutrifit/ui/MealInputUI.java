@@ -1,9 +1,8 @@
 package co.yorku.nutrifit.ui;
 
-import co.yorku.nutrifit.database.userdata.IUserDatabase;
+import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.object.Meal;
 import co.yorku.nutrifit.object.MealType;
-import co.yorku.nutrifit.profile.IProfile;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -14,9 +13,19 @@ import java.util.Map;
 
 public class MealInputUI extends JFrame {
 
+    private static MealInputUI instance;
+
+    public static MealInputUI getInstance() {
+        if (instance == null) {
+            instance = new MealInputUI();
+        }
+
+        return instance;
+    }
+
     private Map<String, Integer> ingredientsMap = new HashMap<>();
 
-    public MealInputUI(IUserDatabase userDatabaseInterface, IProfile profile) {
+    private MealInputUI() {
 
         JPanel mealPanel = new JPanel(new GridLayout(6, 2));
 
@@ -74,8 +83,8 @@ public class MealInputUI extends JFrame {
 
             // Code that logs the meal log
             // ****DO NOT DELETE****
-            userDatabaseInterface.addUserMealLog(
-                    profile.getId(),
+            NutriFit.getInstance().getUserDatabase().addUserMealLog(
+                    NutriFit.getInstance().getLoadedProfile().getId(),
                     new Meal(
                             formattedDateTime,
                             mealType,
@@ -98,7 +107,7 @@ public class MealInputUI extends JFrame {
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(250, 220);
-        setVisible(true);
+        setVisible(false);
     }
 
     private void updatePanel(JPanel mealPanel, JLabel dateLabel, JDateChooser dateChooser, JLabel timeLabel, JTextField timeField, JLabel mealTypeLabel, JComboBox<MealType> mealTypeDropdown, JLabel ingredientsLabel, JTextField ingredientsField, JLabel quantityLabel, JSpinner quantityDropdown) {
@@ -118,5 +127,13 @@ public class MealInputUI extends JFrame {
         // Add the ingredient details to the panel
         mealPanel.revalidate();
         mealPanel.repaint();
+    }
+
+    public void clearInputtedIngredients() {
+        this.ingredientsMap.clear();
+    }
+
+    public void showToUser() {
+        setVisible(true);
     }
 }

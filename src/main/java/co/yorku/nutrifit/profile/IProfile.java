@@ -2,8 +2,6 @@ package co.yorku.nutrifit.profile;
 
 public interface IProfile {
 
-    void setupProfile();
-
     int getId();
 
     String getName();

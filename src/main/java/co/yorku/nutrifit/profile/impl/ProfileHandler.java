@@ -1,11 +1,8 @@
 package co.yorku.nutrifit.profile.impl;
 
-import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.profile.IProfile;
 
 public class ProfileHandler implements IProfile {
-
-    private IUserDatabase userDatabaseInterface;
 
     private int id;
     private String name;
@@ -15,8 +12,7 @@ public class ProfileHandler implements IProfile {
     private float weight;
     private boolean isMetric;
 
-    public ProfileHandler(IUserDatabase userDatabaseInterface, int id, String name, boolean isMale, float height, int age, float weight, boolean isMetric) {
-        this.userDatabaseInterface = userDatabaseInterface;
+    public ProfileHandler(int id, String name, boolean isMale, float height, int age, float weight, boolean isMetric) {
         this.id = id;
         this.name = name;
         this.isMale = isMale;
@@ -24,11 +20,6 @@ public class ProfileHandler implements IProfile {
         this.age = age;
         this.weight = weight;
         this.isMetric = isMetric;
-    }
-
-    @Override
-    public void setupProfile() {
-        this.userDatabaseInterface.setupProfile(this);
     }
 
     @Override
