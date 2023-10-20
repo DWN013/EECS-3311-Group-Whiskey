@@ -1,6 +1,7 @@
 package co.yorku.nutrifit.ui;
 
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
+import co.yorku.nutrifit.logs.impl.Meal;
 import co.yorku.nutrifit.profile.IProfile;
 import co.yorku.nutrifit.ui.visualizerui.BarChartVisualizer;
 
@@ -29,16 +30,19 @@ public class NutriFitMainUI extends JFrame {
         JButton showMealLog = new JButton("Show Meal Log");
 
         visualize.addActionListener(e -> {
-            BarChartVisualizer pieChartVisualizer = new BarChartVisualizer();
-            pieChartVisualizer.setSize(1300, 600);
-            pieChartVisualizer.setVisible(true);
+            BarChartVisualizer barChartVisualizer = new BarChartVisualizer();
+            barChartVisualizer.setSize(1300, 600);
+            barChartVisualizer.setVisible(true);
         });
 
         //ActionListener function to open log exercise via. log exercise button
         logExercise.addActionListener(e -> ExerciseInputUI.getInstance().showToUser());
-        showExerciseLog.addActionListener(e -> ExerciseDisplayUI.getInstance().showToUser());
-        showMealLog.addActionListener(e -> MealDisplayUI.getInstance().showToUser());
-        logMeal.addActionListener(e -> MealInputUI.getInstance().showToUser());
+        showExerciseLog.addActionListener(e -> new ExerciseDisplayUI().showToUser());
+        showMealLog.addActionListener(e -> new MealDisplayUI().showToUser());
+        logMeal.addActionListener(e -> {
+            MealInputUI.getInstance().clearInputtedIngredients();
+            MealInputUI.getInstance().showToUser();
+        });
 
         south.add(visualize);
         south.add(logExercise);

@@ -98,6 +98,7 @@ public class ProfileSelectionUI extends JFrame {
             // Update the result label
             JOptionPane.showMessageDialog(null, "New profile created successfully!");
 
+            NutriFit.getInstance().setLoadedProfile(NutriFit.getInstance().getUserDatabase().getProfile(userid));
             NutriFitMainUI.getInstance().showToUser();
             dispatchEvent(new WindowEvent(ProfileSelectionUI.this, WindowEvent.WINDOW_CLOSING));
         });

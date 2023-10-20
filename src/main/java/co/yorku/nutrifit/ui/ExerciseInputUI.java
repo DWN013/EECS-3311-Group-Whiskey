@@ -1,22 +1,15 @@
 package co.yorku.nutrifit.ui;
 
 import co.yorku.nutrifit.NutriFit;
-import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.exercise.IExercise;
 import co.yorku.nutrifit.exercise.calculators.ExerciseCalculator;
 import co.yorku.nutrifit.exercise.calculators.WeightLossCalculator;
-import co.yorku.nutrifit.exercise.impl.ActivityCalorieTemp;
 import co.yorku.nutrifit.exercise.impl.ExerciseHandler;
 import co.yorku.nutrifit.object.ActivityType;
-import co.yorku.nutrifit.object.Exercise;
+import co.yorku.nutrifit.logs.impl.Exercise;
 import co.yorku.nutrifit.object.Intensity;
-import co.yorku.nutrifit.object.Meal;
-import co.yorku.nutrifit.profile.IProfile;
 import com.toedter.calendar.JDateChooser;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.*;

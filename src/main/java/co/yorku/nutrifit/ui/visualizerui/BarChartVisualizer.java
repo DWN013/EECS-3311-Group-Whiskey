@@ -1,7 +1,8 @@
 package co.yorku.nutrifit.ui.visualizerui;
 
 import co.yorku.nutrifit.NutriFit;
-import co.yorku.nutrifit.object.Exercise;
+import co.yorku.nutrifit.logs.LogIterator;
+import co.yorku.nutrifit.logs.impl.Exercise;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -32,9 +33,11 @@ public class BarChartVisualizer extends JFrame {
 
         Map<String, Integer> caloriesBurnedEachDay = new HashMap<>();
         Calendar calendar = Calendar.getInstance();
-        List<Exercise> logs = NutriFit.getInstance().getUserDatabase().getUserExerciseLogs(NutriFit.getInstance().getLoadedProfile().getId(), fromDate, toDate);
+        LogIterator logs = NutriFit.getInstance().getUserDatabase().getUserExerciseLogs(NutriFit.getInstance().getLoadedProfile().getId(), fromDate, toDate);
+        logs.sortByDateAscending();
 
-        for (Exercise userExerciseLog : logs) {
+        while (logs.hasNext()) {
+            Exercise userExerciseLog = (Exercise) logs.getNext();
 
             Date exerciseDay = userExerciseLog.getDate();
             calendar.setTime(exerciseDay);
@@ -42,6 +45,7 @@ public class BarChartVisualizer extends JFrame {
             String dayKey = calendar.get(Calendar.DAY_OF_MONTH) + "/" + calendar.get(Calendar.MONTH) + "/" + calendar.get(Calendar.YEAR);
 
             caloriesBurnedEachDay.put(dayKey, caloriesBurnedEachDay.getOrDefault(dayKey, 0) + userExerciseLog.getTotalCaloriesBurned());
+
         }
 
         for (Map.Entry<String, Integer> stringIntegerEntry : caloriesBurnedEachDay.entrySet().stream().sorted(Comparator.comparingLong(l -> new Date(l.getKey()).getTime())).collect(Collectors.toList())) {

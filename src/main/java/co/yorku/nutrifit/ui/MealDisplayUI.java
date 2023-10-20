@@ -1,39 +1,30 @@
 package co.yorku.nutrifit.ui;
 
 import co.yorku.nutrifit.NutriFit;
-import co.yorku.nutrifit.object.Meal;
+import co.yorku.nutrifit.logs.LogIterator;
+import co.yorku.nutrifit.logs.impl.Meal;
 
 import javax.swing.*;
-import java.util.Comparator;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class MealDisplayUI extends JFrame {
 
-    private static MealDisplayUI instance;
-
-    public static MealDisplayUI getInstance() {
-        if (instance == null) {
-            instance = new MealDisplayUI();
-        }
-        return instance;
-    }
-
-    private MealDisplayUI() {
+    public MealDisplayUI() {
 
         // TODO: filter by like date and stuff, for now just show all
 
         Date fromDate = new Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(9999999));
         Date toDate = new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(9999999));
 
-        List<Meal> meals = NutriFit.getInstance().getUserDatabase().getUserMealLogs(NutriFit.getInstance().getLoadedProfile().getId(), fromDate, toDate);
-        meals.sort(Comparator.comparingLong(lhs -> lhs.getDate().getTime()));
-        String[] data = meals.isEmpty() ? new String[] { "No Meals Logged" } : new String[meals.size()];
+        LogIterator meals = NutriFit.getInstance().getUserDatabase().getUserMealLogs(NutriFit.getInstance().getLoadedProfile().getId(), fromDate, toDate);
+        meals.sortByDateAscending();
+        String[] data = meals.getTotalEntries() <= 0 ? new String[] { "No Meals Logged" } : new String[meals.getTotalEntries()];
 
         int index = 0;
-        for (Meal meal : meals) {
+        while (meals.hasNext()) {
+            Meal meal = (Meal) meals.getNext();
 
             String mapAsANiceString = "";
 

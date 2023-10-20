@@ -1,7 +1,8 @@
 package co.yorku.nutrifit.database.userdata;
 
-import co.yorku.nutrifit.object.Exercise;
-import co.yorku.nutrifit.object.Meal;
+import co.yorku.nutrifit.logs.LogIterator;
+import co.yorku.nutrifit.logs.impl.Exercise;
+import co.yorku.nutrifit.logs.impl.Meal;
 import co.yorku.nutrifit.profile.IProfile;
 
 import java.util.Date;
@@ -36,7 +37,7 @@ public class UserDatabaseAdapter implements IUserDatabase {
     }
 
     @Override
-    public List<Exercise> getUserExerciseLogs(int userId, Date fromDate, Date toDate) {
+    public LogIterator getUserExerciseLogs(int userId, Date fromDate, Date toDate) {
         return this.userDatabaseInterface.getUserExerciseLogs(userId, fromDate, toDate);
     }
 
@@ -46,7 +47,7 @@ public class UserDatabaseAdapter implements IUserDatabase {
     }
 
     @Override
-    public List<Meal> getUserMealLogs(int userId, Date fromDate, Date toDate) {
+    public LogIterator getUserMealLogs(int userId, Date fromDate, Date toDate) {
         return this.userDatabaseInterface.getUserMealLogs(userId, fromDate, toDate);
     }
 

@@ -1,24 +1,23 @@
-package co.yorku.nutrifit.object;
+package co.yorku.nutrifit.logs.impl;
+
+import co.yorku.nutrifit.logs.ILog;
+import co.yorku.nutrifit.object.ActivityType;
+import co.yorku.nutrifit.object.Intensity;
 
 import java.util.Date;
 
-public class Exercise {
-    private Date date;
+public class Exercise extends ILog {
     private int timeSpentInSeconds;
     private ActivityType activityType;
     private Intensity intensity;
     private int totalCaloriesBurned;
 
     public Exercise(Date date, int timeSpentInSeconds, ActivityType activityType, Intensity intensity, int totalCaloriesBurned) {
-        this.date = date;
+        super(date);
         this.timeSpentInSeconds = timeSpentInSeconds;
         this.activityType = activityType;
         this.intensity = intensity;
         this.totalCaloriesBurned = totalCaloriesBurned;
-    }
-
-    public Date getDate() {
-        return date;
     }
 
     public int getTimeSpentInSeconds() {

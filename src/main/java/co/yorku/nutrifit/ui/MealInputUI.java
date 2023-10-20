@@ -1,7 +1,7 @@
 package co.yorku.nutrifit.ui;
 
 import co.yorku.nutrifit.NutriFit;
-import co.yorku.nutrifit.object.Meal;
+import co.yorku.nutrifit.logs.impl.Meal;
 import co.yorku.nutrifit.object.MealType;
 import com.toedter.calendar.JDateChooser;
 
