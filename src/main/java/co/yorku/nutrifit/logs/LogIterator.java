@@ -37,7 +37,7 @@ public class LogIterator {
     public void sortByDateAscending() {
         this.logs.sort(Comparator.comparing(ILog::getDate));
     }
-    
+
     public void sortByDateDescending() {
         this.sortByDateAscending();
         Collections.reverse(this.logs);

@@ -36,8 +36,6 @@ public class BarChartVisualizer extends JFrame {
         LogIterator logs = NutriFit.getInstance().getUserDatabase().getUserExerciseLogs(NutriFit.getInstance().getLoadedProfile().getId(), fromDate, toDate);
         logs.sortByDateAscending();
 
-        System.out.println(logs.getTotalEntries());
-
         while (logs.hasNext()) {
             Exercise userExerciseLog = (Exercise) logs.getNext();
 
