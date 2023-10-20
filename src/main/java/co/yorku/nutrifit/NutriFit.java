@@ -19,7 +19,7 @@ public class NutriFit {
     public static NutriFit getInstance() { return i; }
 
     // Some stuff
-    public static Gson GSON = new GsonBuilder().create(); // TODO: put this somewhere else
+    public Gson gson; // TODO: put this somewhere else
     private EventManager eventManager;
 
     private IProfile loadedProfile;
@@ -29,6 +29,7 @@ public class NutriFit {
     public NutriFit() {
         NutriFit.i = this;
 
+        this.gson = new GsonBuilder().create();
         this.eventManager = new EventManager();
 
         this.iUserDatabase = new UserDatabaseAdapter(new UserDatabase());
@@ -38,6 +39,10 @@ public class NutriFit {
         this.infDatabase.setupDatabase();
 
         ProfileSelectionUI.getInstance().showToUser();
+    }
+
+    public Gson getGson() {
+        return gson;
     }
 
     public EventManager getEventManager() {

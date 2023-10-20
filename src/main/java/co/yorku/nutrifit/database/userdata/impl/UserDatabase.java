@@ -273,7 +273,7 @@ public class UserDatabase implements IUserDatabase {
 
                     java.util.Date date = new java.util.Date(results.getDate("date").getTime());
                     MealType mealType = MealType.valueOf(results.getString("mealType"));
-                    Map<String, Integer> ingredients = NutriFit.GSON.fromJson(results.getString("ingredients"), new TypeToken<Map<String, Integer>>() {}.getType());
+                    Map<String, Integer> ingredients = NutriFit.getInstance().getGson().fromJson(results.getString("ingredients"), new TypeToken<Map<String, Integer>>() {}.getType());
                     int totalMealCalories = results.getInt("totalMealCalories");
 
                     logs.add(new Meal(date, mealType, ingredients, totalMealCalories));
@@ -298,7 +298,7 @@ public class UserDatabase implements IUserDatabase {
             preparedStatement.setInt(1, userId);
             preparedStatement.setDate(2, new Date(mealLog.getDate().getTime()));
             preparedStatement.setString(3, mealLog.getMealType().toString());
-            preparedStatement.setString(4, NutriFit.GSON.toJson(mealLog.getIngredientsAndQuantities()));
+            preparedStatement.setString(4, NutriFit.getInstance().getGson().toJson(mealLog.getIngredientsAndQuantities()));
             preparedStatement.setInt(5, mealLog.getTotalMealCalories());
             preparedStatement.execute();
             preparedStatement.close();
