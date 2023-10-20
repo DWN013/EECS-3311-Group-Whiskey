@@ -1,12 +1,12 @@
 package co.yorku.nutrifit.logs.impl;
 
-import co.yorku.nutrifit.logs.Log;
+import co.yorku.nutrifit.logs.ILog;
 import co.yorku.nutrifit.object.MealType;
 
 import java.util.Date;
 import java.util.Map;
 
-public class Meal extends Log {
+public class Meal extends ILog {
     private MealType mealType;
     private Map<String, Integer> ingredientsAndQuantities;
     private int totalMealCalories;

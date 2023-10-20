@@ -5,11 +5,9 @@ import java.util.Comparator;
 import java.util.List;
 
 public class LogIterator {
-
     private int currentPosition;
-    private List<Log> logs;
-
-    public LogIterator(List<Log> logs) {
+    private List<ILog> logs;
+    public LogIterator(List<ILog> logs) {
         this.logs = logs;
         this.currentPosition = 0;
     }
@@ -18,12 +16,12 @@ public class LogIterator {
         return currentPosition < logs.size();
     }
 
-    public Log getNext() {
+    public ILog getNext() {
         if (!hasNext()) {
             return null;
         }
 
-        Log log = logs.get(currentPosition);
+        ILog log = logs.get(currentPosition);
         currentPosition++;
         return log;
     }
@@ -37,10 +35,9 @@ public class LogIterator {
     }
 
     public void sortByDateAscending() {
-        this.logs.sort(Comparator.comparing(Log::getDate));
+        this.logs.sort(Comparator.comparing(ILog::getDate));
     }
-
-
+    
     public void sortByDateDescending() {
         this.sortByDateAscending();
         Collections.reverse(this.logs);

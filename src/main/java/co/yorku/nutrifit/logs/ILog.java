@@ -2,11 +2,11 @@ package co.yorku.nutrifit.logs;
 
 import java.util.Date;
 
-public abstract class Log {
+public abstract class ILog {
 
     private Date date;
 
-    public Log(Date date) {
+    public ILog(Date date) {
         this.date = date;
     }
 

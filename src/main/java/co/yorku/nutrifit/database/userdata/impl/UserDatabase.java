@@ -2,7 +2,7 @@ package co.yorku.nutrifit.database.userdata.impl;
 
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
-import co.yorku.nutrifit.logs.Log;
+import co.yorku.nutrifit.logs.ILog;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Exercise;
 import co.yorku.nutrifit.logs.impl.Meal;
@@ -200,7 +200,7 @@ public class UserDatabase implements IUserDatabase {
     @Override
     public LogIterator getUserExerciseLogs(int userId, java.util.Date fromDate, java.util.Date toDate) {
 
-        List<Log> logs = new ArrayList<>();
+        List<ILog> logs = new ArrayList<>();
 
         try {
 
@@ -260,7 +260,7 @@ public class UserDatabase implements IUserDatabase {
     @Override
     public LogIterator getUserMealLogs(int userId, java.util.Date fromDate, java.util.Date toDate) {
 
-        List<Log> logs = new ArrayList<>();
+        List<ILog> logs = new ArrayList<>();
 
         try {
 

@@ -1,12 +1,12 @@
 package co.yorku.nutrifit.logs.impl;
 
-import co.yorku.nutrifit.logs.Log;
+import co.yorku.nutrifit.logs.ILog;
 import co.yorku.nutrifit.object.ActivityType;
 import co.yorku.nutrifit.object.Intensity;
 
 import java.util.Date;
 
-public class Exercise extends Log {
+public class Exercise extends ILog {
     private int timeSpentInSeconds;
     private ActivityType activityType;
     private Intensity intensity;
