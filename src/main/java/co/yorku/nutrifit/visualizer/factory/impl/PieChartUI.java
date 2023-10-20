@@ -29,4 +29,9 @@ public class PieChartUI implements VisualizerUI {
     public void buildNutrientUI() {
         new NutrientVisualizer(null).buildPiechart();
     }
+
+    @Override
+    public void buildDailyTotalEnergyExpenditure() {
+        new DailyTotalEnergyExpenditureVisualizer(null).buildPiechart();
+    }
 }

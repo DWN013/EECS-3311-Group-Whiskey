@@ -9,4 +9,6 @@ public interface VisualizerUI {
     void buildExerciseUI();
 
     void buildNutrientUI();
+
+    void buildDailyTotalEnergyExpenditure();
 }

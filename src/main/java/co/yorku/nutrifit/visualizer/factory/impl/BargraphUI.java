@@ -29,4 +29,9 @@ public class BargraphUI implements VisualizerUI {
     public void buildNutrientUI() {
         new NutrientVisualizer(null).buildBarGraph();
     }
+
+    @Override
+    public void buildDailyTotalEnergyExpenditure() {
+        new DailyTotalEnergyExpenditureVisualizer(null).buildBarGraph();
+    }
 }

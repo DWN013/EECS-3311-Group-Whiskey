@@ -1,23 +1,21 @@
-package co.yorku.nutrifit.object;
+package co.yorku.nutrifit.logs.impl;
+
+import co.yorku.nutrifit.logs.Log;
+import co.yorku.nutrifit.object.MealType;
 
 import java.util.Date;
 import java.util.Map;
 
-public class Meal {
-    private Date date;
+public class Meal extends Log {
     private MealType mealType;
     private Map<String, Integer> ingredientsAndQuantities;
     private int totalMealCalories;
 
     public Meal(Date date, MealType mealType, Map<String, Integer> ingredientsAndQuantities, int totalMealCalories) {
-        this.date = date;
+        super(date);
         this.mealType = mealType;
         this.ingredientsAndQuantities = ingredientsAndQuantities;
         this.totalMealCalories = totalMealCalories;
-    }
-
-    public Date getDate() {
-        return date;
     }
 
     public MealType getMealType() {

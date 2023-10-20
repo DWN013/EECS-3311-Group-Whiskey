@@ -2,6 +2,10 @@ package co.yorku.nutrifit.database.userdata.impl;
 
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
+import co.yorku.nutrifit.logs.Log;
+import co.yorku.nutrifit.logs.LogIterator;
+import co.yorku.nutrifit.logs.impl.Exercise;
+import co.yorku.nutrifit.logs.impl.Meal;
 import co.yorku.nutrifit.object.*;
 import co.yorku.nutrifit.profile.IProfile;
 import co.yorku.nutrifit.profile.impl.ProfileHandler;
@@ -194,9 +198,9 @@ public class UserDatabase implements IUserDatabase {
     }
 
     @Override
-    public List<Exercise> getUserExerciseLogs(int userId, java.util.Date fromDate, java.util.Date toDate) {
+    public LogIterator getUserExerciseLogs(int userId, java.util.Date fromDate, java.util.Date toDate) {
 
-        List<Exercise> logs = new ArrayList<>();
+        List<Log> logs = new ArrayList<>();
 
         try {
 
@@ -228,7 +232,7 @@ public class UserDatabase implements IUserDatabase {
             e.printStackTrace();
             return null; // SOme error occured
         }
-        return logs;
+        return new LogIterator(logs);
     }
 
 
@@ -254,9 +258,9 @@ public class UserDatabase implements IUserDatabase {
     }
 
     @Override
-    public List<Meal> getUserMealLogs(int userId, java.util.Date fromDate, java.util.Date toDate) {
+    public LogIterator getUserMealLogs(int userId, java.util.Date fromDate, java.util.Date toDate) {
 
-        List<Meal> logs = new ArrayList<>();
+        List<Log> logs = new ArrayList<>();
 
         try {
 
@@ -287,7 +291,7 @@ public class UserDatabase implements IUserDatabase {
             e.printStackTrace();
             return null; // SOme error occured
         }
-        return logs;
+        return new LogIterator(logs);
     }
 
     @Override
