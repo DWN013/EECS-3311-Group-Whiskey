@@ -19,12 +19,6 @@ public class BargraphUI implements VisualizerUI {
     public void buildCFGPlateUI() {
         new CFGPlateVisualizer().buildBarGraph();
     }
-
-    @Override
-    public void buildExerciseUI() {
-        new ExerciseVisualizer(null).buildBarGraph();
-    }
-
     @Override
     public void buildNutrientUI() {
         new NutrientVisualizer(null).buildBarGraph();
@@ -32,6 +26,6 @@ public class BargraphUI implements VisualizerUI {
 
     @Override
     public void buildDailyTotalEnergyExpenditure() {
-        new DailyTotalEnergyExpenditureVisualizer(null).buildBarGraph();
+        new ExerciseVisualizer(null).buildBarGraph();
     }
 }

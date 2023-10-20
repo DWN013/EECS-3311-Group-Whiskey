@@ -19,12 +19,6 @@ public class PieChartUI implements VisualizerUI {
     public void buildCFGPlateUI() {
         new CFGPlateVisualizer().buildPiechart();
     }
-
-    @Override
-    public void buildExerciseUI() {
-        new ExerciseVisualizer(null).buildPiechart();
-    }
-
     @Override
     public void buildNutrientUI() {
         new NutrientVisualizer(null).buildPiechart();
@@ -32,6 +26,6 @@ public class PieChartUI implements VisualizerUI {
 
     @Override
     public void buildDailyTotalEnergyExpenditure() {
-        new DailyTotalEnergyExpenditureVisualizer(null).buildPiechart();
+        new ExerciseVisualizer(null).buildPiechart();
     }
 }
