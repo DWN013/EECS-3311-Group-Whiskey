@@ -1,5 +1,6 @@
 package co.yorku.nutrifit.ui;
 
+import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.object.Exercise;
 import co.yorku.nutrifit.object.Meal;
@@ -38,6 +39,9 @@ public class ExerciseDisplayUI extends JFrame {
         setLocationRelativeTo(null);
         setVisible(true);
 
+        // TODO: Have some button that when the user clicks "Submit"
+        // It will call the EventManager to notify whatever UI that there has been an update
+        // NutriFit.getInstance().getEventManager().notify(null, null);
     }
 
 }

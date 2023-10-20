@@ -104,6 +104,10 @@ public class ExerciseInputUI extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(250, 220);
         setVisible(true);
+
+        // TODO: Have some button that when the user clicks "Submit"
+        // It will call the EventManager to notify whatever UI that there has been an update
+        // NutriFit.getInstance().getEventManager().notify(null, null);
     }
 
 }
