@@ -1,19 +1,19 @@
 package co.yorku.nutrifit.visualizer.impl;
 
 import co.yorku.nutrifit.visualizer.IVisualizer;
-import co.yorku.nutrifit.visualizer.calulcators.ExerciseCalculator;
+import co.yorku.nutrifit.visualizer.calulcators.DailyTotalEnergyExpenditureCalculator;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 import java.util.Date;
 
 public class ExerciseVisualizer extends IVisualizer {
 
-    private ExerciseCalculator exerciseCalculator;
+    private DailyTotalEnergyExpenditureCalculator dailyTotalEnergyExpenditureCalculator;
     private DefaultCategoryDataset defaultCategoryDataset;
 
-    public ExerciseVisualizer(ExerciseCalculator exerciseCalculator) {
+    public ExerciseVisualizer(DailyTotalEnergyExpenditureCalculator dailyTotalEnergyExpenditureCalculator) {
         super();
-        this.exerciseCalculator = exerciseCalculator;
+        this.dailyTotalEnergyExpenditureCalculator = dailyTotalEnergyExpenditureCalculator;
         this.defaultCategoryDataset = new DefaultCategoryDataset();
     }
 
