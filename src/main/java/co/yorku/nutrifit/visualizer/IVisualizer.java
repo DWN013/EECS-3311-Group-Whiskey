@@ -13,7 +13,7 @@ public abstract class IVisualizer implements IListener {
         NutriFit.getInstance().getEventManager().subscribe(this);
     }
 
-    protected abstract DefaultCategoryDataset getJFreeChartDataObject();
+    public abstract DefaultCategoryDataset getJFreeChartDataObject();
 
     public void buildBarGraph() {
         DefaultCategoryDataset data = this.getJFreeChartDataObject(); // create bar graph with this data (Template Method)
