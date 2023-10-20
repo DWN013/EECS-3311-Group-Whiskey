@@ -1,5 +1,6 @@
 package co.yorku.nutrifit.ui;
 
+import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.database.nutrient.INFDatabase;
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.profile.IProfile;
@@ -12,10 +13,20 @@ import java.util.List;
 
 public class ProfileSelectionUI extends JFrame {
 
-    public ProfileSelectionUI(IUserDatabase userDatabaseInterface, INFDatabase infDatabase) {
+    private static ProfileSelectionUI instance;
+
+    public static ProfileSelectionUI getInstance() {
+        if (instance == null) {
+            instance = new ProfileSelectionUI();
+        }
+
+        return instance;
+    }
+
+    private ProfileSelectionUI() {
         super("Profile");
 
-        List<IProfile> allProfiles = userDatabaseInterface.getAllProfiles();
+        List<IProfile> allProfiles = NutriFit.getInstance().getUserDatabase().getAllProfiles();
 
         String[] listItems = new String[allProfiles.size()];
         for (int i = 0; i < allProfiles.size(); i++) {
@@ -79,8 +90,7 @@ public class ProfileSelectionUI extends JFrame {
                 return; // Stop processing if parsing fails
             }
 
-            int userid = userDatabaseInterface.setupProfile(new ProfileHandler(
-                    userDatabaseInterface,
+            int userid = NutriFit.getInstance().getUserDatabase().setupProfile(new ProfileHandler(
                     -1, name, isMale, height, age, weight, isMetric
             ));
 
@@ -88,13 +98,14 @@ public class ProfileSelectionUI extends JFrame {
             // Update the result label
             JOptionPane.showMessageDialog(null, "New profile created successfully!");
 
-            new NutriFitMainUI(userDatabaseInterface, userid);
+            NutriFitMainUI.getInstance().showToUser();
             dispatchEvent(new WindowEvent(ProfileSelectionUI.this, WindowEvent.WINDOW_CLOSING));
         });
 
         loadProfile.addActionListener(e -> {
             IProfile selectedIndex = allProfiles.get(list.getSelectedIndex());
-            new NutriFitMainUI(userDatabaseInterface, selectedIndex.getId());
+            NutriFit.getInstance().setLoadedProfile(selectedIndex);
+            NutriFitMainUI.getInstance().showToUser();
             dispatchEvent(new WindowEvent(ProfileSelectionUI.this, WindowEvent.WINDOW_CLOSING));
         });
 
@@ -117,7 +128,10 @@ public class ProfileSelectionUI extends JFrame {
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 200);
-        setVisible(true);
+        setVisible(false);
     }
 
+    public void showToUser() {
+        setVisible(true);
+    }
 }

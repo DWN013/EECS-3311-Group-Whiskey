@@ -15,14 +15,23 @@ import java.util.concurrent.TimeUnit;
 
 public class ExerciseDisplayUI extends JFrame {
 
-    public ExerciseDisplayUI(IUserDatabase iUserDatabase, IProfile iProfile) {
+    private static ExerciseDisplayUI instance;
+
+    public static ExerciseDisplayUI getInstance() {
+        if (instance == null) {
+            instance = new ExerciseDisplayUI();
+        }
+        return instance;
+    }
+
+    private ExerciseDisplayUI() {
 
         // TODO: filter by like date and stuff, for now just show all
 
         Date fromDate = new Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(9999999));
         Date toDate = new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(9999999));
 
-        List<Exercise> exercises = iUserDatabase.getUserExerciseLogs(iProfile.getId(), fromDate, toDate);
+        List<Exercise> exercises = NutriFit.getInstance().getUserDatabase().getUserExerciseLogs(NutriFit.getInstance().getLoadedProfile().getId(), fromDate, toDate);
         exercises.sort(Comparator.comparingLong(lhs -> lhs.getDate().getTime()));
         String[] data = exercises.isEmpty() ? new String[] { "No Exercises Logged" } : new String[exercises.size()];
 
@@ -37,11 +46,14 @@ public class ExerciseDisplayUI extends JFrame {
         pack();
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setVisible(true);
+        setVisible(false);
 
         // TODO: Have some button that when the user clicks "Submit"
         // It will call the EventManager to notify whatever UI that there has been an update
         // NutriFit.getInstance().getEventManager().notify(null, null);
     }
 
+    public void showToUser() {
+        setVisible(true);
+    }
 }

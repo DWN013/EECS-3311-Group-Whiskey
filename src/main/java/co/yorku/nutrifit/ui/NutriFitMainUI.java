@@ -8,10 +8,17 @@ import javax.swing.*;
 
 public class NutriFitMainUI extends JFrame {
 
-    public NutriFitMainUI(IUserDatabase userDatabaseInterface, int userId) {
-        super("Home Page");
+    private static NutriFitMainUI instance;
 
-        IProfile profile = userDatabaseInterface.getProfile(userId);
+    public static NutriFitMainUI getInstance() {
+        if (instance == null) {
+            instance = new NutriFitMainUI();
+        }
+        return instance;
+    }
+
+    private NutriFitMainUI() {
+        super("Home Page");
 
         JPanel south = new JPanel();
 
@@ -22,16 +29,16 @@ public class NutriFitMainUI extends JFrame {
         JButton showMealLog = new JButton("Show Meal Log");
 
         visualize.addActionListener(e -> {
-            BarChartVisualizer pieChartVisualizer = new BarChartVisualizer(userDatabaseInterface, profile);
+            BarChartVisualizer pieChartVisualizer = new BarChartVisualizer();
             pieChartVisualizer.setSize(1300, 600);
             pieChartVisualizer.setVisible(true);
         });
 
         //ActionListener function to open log exercise via. log exercise button
-        logExercise.addActionListener(e -> new ExerciseInputUI(userDatabaseInterface, userId));
-        showExerciseLog.addActionListener(e -> new ExerciseDisplayUI(userDatabaseInterface, profile));
-        showMealLog.addActionListener(e -> new MealDisplayUI(userDatabaseInterface, profile));
-        logMeal.addActionListener(e -> new MealInputUI(userDatabaseInterface, profile));
+        logExercise.addActionListener(e -> ExerciseInputUI.getInstance().showToUser());
+        showExerciseLog.addActionListener(e -> ExerciseDisplayUI.getInstance().showToUser());
+        showMealLog.addActionListener(e -> MealDisplayUI.getInstance().showToUser());
+        logMeal.addActionListener(e -> MealInputUI.getInstance().showToUser());
 
         south.add(visualize);
         south.add(logExercise);
@@ -42,6 +49,10 @@ public class NutriFitMainUI extends JFrame {
         getContentPane().add(south);
 
         pack();
+        setVisible(false);
+    }
+
+    public void showToUser() {
         setVisible(true);
     }
 }

@@ -1,5 +1,6 @@
 package co.yorku.nutrifit.ui;
 
+import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.exercise.IExercise;
 import co.yorku.nutrifit.exercise.calculators.ExerciseCalculator;
@@ -23,16 +24,23 @@ import java.awt.*;
 
 
 //Interface details to input user exercise information
-public class ExerciseInputUI extends JFrame{
+public class ExerciseInputUI extends JFrame {
+
+
+    private static ExerciseInputUI instance;
+
+    public static ExerciseInputUI getInstance() {
+        if (instance == null) {
+            instance = new ExerciseInputUI();
+        }
+      return instance;
+    }
 
     //ExerciseUI actions
-    public ExerciseInputUI(IUserDatabase userDatabaseInterface, int userId){
+    private ExerciseInputUI(){
         //Title of window that opens when "Log Exercise" button pressed
         super("Exercise UI");
-        IProfile profile = userDatabaseInterface.getProfile(userId);
         IExercise exercise = new ExerciseHandler(new ExerciseCalculator(), new WeightLossCalculator());
-        //Debug line
-        System.out.println("Loaded exercise input for " + profile.getId() + " -> " + profile.getName());
 
         //New exercise panel to input information
         JPanel newExercisePanel = new JPanel(new GridLayout(6, 2));
@@ -61,7 +69,7 @@ public class ExerciseInputUI extends JFrame{
             ActivityType activityType = (ActivityType) exerciseComboBox.getSelectedItem();
             Intensity intensity = (Intensity) intensityComboBox.getSelectedItem();
             int durationInSeconds = Integer.parseInt(secondsField.getText());
-            int totalCaloriesBurned = exercise.getTotalCaloriesBurned(activityType, intensity, durationInSeconds, profile);
+            int totalCaloriesBurned = exercise.getTotalCaloriesBurned(activityType, intensity, durationInSeconds, NutriFit.getInstance().getLoadedProfile());
 
             Date formattedDateTime = dateChooser.getDate();
             String[] timeSplit = timeField.getText().split(":");
@@ -78,8 +86,8 @@ public class ExerciseInputUI extends JFrame{
 
             // Code that logs the exercise logs
             // ****DO NOT DELETE****
-            userDatabaseInterface.addUserExerciseLog(
-                    profile.getId(),
+            NutriFit.getInstance().getUserDatabase().addUserExerciseLog(
+                    NutriFit.getInstance().getLoadedProfile().getId(),
                     exerciseObj
             );
 
@@ -103,11 +111,15 @@ public class ExerciseInputUI extends JFrame{
         getContentPane().add(newExercisePanel);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(250, 220);
-        setVisible(true);
+        setVisible(false);
 
         // TODO: Have some button that when the user clicks "Submit"
         // It will call the EventManager to notify whatever UI that there has been an update
         // NutriFit.getInstance().getEventManager().notify(null, null);
+    }
+
+    public void showToUser() {
+        setVisible(true);
     }
 
 }

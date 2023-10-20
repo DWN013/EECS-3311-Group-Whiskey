@@ -150,7 +150,7 @@ public class UserDatabase implements IUserDatabase {
                 float weight = data.getFloat("weight");
                 boolean isMetric = data.getBoolean("isMetric");
 
-                profiles.add(new ProfileHandler(this, id, name, isMale, height, age, weight, isMetric));
+                profiles.add(new ProfileHandler(id, name, isMale, height, age, weight, isMetric));
             }
             preparedStatement.close();
         } catch (Exception e) {
@@ -181,7 +181,7 @@ public class UserDatabase implements IUserDatabase {
                 float weight = data.getFloat("weight");
                 boolean isMetric = data.getBoolean("isMetric");
 
-                profile = new ProfileHandler(this, userId, name, isMale, height, age, weight, isMetric);
+                profile = new ProfileHandler(userId, name, isMale, height, age, weight, isMetric);
                 break;
             }
 

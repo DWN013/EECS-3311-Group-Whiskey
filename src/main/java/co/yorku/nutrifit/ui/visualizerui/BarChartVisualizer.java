@@ -1,8 +1,7 @@
 package co.yorku.nutrifit.ui.visualizerui;
 
-import co.yorku.nutrifit.database.userdata.IUserDatabase;
+import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.object.Exercise;
-import co.yorku.nutrifit.profile.IProfile;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -11,11 +10,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import javax.swing.*;
 import java.awt.*;
-import java.sql.Time;
 import java.util.List;
 import java.util.*;
-import java.util.Timer;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -27,7 +23,7 @@ This class is temp to show our one visualization working
 
 public class BarChartVisualizer extends JFrame {
 
-    public BarChartVisualizer(IUserDatabase database, IProfile profile) {
+    public BarChartVisualizer() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
         // Temp code, just grab all of the user's logs
@@ -36,7 +32,7 @@ public class BarChartVisualizer extends JFrame {
 
         Map<String, Integer> caloriesBurnedEachDay = new HashMap<>();
         Calendar calendar = Calendar.getInstance();
-        List<Exercise> logs = database.getUserExerciseLogs(profile.getId(), fromDate, toDate);
+        List<Exercise> logs = NutriFit.getInstance().getUserDatabase().getUserExerciseLogs(NutriFit.getInstance().getLoadedProfile().getId(), fromDate, toDate);
 
         for (Exercise userExerciseLog : logs) {
 
