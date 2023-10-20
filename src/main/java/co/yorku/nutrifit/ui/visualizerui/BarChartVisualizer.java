@@ -11,10 +11,19 @@ import org.jfree.data.category.DefaultCategoryDataset;
 
 import javax.swing.*;
 import java.awt.*;
+import java.sql.Time;
 import java.util.List;
 import java.util.*;
+import java.util.Timer;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+
+/*
+
+This class is temp to show our one visualization working
+
+ */
 
 public class BarChartVisualizer extends JFrame {
 
@@ -58,6 +67,7 @@ public class BarChartVisualizer extends JFrame {
         chartPanel.setBackground(Color.white);
 
         getContentPane().add(chartPanel);
+
     }
 
 }

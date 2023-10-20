@@ -3,6 +3,11 @@ package co.yorku.nutrifit.exercise.impl;
 import co.yorku.nutrifit.object.ActivityType;
 import co.yorku.nutrifit.object.Intensity;
 
+/*
+
+This class is temp to hold some dummy data until database implementation is done
+
+ */
 public class ActivityCalorieTemp {
 	
 	private float [] [] [] activityCalorieList = { 

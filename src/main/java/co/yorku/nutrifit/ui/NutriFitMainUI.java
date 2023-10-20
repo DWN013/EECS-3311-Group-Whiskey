@@ -3,7 +3,6 @@ package co.yorku.nutrifit.ui;
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.profile.IProfile;
 import co.yorku.nutrifit.ui.visualizerui.BarChartVisualizer;
-import co.yorku.nutrifit.ui.visualizerui.PieChartVisualizer;
 
 import javax.swing.*;
 
