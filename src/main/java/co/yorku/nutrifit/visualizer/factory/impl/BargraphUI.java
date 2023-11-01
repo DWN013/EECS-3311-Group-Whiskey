@@ -15,7 +15,6 @@ public class BargraphUI implements VisualizerUI {
     public IVisualizer buildAverageUserPlateUI() {
         return new AvgUserPlateVisualizer(new AvgUserFoodPlateCalculator());
     }
-
     @Override
     public IVisualizer buildCalorieUI() {
         return new CalorieVisualizer(new CalorieCalculator());
