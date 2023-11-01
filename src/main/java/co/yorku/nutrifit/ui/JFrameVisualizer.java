@@ -46,8 +46,8 @@ public abstract class JFrameVisualizer extends NutrifitWindow {
         JDateChooser toDate = new JDateChooser();
         toDate.setDateFormatString("yyyy-MM-dd");
         toDate.setDate(new Date(System.currentTimeMillis()));
-        this.addComponent(fromDate);
-        addButton("Update", event -> NutriFit.getInstance().getEventManager().notify(fromDate.getDate(), toDate.getDate()));
+        this.addComponent(toDate);
+        addButton("Update Date Range", event -> NutriFit.getInstance().getEventManager().notify(fromDate.getDate(), toDate.getDate()));
     }
 
     public IVisualizer getiVisualizer() {
