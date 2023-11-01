@@ -7,34 +7,14 @@ import co.yorku.nutrifit.ui.NutrifitWindow;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class ProfileSelectionUI extends NutrifitWindow {
+public class SignUpPage extends NutrifitWindow {
 
-    private static ProfileSelectionUI instance;
-
-    public static ProfileSelectionUI getInstance() {
-        if (instance == null) {
-            instance = new ProfileSelectionUI();
-        }
-
-        return instance;
-    }
-
-    private ProfileSelectionUI() {
-        super("Profile Page", new GridLayout(9, 2));
-
-        List<IProfile> allProfiles = NutriFit.getInstance().getUserDatabase().getAllProfiles();
-        JComboBox<String> profileList = addComboBox(allProfiles.stream().map(IProfile::getName).collect(Collectors.toList()));
-        addButton("Load Selected Profile", event -> {
-            IProfile selectedIndex = allProfiles.get(profileList.getSelectedIndex());
-            NutriFit.getInstance().setLoadedProfile(selectedIndex);
-            hideWindow(); // Hide this window
-            NutriFitMainUI.getInstance().showWindow(); // Show the Main UI
-        });
+    public SignUpPage(NutrifitWindow parent) {
+        super("Sign Up", new GridLayout(8, 2));
 
         // Create components for the new profile layout
         addLabel("Name:");
@@ -91,6 +71,8 @@ public class ProfileSelectionUI extends NutrifitWindow {
             hideWindow(); // Hide this window
             NutriFitMainUI.getInstance().showWindow(); // Show the Main UI
         });
+
+        this.addBackButton(parent);
 
         this.build();
     }
