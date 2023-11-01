@@ -8,7 +8,8 @@ import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.database.userdata.impl.UserDatabase;
 import co.yorku.nutrifit.event.EventManager;
 import co.yorku.nutrifit.profile.IProfile;
-import co.yorku.nutrifit.ui.ProfileSelectionUI;
+//import co.yorku.nutrifit.ui.ProfileSelectionUI;
+import co.yorku.nutrifit.ui.LogInOrSignUpPage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -38,7 +39,8 @@ public class NutriFit {
         this.infDatabase = new NFDatabaseAdapter(new NFDatabase());
         this.infDatabase.setupDatabase();
 
-        ProfileSelectionUI.getInstance().showToUser();
+        //ProfileSelectionUI.getInstance().showToUser();
+        new LogInOrSignUpPage().showToUser();
     }
 
     public Gson getGson() {

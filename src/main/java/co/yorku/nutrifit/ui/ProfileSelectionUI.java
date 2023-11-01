@@ -5,6 +5,7 @@ import co.yorku.nutrifit.database.nutrient.INFDatabase;
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.profile.IProfile;
 import co.yorku.nutrifit.profile.impl.ProfileHandler;
+import co.yorku.nutrifit.ui.LogInOrSignUpPage;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,24 +24,48 @@ public class ProfileSelectionUI extends JFrame {
         return instance;
     }
 
-    private ProfileSelectionUI() {
+    public ProfileSelectionUI() {
         super("Profile");
+    }
+    
+    protected void logIn()
+    {
+	  List<IProfile> allProfiles = NutriFit.getInstance().getUserDatabase().getAllProfiles();
 
-        List<IProfile> allProfiles = NutriFit.getInstance().getUserDatabase().getAllProfiles();
+      String[] listItems = new String[allProfiles.size()];
+      for (int i = 0; i < allProfiles.size(); i++) {
+          IProfile profile = allProfiles.get(i);
+          listItems[i] = "#" + profile.getId() + ": " + profile.getName();
+      }
+      
+      JComboBox list = new JComboBox(listItems);
+      JButton loadProfile = new JButton("Load Selected Profile");
+      JPanel newProfilePanel = new JPanel(new GridLayout(1, 2));
+          
+      loadProfile.addActionListener(e -> {
+          IProfile selectedIndex = allProfiles.get(list.getSelectedIndex());
+          NutriFit.getInstance().setLoadedProfile(selectedIndex);
+          NutriFitMainUI.getInstance().showToUser();
+          dispatchEvent(new WindowEvent(ProfileSelectionUI.this, WindowEvent.WINDOW_CLOSING));
+      });
+      
+      newProfilePanel.add(list);
+      newProfilePanel.add(loadProfile);
+      
+      getContentPane().add(newProfilePanel);
 
-        String[] listItems = new String[allProfiles.size()];
-        for (int i = 0; i < allProfiles.size(); i++) {
-            IProfile profile = allProfiles.get(i);
-            listItems[i] = "#" + profile.getId() + ": " + profile.getName();
-        }
-        JComboBox list = new JComboBox(listItems);
-        JButton loadProfile = new JButton("Load Selected Profile");
-
-        // Create components for the new profile layout
-        JPanel newProfilePanel = new JPanel(new GridLayout(9, 2));
+      setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+      setSize(400, 200);
+      setVisible(false);
+    }
+    
+    protected void signUp()
+    {
+    	 // Create components for the new profile layout
+        JPanel newProfilePanel = new JPanel(new GridLayout(6, 2));
         JLabel nameLabel = new JLabel("Name:");
         JTextField nameField = new JTextField(20);  // Use the global field
-        JLabel heightLabel = new JLabel("Height (cm):");
+        JLabel heightLabel = new JLabel("Height:");
         JTextField heightField = new JTextField(5); // Use the global field
         JLabel ageLabel = new JLabel("Age:");
         JTextField ageField = new JTextField(5);     // Use the global field
@@ -54,12 +79,11 @@ public class ProfileSelectionUI extends JFrame {
         metricOrImperial[1] = "Imperial";
         JComboBox metricOrImperalJComboBox = new JComboBox(metricOrImperial);
 
-        String[] isMalOrFemale = new String[2];
-        isMalOrFemale[0] = "Male";
-        isMalOrFemale[1] = "Female";
-        JComboBox maleOrFemale = new JComboBox(isMalOrFemale);
-
-        // Add action listener to the Submit button in the new profile layout
+        String[] isMaleOrFemale = new String[2];
+        isMaleOrFemale[0] = "Male";
+        isMaleOrFemale[1] = "Female";
+        JComboBox maleOrFemale = new JComboBox(isMaleOrFemale);
+        
         submitButton.addActionListener(e -> {
             // Get user input from fields in the new profile layout
             String name = nameField.getText();
@@ -102,16 +126,7 @@ public class ProfileSelectionUI extends JFrame {
             NutriFitMainUI.getInstance().showToUser();
             dispatchEvent(new WindowEvent(ProfileSelectionUI.this, WindowEvent.WINDOW_CLOSING));
         });
-
-        loadProfile.addActionListener(e -> {
-            IProfile selectedIndex = allProfiles.get(list.getSelectedIndex());
-            NutriFit.getInstance().setLoadedProfile(selectedIndex);
-            NutriFitMainUI.getInstance().showToUser();
-            dispatchEvent(new WindowEvent(ProfileSelectionUI.this, WindowEvent.WINDOW_CLOSING));
-        });
-
-        newProfilePanel.add(list);
-        newProfilePanel.add(loadProfile);
+        
         newProfilePanel.add(metricOrImperalJComboBox);
         newProfilePanel.add(maleOrFemale);
 
@@ -124,12 +139,13 @@ public class ProfileSelectionUI extends JFrame {
         newProfilePanel.add(weightLabel);
         newProfilePanel.add(weightField);
         newProfilePanel.add(submitButton);
-
+        
         getContentPane().add(newProfilePanel);
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setSize(400, 200);
         setVisible(false);
+        
     }
 
     public void showToUser() {

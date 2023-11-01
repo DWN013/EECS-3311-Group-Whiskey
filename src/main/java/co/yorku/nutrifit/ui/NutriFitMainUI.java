@@ -4,6 +4,10 @@ import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.logs.impl.Meal;
 import co.yorku.nutrifit.profile.IProfile;
 import co.yorku.nutrifit.ui.visualizerui.BarChartVisualizer;
+import co.yorku.nutrifit.ui.LogInOrSignUpPage;
+import co.yorku.nutrifit.ui.SettingsUI;
+
+import java.awt.event.WindowEvent;
 
 import javax.swing.*;
 
@@ -28,6 +32,8 @@ public class NutriFitMainUI extends JFrame {
         JButton showExerciseLog = new JButton("Show Exercise Log");
         JButton logMeal = new JButton("Log Meal");
         JButton showMealLog = new JButton("Show Meal Log");
+        JButton logOut = new JButton("Log Out");
+        JButton settings = new JButton("Settings");
 
         visualize.addActionListener(e -> {
             BarChartVisualizer barChartVisualizer = new BarChartVisualizer();
@@ -43,12 +49,24 @@ public class NutriFitMainUI extends JFrame {
             MealInputUI.getInstance().clearInputtedIngredients();
             MealInputUI.getInstance().showToUser();
         });
+        logOut.addActionListener(e -> {
+        	new LogInOrSignUpPage().showToUser();
+        	dispatchEvent(new WindowEvent(NutriFitMainUI.this, WindowEvent.WINDOW_CLOSING));
+        });
+        settings.addActionListener(e -> {
+        	//Ability to edit profile
+        	new SettingsUI().showToUser();
+        	dispatchEvent(new WindowEvent(NutriFitMainUI.this, WindowEvent.WINDOW_CLOSING));
+        });
+        
 
         south.add(visualize);
         south.add(logExercise);
         south.add(showExerciseLog);
         south.add(logMeal);
         south.add(showMealLog);
+        south.add(logOut);
+        south.add(settings);
 
         getContentPane().add(south);
 
