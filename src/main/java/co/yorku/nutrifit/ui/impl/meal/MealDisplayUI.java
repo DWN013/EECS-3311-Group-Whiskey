@@ -1,19 +1,21 @@
-package co.yorku.nutrifit.ui;
+package co.yorku.nutrifit.ui.impl.meal;
 
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Meal;
+import co.yorku.nutrifit.ui.NutrifitWindow;
+import co.yorku.nutrifit.ui.impl.main.NutriFitMainUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-public class MealDisplayUI extends JFrame {
+public class MealDisplayUI extends NutrifitWindow {
 
     public MealDisplayUI() {
-
-        // TODO: filter by like date and stuff, for now just show all
+        super("Exercise Display", new GridLayout());
 
         Date fromDate = new Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(9999999));
         Date toDate = new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(9999999));
@@ -38,12 +40,9 @@ public class MealDisplayUI extends JFrame {
             index++;
         }
 
-        add(new JList(data));
-        pack();
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setVisible(false);
-
+        this.addComponent(new JList<>(data));
+        this.addBackButton(NutriFitMainUI.getInstance());
+        this.build();
     }
 
     public void showToUser() {
