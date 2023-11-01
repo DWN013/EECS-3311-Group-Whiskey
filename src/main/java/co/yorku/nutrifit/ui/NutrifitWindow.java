@@ -5,6 +5,7 @@ import com.google.common.base.Preconditions;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 public abstract class NutrifitWindow extends JFrame {
@@ -16,6 +17,8 @@ public abstract class NutrifitWindow extends JFrame {
         super(windowName);
         Preconditions.checkNotNull(layout, "Layout cannot be null");
         this.layout = new JPanel(layout);
+
+        this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
 
     public JLabel addLabel(String text) {
@@ -70,15 +73,14 @@ public abstract class NutrifitWindow extends JFrame {
     public void addBackButton(NutrifitWindow previousWindow) {
         this.previousWindow = previousWindow;
         this.addButton("Back", event -> {
-            this.hideWindow();
             this.previousWindow.showWindow();
+            this.hideWindow();
         });
     }
 
     public void build() {
         this.getContentPane().add(layout);
         this.pack();
-        this.hideWindow(); // Hide By Default
     }
 
     public void showWindow() {

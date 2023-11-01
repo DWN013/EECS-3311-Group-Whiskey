@@ -9,6 +9,7 @@ import co.yorku.nutrifit.object.ActivityType;
 import co.yorku.nutrifit.logs.impl.Exercise;
 import co.yorku.nutrifit.object.Intensity;
 import co.yorku.nutrifit.ui.NutrifitWindow;
+import co.yorku.nutrifit.ui.impl.main.NutriFitMainUI;
 import com.toedter.calendar.JDateChooser;
 
 import java.util.Date;
@@ -80,7 +81,7 @@ public class ExerciseInputUI extends NutrifitWindow {
 
         });
 
-
+        this.addBackButton(NutriFitMainUI.getInstance());
         this.build();
     }
 }

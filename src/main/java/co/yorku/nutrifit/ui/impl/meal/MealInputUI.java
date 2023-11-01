@@ -4,6 +4,7 @@ import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.impl.Meal;
 import co.yorku.nutrifit.object.MealType;
 import co.yorku.nutrifit.ui.NutrifitWindow;
+import co.yorku.nutrifit.ui.impl.main.NutriFitMainUI;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -27,7 +28,7 @@ public class MealInputUI extends NutrifitWindow {
     private Map<String, Integer> ingredientsMap = new HashMap<>();
 
     private MealInputUI() {
-        super("Log Meal", new GridLayout(6, 2));
+        super("Log Meal", new GridLayout(7, 2));
 
         //Date selection drop down  menu
         addLabel("Date");
@@ -86,6 +87,7 @@ public class MealInputUI extends NutrifitWindow {
 
         });
 
+        this.addBackButton(NutriFitMainUI.getInstance());
         this.build();
     }
 

@@ -84,7 +84,6 @@ public class ProfileSelectionUI extends NutrifitWindow {
                     -1, name, isMale, height, age, weight, isMetric
             ));
 
-
             // Update the result label
             JOptionPane.showMessageDialog(null, "New profile created successfully!");
 

@@ -4,6 +4,7 @@ import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Exercise;
 import co.yorku.nutrifit.ui.NutrifitWindow;
+import co.yorku.nutrifit.ui.impl.main.NutriFitMainUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -32,6 +33,7 @@ public class ExerciseDisplayUI extends NutrifitWindow {
         }
 
         this.addComponent(new JList<>(data));
+        this.addBackButton(NutriFitMainUI.getInstance());
         this.build();
     }
 
