@@ -2,6 +2,7 @@ package co.yorku.nutrifit.visualizer;
 
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.event.IListener;
+import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 
 public abstract class IVisualizer implements IListener {
@@ -10,15 +11,20 @@ public abstract class IVisualizer implements IListener {
     // so that they can be updated when the user updates the date range in the UI (IListener)
 
     public IVisualizer() {
+        // Subscribe this class
         NutriFit.getInstance().getEventManager().subscribe(this);
     }
 
     public abstract DefaultCategoryDataset getJFreeChartDataObject();
 
-    public void buildBarGraph() {
+    public JFreeChart buildBarGraph() {
         DefaultCategoryDataset data = this.getJFreeChartDataObject(); // create bar graph with this data (Template Method)
+
+        return null;
     }
-    public void buildPiechart() {
+    public JFreeChart buildPiechart() {
         DefaultCategoryDataset data = this.getJFreeChartDataObject(); // create pie chart with this data (Template Method)
+
+        return null;
     }
 }

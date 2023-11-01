@@ -2,30 +2,31 @@ package co.yorku.nutrifit.visualizer.factory.impl;
 
 import co.yorku.nutrifit.visualizer.factory.VisualizerUI;
 import co.yorku.nutrifit.visualizer.impl.*;
+import org.jfree.chart.JFreeChart;
 
 public class PieChartUI implements VisualizerUI {
 
     @Override
-    public void buildAverageUserPlateUI() {
-        new AvgUserPlateVisualizer(null).buildPiechart();
+    public JFreeChart buildAverageUserPlateUI() {
+        return new AvgUserPlateVisualizer(null).buildPiechart();
     }
 
     @Override
-    public void buildCalorieUI() {
-        new CalorieVisualizer(null).buildPiechart();
+    public JFreeChart buildCalorieUI() {
+        return new CalorieVisualizer(null).buildPiechart();
     }
 
     @Override
-    public void buildCFGPlateUI() {
-        new CFGPlateVisualizer().buildPiechart();
+    public JFreeChart buildCFGPlateUI() {
+        return new CFGPlateVisualizer().buildPiechart();
     }
     @Override
-    public void buildNutrientUI() {
-        new NutrientVisualizer(null).buildPiechart();
+    public JFreeChart buildNutrientUI() {
+        return new NutrientVisualizer(null).buildPiechart();
     }
 
     @Override
-    public void buildDailyTotalEnergyExpenditure() {
-        new ExerciseVisualizer(null).buildPiechart();
+    public JFreeChart buildDailyTotalEnergyExpenditure() {
+        return new ExerciseVisualizer(null).buildPiechart();
     }
 }
