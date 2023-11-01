@@ -19,14 +19,37 @@ public class AvgUserPlateVisualizer extends IVisualizer {
     }
 
     @Override
-    public DefaultCategoryDataset getJFreeChartDataObject() {
+    public String getChartName() {
+        return "Average User Plate";
+    }
+
+    @Override
+    public String getBarGraphCategoryAxisLabel() {
+        return "Something";
+    }
+
+    @Override
+    public String getBarGraphValueAxisLabel() {
+        return "Something Else";
+    }
+
+    @Override
+    public DefaultCategoryDataset buildDataSet() {
         // TODO: Add Data here
+        defaultCategoryDataset.setValue(100, "Calories Burned", "Today");
+        defaultCategoryDataset.setValue(200, "Calories Burned", "Yesterday");
+        defaultCategoryDataset.setValue(999, "Calories Burned", "Day Before Yesterday");
+
         return defaultCategoryDataset;
     }
 
     @Override
     public void onDateRangeUpdate(Date newFromDate, Date newToDate) {
         this.defaultCategoryDataset.clear();
-        // TODO: calculate new data and stuff
+        //this.buildDataSet();
+
+        defaultCategoryDataset.setValue(1234, "Calories Burned", "Test Today");
+        defaultCategoryDataset.setValue(99999, "Calories Burned", "Test Yesterday");
+        defaultCategoryDataset.setValue(420, "Calories Burned", "Test Day Before Yesterday");
     }
 }

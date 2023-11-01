@@ -1,17 +1,20 @@
-package co.yorku.nutrifit.ui;
+package co.yorku.nutrifit.ui.impl.exercise;
 
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Exercise;
+import co.yorku.nutrifit.ui.NutrifitWindow;
+import co.yorku.nutrifit.ui.impl.main.NutriFitMainUI;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public class ExerciseDisplayUI extends JFrame {
+public class ExerciseDisplayUI extends NutrifitWindow {
 
     public ExerciseDisplayUI() {
-
+        super("Exercise Display", new GridLayout());
         // TODO: filter by like date and stuff, for now just show all
 
         Date fromDate = new Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(9999999));
@@ -29,15 +32,9 @@ public class ExerciseDisplayUI extends JFrame {
             index++;
         }
 
-        add(new JList(data));
-        pack();
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
-        setVisible(false);
-
-        // TODO: Have some button that when the user clicks "Submit"
-        // It will call the EventManager to notify whatever UI that there has been an update
-        // NutriFit.getInstance().getEventManager().notify(null, null);
+        this.addComponent(new JList<>(data));
+        this.addBackButton(NutriFitMainUI.getInstance());
+        this.build();
     }
 
     public void showToUser() {
