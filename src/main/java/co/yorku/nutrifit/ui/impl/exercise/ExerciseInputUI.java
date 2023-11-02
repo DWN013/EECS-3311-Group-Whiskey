@@ -81,7 +81,7 @@ public class ExerciseInputUI extends NutrifitWindow {
 
         });
 
-        this.addBackButton(NutriFitMainUI.getInstance());
+        this.addBackButton(MainExerciseMenu.getInstance());
         this.build();
     }
 }

@@ -32,7 +32,7 @@ public class NutriFitMainUI extends NutrifitWindow {
         });
         addButton("Exercise Menu", event -> {
             this.hideWindow();
-            new MainExerciseMenu().getInstance().showWindow();
+            MainExerciseMenu.getInstance().showWindow();
         });
         addButton("Log Meal", event -> {
             this.hideWindow();

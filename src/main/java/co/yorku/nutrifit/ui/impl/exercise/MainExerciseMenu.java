@@ -2,9 +2,11 @@ package co.yorku.nutrifit.ui.impl.exercise;
 
 import co.yorku.nutrifit.ui.NutrifitWindow;
 import co.yorku.nutrifit.ui.impl.main.NutriFitMainUI;
+import co.yorku.nutrifit.ui.impl.visualizer.AverageUserFoodPlateVisualizer;
 import co.yorku.nutrifit.ui.impl.visualizer.MainVisualizerSelectionUI;
 import co.yorku.nutrifit.ui.impl.exercise.ExerciseDisplayUI;
 import co.yorku.nutrifit.ui.impl.exercise.ExerciseInputUI;
+import co.yorku.nutrifit.visualizer.factory.impl.BargraphUI;
 
 import java.awt.*;
 
@@ -18,7 +20,7 @@ public class MainExerciseMenu extends NutrifitWindow {
         return instance;
     }
 
-    public MainExerciseMenu() {
+    private MainExerciseMenu() {
         super("Exercise Menu", new GridLayout());
         addButton("Log Exercise", event -> {
             this.hideWindow();
@@ -30,7 +32,9 @@ public class MainExerciseMenu extends NutrifitWindow {
         });
         addButton("View Weight Loss", event -> {
             this.hideWindow();
-            new ViewWeightLoss().getInstance().showWindow();
+
+            //AverageUserFoodPlateVisualizer averageUserFoodPlateVisualizer = new AverageUserFoodPlateVisualizer(new BargraphUI().buildAverageUserPlateUI(), this);
+            new ViewWeightLoss().showWindow();
         });
 
         this.addBackButton(NutriFitMainUI.getInstance());
