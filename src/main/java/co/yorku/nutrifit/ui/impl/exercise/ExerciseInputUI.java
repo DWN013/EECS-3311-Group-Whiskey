@@ -38,26 +38,26 @@ public class ExerciseInputUI extends NutrifitWindow {
         IExercise exercise = new ExerciseHandler(new ExerciseCalculator(), new WeightLossCalculator());
 
         //Date input
-        addLabel("Date");
+        addLabel("Date", 1);
         JDateChooser dateChooser = new JDateChooser();
         dateChooser.setDateFormatString("yyyy-MM-dd");
-        this.addComponent(dateChooser);
+        this.addComponent(dateChooser, 1);
 
         //Time the user did this at, (make a variable later of type Date)
-        addLabel("Time (24:00)");
-        JTextField timeField = addTextField(5);
+        addLabel("Time (24:00)", 1);
+        JTextField timeField = addTextField(5, 1);
 
         //Exercise input
-        addLabel("Exercise");
-        JComboBox<Enum<?>> exerciseComboBox = addComboBox(ActivityType.values());
+        addLabel("Exercise", 1);
+        JComboBox<Enum<?>> exerciseComboBox = addComboBox(ActivityType.values(), 1);
 
         //Intensity combo box
-        addLabel("Intensity");
-        JComboBox<Enum<?>> intensityComboBox = addComboBox(Intensity.values());
+        addLabel("Intensity", 1);
+        JComboBox<Enum<?>> intensityComboBox = addComboBox(Intensity.values(), 1);
 
         //Time in seconds
-        addLabel("Seconds");
-        JTextField secondsField = addTextField(6);
+        addLabel("Seconds", 1);
+        JTextField secondsField = addTextField(6, 1);
 
 
         //Save button for saving to DB
@@ -79,7 +79,7 @@ public class ExerciseInputUI extends NutrifitWindow {
             NutriFit.getInstance().getUserDatabase().addUserExerciseLog(NutriFit.getInstance().getLoadedProfile().getId(), exerciseObj);
             JOptionPane.showMessageDialog(null, "Exercise Logging Successful!");
 
-        });
+        },1);
 
         this.addBackButton(NutriFitMainUI.getInstance());
         this.build();

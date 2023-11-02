@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.util.List;
 
 public abstract class NutrifitWindow extends JFrame {
@@ -21,19 +20,19 @@ public abstract class NutrifitWindow extends JFrame {
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
 
-    public JLabel addLabel(String text) {
+    public JLabel addLabel(String text, int i) {
         JLabel label = new JLabel(text);
         this.layout.add(label);
         return label;
     }
 
-    public JTextField addTextField(int columns) {
+    public JTextField addTextField(int columns, int i) {
         JTextField jTextField = new JTextField(columns);
         this.layout.add(jTextField);
         return jTextField;
     }
 
-    public JComboBox<Enum<?>> addComboBox(Enum<?>[] objects) {
+    public JComboBox<Enum<?>> addComboBox(Enum<?>[] objects, int i) {
         JComboBox<Enum<?>> comboBox = new JComboBox<>(objects);
         this.layout.add(comboBox);
         return comboBox;
@@ -60,13 +59,14 @@ public abstract class NutrifitWindow extends JFrame {
         return jSpinner;
     }
 
-    public void addButton(String text, ActionListener onClick) {
+    public JButton addButton(String text, ActionListener onClick, int i) {
         JButton button = new JButton(text);
         button.addActionListener(onClick);
         this.layout.add(button);
+        return button;
     }
 
-    public void addComponent(JComponent jComponent) {
+    public void addComponent(JComponent jComponent, int i) {
         this.layout.add(jComponent);
     }
 
@@ -75,7 +75,7 @@ public abstract class NutrifitWindow extends JFrame {
         this.addButton("Back", event -> {
             this.previousWindow.showWindow();
             this.hideWindow();
-        });
+        },1);
     }
 
     public void build() {

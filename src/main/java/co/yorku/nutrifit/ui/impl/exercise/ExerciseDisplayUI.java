@@ -32,7 +32,7 @@ public class ExerciseDisplayUI extends NutrifitWindow {
             index++;
         }
 
-        this.addComponent(new JList<>(data));
+        this.addComponent(new JList<>(data), 1);
         this.addBackButton(NutriFitMainUI.getInstance());
         this.build();
     }

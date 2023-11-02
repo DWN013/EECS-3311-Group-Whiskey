@@ -27,23 +27,23 @@ public class MainVisualizerSelectionUI extends NutrifitWindow {
             this.hideWindow();
             AverageUserFoodPlateVisualizer averageUserFoodPlateVisualizer = new AverageUserFoodPlateVisualizer(new BargraphUI().buildAverageUserPlateUI(), this);
             averageUserFoodPlateVisualizer.showWindow();
-        });
+        },1);
 
         addButton("Calorie Visualizer", event -> {
 
-        });
+        },1);
 
         addButton("CFG Plate Visualizer", event -> {
 
-        });
+        },1);
 
         addButton("Exercise Visualizer", event -> {
 
-        });
+        },1);
 
         addButton("Nutrient Visualizer", event -> {
 
-        });
+        },1);
 
         this.addBackButton(NutriFitMainUI.getInstance());
         this.build();

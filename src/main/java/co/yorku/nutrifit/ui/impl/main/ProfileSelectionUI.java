@@ -7,7 +7,6 @@ import co.yorku.nutrifit.ui.NutrifitWindow;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -34,17 +33,17 @@ public class ProfileSelectionUI extends NutrifitWindow {
             NutriFit.getInstance().setLoadedProfile(selectedIndex);
             hideWindow(); // Hide this window
             NutriFitMainUI.getInstance().showWindow(); // Show the Main UI
-        });
+        },1);
 
         // Create components for the new profile layout
-        addLabel("Name:");
-        JTextField nameField = addTextField(32);
-        addLabel("Height (cm):");
-        JTextField heightField = addTextField(5);
-        addLabel("Age:");
-        JTextField ageField = addTextField(5);
-        addLabel("Weight:");
-        JTextField weightField = addTextField(5);
+        addLabel("Name:", 1);
+        JTextField nameField = addTextField(32, 1);
+        addLabel("Height (cm):", 1);
+        JTextField heightField = addTextField(5, 1);
+        addLabel("Age:", 1);
+        JTextField ageField = addTextField(5, 1);
+        addLabel("Weight:", 1);
+        JTextField weightField = addTextField(5, 1);
 
         JComboBox<String> metricOrImperalJComboBox = addComboBox("Metric", "Imperial");
         JComboBox<String> maleOrFemale = addComboBox("Male", "Female");
@@ -90,7 +89,7 @@ public class ProfileSelectionUI extends NutrifitWindow {
             NutriFit.getInstance().setLoadedProfile(NutriFit.getInstance().getUserDatabase().getProfile(userid));
             hideWindow(); // Hide this window
             NutriFitMainUI.getInstance().showWindow(); // Show the Main UI
-        });
+        },1);
 
         this.build();
     }
