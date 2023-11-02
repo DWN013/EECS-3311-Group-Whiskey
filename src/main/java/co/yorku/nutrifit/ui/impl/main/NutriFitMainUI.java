@@ -28,30 +28,30 @@ public class NutriFitMainUI extends NutrifitWindow {
         addButton("Visualizers", event -> {
             this.hideWindow();
             MainVisualizerSelectionUI.getInstance().showWindow();
-        },1);
+        });
         addButton("Log Exercise", event -> {
             this.hideWindow();
             ExerciseInputUI.getInstance().showWindow();
-        },1);
+        });
         addButton("Show Exercise Log", event -> {
             this.hideWindow();
             new ExerciseDisplayUI().showToUser();
-        },1);
+        });
         addButton("Log Meal", event -> {
             this.hideWindow();
             MealInputUI.getInstance().clearInputtedIngredients();
             MealInputUI.getInstance().showWindow();
-        },1);
+        });
         addButton("Show Meal Log", event -> {
             this.hideWindow();
             new MealDisplayUI().showToUser();
-        },1);
+        });
 
         addButton("Logout", event -> {
             NutriFit.getInstance().setLoadedProfile(null);
             this.hideWindow();
             ProfileSelectionUI.getInstance().showWindow();
-        },1);
+        });
 
        this.build();
     }

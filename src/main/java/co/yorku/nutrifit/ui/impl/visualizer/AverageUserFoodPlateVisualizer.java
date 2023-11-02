@@ -20,7 +20,7 @@ public class AverageUserFoodPlateVisualizer extends JFrameVisualizer {
         chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         chartPanel.setBackground(Color.white);
 
-        addComponent(chartPanel, 1);
+        addComponent(chartPanel);
 
         this.addBackButton(parent);
         this.build();

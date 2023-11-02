@@ -43,24 +43,30 @@ public class MealInputUI extends NutrifitWindow {
         super("Log Meal", new GridLayout(8, 2));
 
         //Date selection drop down  menu
-        addLabel("Date",1);
+        addLabel("Date");
         JDateChooser dateChooser = new JDateChooser();
         dateChooser.setDateFormatString("yyyy-MM-dd");
-        this.addComponent(dateChooser,1);
+        this.addComponent(dateChooser);
 
-        addLabel("Time (24:00)",1);
-        JTextField timeField = addTextField(5,1);
+        addLabel("Time (24:00)");
+        JTextField timeField = addTextField(5);
 
-        addLabel("Meal Type:",1);
-        JComboBox<Enum<?>> mealTypeDropdown = addComboBox(MealType.values(),1);
+        addLabel("Meal Type:");
+        JComboBox<Enum<?>> mealTypeDropdown = addComboBox(MealType.values());
 
-        addLabel("Ingredients:",1);
-        JComboBox<Enum<?>> ingredientsField = addComboBox(Ingredients.values(), 1);
+        addLabel("Ingredients:");
+        JComboBox<Enum<?>> ingredientsField = addComboBox(Ingredients.values());
 
-        addLabel("Quantity:",1);
+        addLabel("Quantity:");
         JSpinner quantityDropdown = addSpinner();
 
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Ingredients");
+        tableModel.addColumn("Quantity");
 
+        ingredientsTable = new JTable(tableModel);
+        JScrollPane scrollPane = new JScrollPane(ingredientsTable);
+        addComponent(scrollPane);
 
 
         JButton addIngredientButton = addButton("Add Ingredient", event -> {
@@ -76,7 +82,7 @@ public class MealInputUI extends NutrifitWindow {
             ingredientsMap.put(ingredient, quantity);
             quantityDropdown.setValue(1);
             updateIngredientsTable();
-        },1);
+        });
 
         addButton("Edit Ingredient", event -> {
             // TODO: Implement the edit ingredient functionality
@@ -97,7 +103,7 @@ public class MealInputUI extends NutrifitWindow {
                 JOptionPane.showMessageDialog(null, "Please add the ingredient before editing.");
             }
 
-        },1);
+        });
         addButton("Delete Ingredient", event -> {
             // TODO: Implement the delete ingredient functionality
             String selectedIngredient = ingredientsField.getSelectedItem().toString();
@@ -110,7 +116,7 @@ public class MealInputUI extends NutrifitWindow {
             } else {
                 JOptionPane.showMessageDialog(null, "Please add the ingredient before deleting.");
             }
-        },1);
+        });
 
         addButton("Submit", event -> {
             // Get user input from fields in the new profile layout
@@ -178,15 +184,7 @@ public class MealInputUI extends NutrifitWindow {
                 JOptionPane.showMessageDialog(null, "Please enter a valid date and time.");
             }
 
-        },1);
-
-        tableModel = new DefaultTableModel();
-        tableModel.addColumn("Ingredients");
-        tableModel.addColumn("Quantity");
-
-        ingredientsTable = new JTable(tableModel);
-        JScrollPane scrollPane = new JScrollPane(ingredientsTable);
-        addComponent(scrollPane, 2);
+        });
 
         this.addBackButton(NutriFitMainUI.getInstance());
         this.build();

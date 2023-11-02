@@ -40,7 +40,7 @@ public class MealDisplayUI extends NutrifitWindow {
             index++;
         }
 
-        this.addComponent(new JList<>(data), 1);
+        this.addComponent(new JList<>(data));
         this.addBackButton(NutriFitMainUI.getInstance());
         this.build();
     }

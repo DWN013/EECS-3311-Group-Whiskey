@@ -20,19 +20,19 @@ public abstract class NutrifitWindow extends JFrame {
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
 
-    public JLabel addLabel(String text, int i) {
+    public JLabel addLabel(String text) {
         JLabel label = new JLabel(text);
         this.layout.add(label);
         return label;
     }
 
-    public JTextField addTextField(int columns, int i) {
+    public JTextField addTextField(int columns) {
         JTextField jTextField = new JTextField(columns);
         this.layout.add(jTextField);
         return jTextField;
     }
 
-    public JComboBox<Enum<?>> addComboBox(Enum<?>[] objects, int i) {
+    public JComboBox<Enum<?>> addComboBox(Enum<?>[] objects) {
         JComboBox<Enum<?>> comboBox = new JComboBox<>(objects);
         this.layout.add(comboBox);
         return comboBox;
@@ -59,14 +59,14 @@ public abstract class NutrifitWindow extends JFrame {
         return jSpinner;
     }
 
-    public JButton addButton(String text, ActionListener onClick, int i) {
+    public JButton addButton(String text, ActionListener onClick) {
         JButton button = new JButton(text);
         button.addActionListener(onClick);
         this.layout.add(button);
         return button;
     }
 
-    public void addComponent(JComponent jComponent, int i) {
+    public void addComponent(JComponent jComponent) {
         this.layout.add(jComponent);
     }
 
@@ -75,7 +75,7 @@ public abstract class NutrifitWindow extends JFrame {
         this.addButton("Back", event -> {
             this.previousWindow.showWindow();
             this.hideWindow();
-        },1);
+        });
     }
 
     public void build() {

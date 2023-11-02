@@ -35,19 +35,19 @@ public abstract class JFrameVisualizer extends NutrifitWindow {
     // By Default we will show the last 7 days
     private void addDateRangeButtons() {
 
-        addLabel("From Date:", 1);
+        addLabel("From Date:");
         JDateChooser fromDate = new JDateChooser();
         fromDate.setDateFormatString("yyyy-MM-dd");
         fromDate.setDate(new Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7)));
-        this.addComponent(fromDate, 1);
-        addLabel("", 1); // Empty Label
+        this.addComponent(fromDate);
+        addLabel(""); // Empty Label
 
-        addLabel("To Date:", 1);
+        addLabel("To Date:");
         JDateChooser toDate = new JDateChooser();
         toDate.setDateFormatString("yyyy-MM-dd");
         toDate.setDate(new Date(System.currentTimeMillis()));
-        this.addComponent(toDate, 1);
-        addButton("Update Date Range", event -> NutriFit.getInstance().getEventManager().notify(fromDate.getDate(), toDate.getDate()),1);
+        this.addComponent(toDate);
+        addButton("Update Date Range", event -> NutriFit.getInstance().getEventManager().notify(fromDate.getDate(), toDate.getDate()));
     }
 
     public IVisualizer getiVisualizer() {
