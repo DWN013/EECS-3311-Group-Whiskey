@@ -33,6 +33,8 @@ public class UserDatabase implements IUserDatabase {
     private String INSERT_USER = "INSERT INTO profiles (name, isMale, height, age, weight, isMetric) " +
             "VALUES (?, ?, ?, ?, ?, ?);";
 
+    private String UPDATE_USER = "UPDATE profiles SET name=?, isMale=?, height=?, age=?, weight=?, isMetric=? WHERE id=?;";
+
     private String GET_USER = "SELECT * FROM profiles WHERE id=?;";
 
     private String GET_LAST_INSERTED_USER = "SELECT * FROM profiles;";
@@ -134,6 +136,30 @@ public class UserDatabase implements IUserDatabase {
         }
 
         return id;
+    }
+
+    @Override
+    public boolean updateProfile(IProfile profile) {
+
+        try {
+
+            PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(this.UPDATE_USER);
+            preparedStatement.setString(1, profile.getName());
+            preparedStatement.setBoolean(2, profile.isMale());
+            preparedStatement.setFloat(3, profile.getHeight());
+            preparedStatement.setInt(4, profile.getAge());
+            preparedStatement.setFloat(5, profile.getWeight());
+            preparedStatement.setBoolean(6, profile.isMetric());
+            preparedStatement.setInt(7, profile.getId());
+            preparedStatement.execute();
+            preparedStatement.close();
+
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
     @Override
