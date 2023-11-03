@@ -1,6 +1,7 @@
 package co.yorku.nutrifit.ui.impl.meal;
 
 import co.yorku.nutrifit.NutriFit;
+import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Meal;
 import co.yorku.nutrifit.object.Ingredients;
 import co.yorku.nutrifit.object.MealType;
@@ -18,12 +19,6 @@ import java.util.Map;
 public class MealInputUI extends NutrifitWindow {
 
     private static MealInputUI instance;
-    private static boolean breakfastLogged = false;
-    private static Date lastLoggedBreakfastDate;
-    private static boolean lunchLogged = false;
-    private static Date lastLoggedLunchDate;
-    private static boolean dinnerLogged = false;
-    private static Date lastLoggedDinnerDate;
     private DefaultTableModel tableModel;
     private JTable ingredientsTable;
 
@@ -119,34 +114,6 @@ public class MealInputUI extends NutrifitWindow {
         });
 
         addButton("Submit", event -> {
-            // Get user input from fields in the new profile layout
-            MealType mealType = (MealType) mealTypeDropdown.getSelectedItem();
-
-            if (mealType == MealType.BREAKFAST) {
-                if (breakfastLogged && isSameDate(lastLoggedBreakfastDate, dateChooser.getDate())) {
-                    JOptionPane.showMessageDialog(null, "You can only log breakfast once per day!");
-                    return;
-                } else {
-                    lastLoggedBreakfastDate = dateChooser.getDate();
-                    breakfastLogged = true;
-                }
-            } else if (mealType == MealType.LUNCH) {
-                if (lunchLogged && isSameDate(lastLoggedLunchDate, dateChooser.getDate())) {
-                    JOptionPane.showMessageDialog(null, "You can only log lunch once per day!");
-                    return;
-                } else {
-                    lastLoggedLunchDate = dateChooser.getDate();
-                    lunchLogged = true;
-                }
-            } else if (mealType == MealType.DINNER) {
-                if (dinnerLogged && isSameDate(lastLoggedDinnerDate, dateChooser.getDate())) {
-                    JOptionPane.showMessageDialog(null, "You can only log dinner once per day!");
-                    return;
-                } else {
-                    lastLoggedDinnerDate = dateChooser.getDate();
-                    dinnerLogged = true;
-                }
-            }
 
             if (timeField.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(null, "Please enter a valid time.");
@@ -158,8 +125,34 @@ public class MealInputUI extends NutrifitWindow {
                 return;
             }
 
+            // Get user input from fields in the new profile layout
+            MealType mealType = (MealType) mealTypeDropdown.getSelectedItem();
+
+            Date formattedDateTime = dateChooser.getDate();
+            Date startOfDay = new Date(formattedDateTime.getTime());
+            Date endOfDay = new Date(formattedDateTime.getTime());
+
+            startOfDay.setHours(0);
+            startOfDay.setMinutes(0);
+            startOfDay.setSeconds(0);
+
+            endOfDay.setHours(23);
+            endOfDay.setMinutes(59);
+            endOfDay.setSeconds(59);
+
+            LogIterator logIterator = NutriFit.getInstance().getUserDatabase().getUserMealLogs(NutriFit.getInstance().getLoadedProfile().getId(), startOfDay, endOfDay);
+
+            // Check top make sure that we are only logging one type of meal type for that day
+            while (mealType != MealType.SNACK && logIterator.hasNext()) {
+                Meal meal = (Meal) logIterator.getNext();
+                if (meal.getMealType() == mealType) {
+                    JOptionPane.showMessageDialog(null, "You can only log one " + mealType.getDisplayName() + " once per day!");
+                    return;
+                }
+            }
+
+
             try {
-                Date formattedDateTime = dateChooser.getDate();
                 String[] timeSplit = timeField.getText().split(":");
                 formattedDateTime.setHours(Integer.parseInt(timeSplit[0]));
                 formattedDateTime.setMinutes(Integer.parseInt(timeSplit[1]));
@@ -190,10 +183,6 @@ public class MealInputUI extends NutrifitWindow {
         this.build();
     }
 
-    private boolean isSameDate(Date date1, Date date2) {
-        return date1.getYear() == date2.getYear() && date1.getMonth() == date2.getMonth() && date1.getDate() == date2.getDate();
-    }
-
     private void updateIngredientsTable() {
         clearIngredientsTable();
 
@@ -207,7 +196,8 @@ public class MealInputUI extends NutrifitWindow {
     private void clearIngredientsTable() {
         tableModel.setRowCount(0);
     }
-    public void clearInputtedIngredients() {
+    public void reset() {
+        this.clearIngredientsTable();
         this.ingredientsMap.clear();
     }
 
