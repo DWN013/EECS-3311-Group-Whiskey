@@ -4,6 +4,7 @@ import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.ui.NutrifitWindow;
 import co.yorku.nutrifit.ui.impl.exercise.ExerciseDisplayUI;
 import co.yorku.nutrifit.ui.impl.exercise.ExerciseInputUI;
+import co.yorku.nutrifit.ui.impl.meal.MainMealMenu;
 import co.yorku.nutrifit.ui.impl.meal.MealDisplayUI;
 import co.yorku.nutrifit.ui.impl.meal.MealInputUI;
 import co.yorku.nutrifit.ui.impl.visualizer.MainVisualizerSelectionUI;
@@ -33,15 +34,11 @@ public class NutriFitMainUI extends NutrifitWindow {
             this.hideWindow();
             MainExerciseMenu.getInstance().showWindow();
         });
-        addButton("Log Meal", event -> {
+        addButton("Meal Menu", event -> {
             this.hideWindow();
-            MealInputUI.getInstance().reset();
-            MealInputUI.getInstance().showWindow();
+            MainMealMenu.getInstance().showWindow();
         });
-        addButton("Show Meal Log", event -> {
-            this.hideWindow();
-            new MealDisplayUI().showToUser();
-        });
+
 
         addButton("Settings", event -> {
             this.hideWindow();
