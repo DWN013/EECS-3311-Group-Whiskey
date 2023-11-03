@@ -9,7 +9,6 @@ import co.yorku.nutrifit.ui.impl.meal.MealInputUI;
 import co.yorku.nutrifit.ui.impl.visualizer.MainVisualizerSelectionUI;
 import co.yorku.nutrifit.ui.impl.exercise.MainExerciseMenu;
 
-import javax.swing.*;
 import java.awt.*;
 
 public class NutriFitMainUI extends NutrifitWindow {
@@ -44,10 +43,15 @@ public class NutriFitMainUI extends NutrifitWindow {
             new MealDisplayUI().showToUser();
         });
 
+        addButton("Settings", event -> {
+            this.hideWindow();
+            SettingsUI.getInstance().showWindow();
+        });
+
         addButton("Logout", event -> {
             NutriFit.getInstance().setLoadedProfile(null);
             this.hideWindow();
-            ProfileSelectionUI.getInstance().showWindow();
+            LogInOrSignUpPage.getInstance().showWindow();
         });
 
        this.build();
