@@ -1,4 +1,5 @@
 package co.yorku.nutrifit.visualizer.calulcators;
 
-public class DailyTotalEnergyExpenditureCalculator {
+public class DailyTotalEnergyExpenditureCalculator{
+
 }
