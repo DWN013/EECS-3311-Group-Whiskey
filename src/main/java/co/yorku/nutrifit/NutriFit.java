@@ -23,9 +23,8 @@ public class NutriFit {
     }
 
     // Some stuff
-    public Gson gson; // TODO: put this somewhere else
+    public Gson gson;
     private EventManager eventManager;
-
     private IProfile loadedProfile;
     private IUserDatabase iUserDatabase;
     private INFDatabase infDatabase;
