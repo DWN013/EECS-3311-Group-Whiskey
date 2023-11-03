@@ -60,17 +60,16 @@ public class MealInputUI extends NutrifitWindow {
         tableModel.addColumn("Quantity");
 
         ingredientsTable = new JTable(tableModel);
-        JScrollPane scrollPane = new JScrollPane(ingredientsTable);
-        addComponent(scrollPane);
+        addComponent(new JScrollPane(ingredientsTable));
 
 
-        JButton addIngredientButton = addButton("Add Ingredient", event -> {
+        addButton("Add Ingredient", event -> {
             String ingredient = ingredientsField.getSelectedItem().toString();
             int quantity = Integer.parseInt(quantityDropdown.getValue().toString());
 
             // Validate input
             if (ingredient.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please fill in the ingredient field.");
+                showMessageDialog( "Please fill in the ingredient field.");
                 return;
             }
 
@@ -84,18 +83,18 @@ public class MealInputUI extends NutrifitWindow {
             String selectedIngredient = ingredientsField.getSelectedItem().toString();
             if (ingredientsMap.containsKey(selectedIngredient)) {
                 int currentQuantity = ingredientsMap.get(selectedIngredient);
-                String input = JOptionPane.showInputDialog("Enter the new quantity for " + selectedIngredient + " (current: " + currentQuantity + ")");
+                String input = openTextInputDialog("Enter the new quantity for " + selectedIngredient + " (current: " + currentQuantity + ")");
                 if (input != null && !input.isEmpty()) {
                     try {
                         int newQuantity = Integer.parseInt(input);
                         ingredientsMap.put(selectedIngredient, newQuantity);
                         updateIngredientsTable();
                     } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(null, "Please enter a valid integer for the quantity.");
+                        showMessageDialog("Please enter a valid integer for the quantity.");
                     }
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Please add the ingredient before editing.");
+                showMessageDialog( "Please add the ingredient before editing.");
             }
 
         });
@@ -103,25 +102,25 @@ public class MealInputUI extends NutrifitWindow {
             // TODO: Implement the delete ingredient functionality
             String selectedIngredient = ingredientsField.getSelectedItem().toString();
             if (ingredientsMap.containsKey(selectedIngredient)) {
-                int option = JOptionPane.showConfirmDialog(null, "Do you want to delete " + selectedIngredient + " from the ingredients list?", "Delete Ingredient", JOptionPane.YES_NO_OPTION);
+                int option = showConfirmationDialog( "Do you want to delete " + selectedIngredient + " from the ingredients list?");
                 if (option == JOptionPane.YES_OPTION) {
                     ingredientsMap.remove(selectedIngredient);
                     updateIngredientsTable();
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Please add the ingredient before deleting.");
+                showMessageDialog( "Please add the ingredient before deleting.");
             }
         });
 
         addButton("Submit", event -> {
 
             if (timeField.getText().isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Please enter a valid time.");
+                showMessageDialog("Please enter a valid time.");
                 return;
             }
 
             if (dateChooser.getDate() == null) {
-                JOptionPane.showMessageDialog(null, "Please enter a valid date.");
+                showMessageDialog("Please enter a valid date.");
                 return;
             }
 
@@ -146,7 +145,7 @@ public class MealInputUI extends NutrifitWindow {
             while (mealType != MealType.SNACK && logIterator.hasNext()) {
                 Meal meal = (Meal) logIterator.getNext();
                 if (meal.getMealType() == mealType) {
-                    JOptionPane.showMessageDialog(null, "You can only log one " + mealType.getDisplayName() + " once per day!");
+                    showMessageDialog("You can only log one " + mealType.getDisplayName() + " once per day!");
                     return;
                 }
             }
@@ -169,12 +168,12 @@ public class MealInputUI extends NutrifitWindow {
                         )
                 );
 
-                JOptionPane.showMessageDialog(null, "Meal Logging Successful!");
+                showMessageDialog( "Meal Logging Successful!");
                 clearIngredientsTable();
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(null, "Please enter a valid time in the format HH:mm.");
+                showMessageDialog("Please enter a valid time in the format HH:mm.");
             } catch (NullPointerException e) {
-                JOptionPane.showMessageDialog(null, "Please enter a valid date and time.");
+                showMessageDialog("Please enter a valid date and time.");
             }
 
         });
