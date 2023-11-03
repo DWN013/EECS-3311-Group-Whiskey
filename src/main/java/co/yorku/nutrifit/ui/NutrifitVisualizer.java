@@ -11,11 +11,11 @@ import java.awt.event.WindowEvent;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-public abstract class JFrameVisualizer extends NutrifitWindow {
+public abstract class NutrifitVisualizer extends NutrifitWindow {
 
     private IVisualizer iVisualizer;
 
-    public JFrameVisualizer(String windowName, IVisualizer iVisualizer) {
+    public NutrifitVisualizer(String windowName, IVisualizer iVisualizer) {
         super(windowName, new GridLayout(3, 3));
         Preconditions.checkNotNull(iVisualizer, "A Visualizer be provided");
         this.iVisualizer = iVisualizer;
