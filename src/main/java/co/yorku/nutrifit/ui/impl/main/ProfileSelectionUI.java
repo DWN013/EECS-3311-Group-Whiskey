@@ -7,7 +7,6 @@ import co.yorku.nutrifit.ui.NutrifitWindow;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
