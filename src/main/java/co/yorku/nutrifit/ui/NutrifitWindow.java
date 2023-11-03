@@ -5,7 +5,6 @@ import com.google.common.base.Preconditions;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.util.List;
 
 public abstract class NutrifitWindow extends JFrame {
@@ -60,10 +59,11 @@ public abstract class NutrifitWindow extends JFrame {
         return jSpinner;
     }
 
-    public void addButton(String text, ActionListener onClick) {
+    public JButton addButton(String text, ActionListener onClick) {
         JButton button = new JButton(text);
         button.addActionListener(onClick);
         this.layout.add(button);
+        return button;
     }
 
     public String openDropdownDialog(String windowName, String question, int defaultOption, String... options) {
