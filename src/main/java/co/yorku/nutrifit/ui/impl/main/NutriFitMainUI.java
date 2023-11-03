@@ -56,7 +56,7 @@ public class NutriFitMainUI extends NutrifitWindow {
             this.hideWindow();
             LogInOrSignUpPage.getInstance().showWindow();
         });
-        
+
        this.build();
     }
 
