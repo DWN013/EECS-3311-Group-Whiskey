@@ -66,6 +66,27 @@ public abstract class NutrifitWindow extends JFrame {
         this.layout.add(button);
     }
 
+    public String openDropdownDialog(String windowName, String question, int defaultOption, String... options) {
+        return (String) JOptionPane.showInputDialog(null, question,
+                windowName, JOptionPane.QUESTION_MESSAGE, null, // Use
+                // default
+                // icon
+                options, // Array of choices
+                options[defaultOption]);
+    }
+
+    public String openTextInputDialog(String question) {
+        return (String) JOptionPane.showInputDialog(null, question);
+    }
+
+    public void showMessageDialog(String text) {
+        JOptionPane.showMessageDialog(null, text);
+    }
+
+    public int showConfirmationDialog(String text) {
+        return JOptionPane.showConfirmDialog(null, text);
+    }
+
     public void addComponent(JComponent jComponent) {
         this.layout.add(jComponent);
     }
