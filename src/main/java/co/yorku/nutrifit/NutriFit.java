@@ -30,7 +30,7 @@ public class NutriFit {
     private IUserDatabase iUserDatabase;
     private INFDatabase infDatabase;
 
-    public NutriFit() {
+    private NutriFit() {
         NutriFit.i = this;
 
         this.gson = new GsonBuilder().create();
