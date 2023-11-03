@@ -39,6 +39,7 @@ public class ViewWeightLoss extends NutrifitWindow {
         diet_iterator.sortByDateAscending();
 
         // While there is still a log next in the linked list for both meal and exercise, go to the next log
+        //correct this, people don't need to exercise every day but they do need to eat
         while (ex_iterator.hasNext() && diet_iterator.hasNext()){
 
             //Go to next set of logs
