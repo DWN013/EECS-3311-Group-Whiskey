@@ -67,9 +67,6 @@ public class NutriFit {
 
     public void setLoadedProfile(IProfile loadedProfile) {
         this.loadedProfile = loadedProfile;
-
-        this.loadedProfile.setName("Updated Test Name");
-        this.iUserDatabase.updateProfile(this.loadedProfile);
     }
 
 
