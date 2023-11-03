@@ -57,4 +57,34 @@ public class ProfileHandler implements IProfile {
         return this.isMetric;
     }
 
+	@Override
+	public void setName(String name) {
+		this.name = name;		
+	}
+
+	@Override
+	public void setGender(boolean gender) {
+		this.isMale = gender;
+	}
+
+	@Override
+	public void setHeight(float height) {
+		this.height = height;
+	}
+
+	@Override
+	public void setWeight(float weight) {
+		this.weight = weight;
+	}
+
+	@Override
+	public void setUnit(boolean unit) {
+		this.isMetric = unit;
+	}
+
+	@Override
+	public void setAge(int age) {
+		this.age = age;		
+	}
+
 }
