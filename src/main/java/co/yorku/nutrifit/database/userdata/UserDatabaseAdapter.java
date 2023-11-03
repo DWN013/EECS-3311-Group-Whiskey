@@ -27,6 +27,11 @@ public class UserDatabaseAdapter implements IUserDatabase {
     }
 
     @Override
+    public boolean updateProfile(IProfile profile) {
+        return this.userDatabaseInterface.updateProfile(profile);
+    }
+
+    @Override
     public List<IProfile> getAllProfiles() {
         return this.userDatabaseInterface.getAllProfiles();
     }

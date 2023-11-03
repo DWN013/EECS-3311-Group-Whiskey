@@ -14,6 +14,8 @@ public interface IUserDatabase {
 
     int setupProfile(IProfile profile);
 
+    boolean updateProfile(IProfile profile);
+
     List<IProfile> getAllProfiles();
 
     IProfile getProfile(int userId);
