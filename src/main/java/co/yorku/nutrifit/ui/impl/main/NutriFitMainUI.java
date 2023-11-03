@@ -35,7 +35,7 @@ public class NutriFitMainUI extends NutrifitWindow {
         });
         addButton("Log Meal", event -> {
             this.hideWindow();
-            MealInputUI.getInstance().clearInputtedIngredients();
+            MealInputUI.getInstance().reset();
             MealInputUI.getInstance().showWindow();
         });
         addButton("Show Meal Log", event -> {
