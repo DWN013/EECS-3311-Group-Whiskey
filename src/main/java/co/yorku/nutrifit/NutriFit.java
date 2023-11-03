@@ -17,7 +17,10 @@ public class NutriFit {
 
     // Singleton Instance
     private static NutriFit i;
-    public static NutriFit getInstance() { return i; }
+
+    public static NutriFit getInstance() {
+        return i;
+    }
 
     // Some stuff
     public Gson gson; // TODO: put this somewhere else

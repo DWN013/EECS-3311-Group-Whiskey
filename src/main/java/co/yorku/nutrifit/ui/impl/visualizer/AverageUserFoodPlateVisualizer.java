@@ -1,6 +1,6 @@
 package co.yorku.nutrifit.ui.impl.visualizer;
 
-import co.yorku.nutrifit.ui.JFrameVisualizer;
+import co.yorku.nutrifit.ui.NutrifitVisualizer;
 import co.yorku.nutrifit.ui.NutrifitWindow;
 import co.yorku.nutrifit.visualizer.IVisualizer;
 import org.jfree.chart.ChartPanel;
@@ -9,7 +9,7 @@ import org.jfree.chart.JFreeChart;
 import javax.swing.*;
 import java.awt.*;
 
-public class AverageUserFoodPlateVisualizer extends JFrameVisualizer {
+public class AverageUserFoodPlateVisualizer extends NutrifitVisualizer {
 
     public AverageUserFoodPlateVisualizer(IVisualizer iVisualizer, NutrifitWindow parent) {
         super("Average User Food Plate", iVisualizer);
