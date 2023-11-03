@@ -52,7 +52,7 @@ public class NutriFitMainUI extends NutrifitWindow {
             this.hideWindow();
             ProfileSelectionUI.getInstance().showWindow();
         });
-
+        
        this.build();
     }
 
