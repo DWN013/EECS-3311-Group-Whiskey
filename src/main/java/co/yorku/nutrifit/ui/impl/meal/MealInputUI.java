@@ -79,7 +79,7 @@ public class MealInputUI extends NutrifitWindow {
         });
 
         addButton("Edit Ingredient", event -> {
-            // TODO: Implement the edit ingredient functionality
+
             String selectedIngredient = ingredientsField.getSelectedItem().toString();
             if (ingredientsMap.containsKey(selectedIngredient)) {
                 int currentQuantity = ingredientsMap.get(selectedIngredient);
@@ -99,7 +99,7 @@ public class MealInputUI extends NutrifitWindow {
 
         });
         addButton("Delete Ingredient", event -> {
-            // TODO: Implement the delete ingredient functionality
+
             String selectedIngredient = ingredientsField.getSelectedItem().toString();
             if (ingredientsMap.containsKey(selectedIngredient)) {
                 int option = showConfirmationDialog( "Do you want to delete " + selectedIngredient + " from the ingredients list?");
