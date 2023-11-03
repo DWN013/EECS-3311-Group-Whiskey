@@ -15,5 +15,17 @@ public interface IProfile {
     float getWeight();
 
     boolean isMetric();
+    
+    void setName(String name);
+    
+    void setGender(boolean gender);
+    
+    void setAge (int age);
+    
+    void setHeight(float height);
+    
+    void setWeight (float weight);
+    
+    void setUnit(boolean unit);
 
 }
