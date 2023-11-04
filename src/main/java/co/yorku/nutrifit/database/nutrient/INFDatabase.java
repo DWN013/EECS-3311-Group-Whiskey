@@ -8,4 +8,6 @@ public interface INFDatabase {
 
     NutrientInfo getNutrientInfo(String ingredient);
 
+    void close();
+
 }

@@ -8,7 +8,6 @@ import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.database.userdata.impl.UserDatabase;
 import co.yorku.nutrifit.event.EventManager;
 import co.yorku.nutrifit.profile.IProfile;
-//import co.yorku.nutrifit.ui.ProfileSelectionUI;
 import co.yorku.nutrifit.ui.impl.main.LogInOrSignUpPage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -44,6 +43,14 @@ public class NutriFit {
         LogInOrSignUpPage.getInstance().showWindow();
     }
 
+
+    public void close() {
+        this.infDatabase.close();
+        this.iUserDatabase.close();
+        this.setLoadedProfile(null);
+        System.exit(0);
+    }
+
     public Gson getGson() {
         return gson;
     }
@@ -62,6 +69,10 @@ public class NutriFit {
 
     public IProfile getLoadedProfile() {
         return loadedProfile;
+    }
+
+    public boolean isProfileLoaded() {
+        return this.getLoadedProfile() != null;
     }
 
     public void setLoadedProfile(IProfile loadedProfile) {

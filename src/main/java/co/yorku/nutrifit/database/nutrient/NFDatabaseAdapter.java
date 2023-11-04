@@ -19,4 +19,9 @@ public class NFDatabaseAdapter implements INFDatabase {
     public NutrientInfo getNutrientInfo(String ingredient) {
         return this.nfDatabaseInterface.getNutrientInfo(ingredient);
     }
+
+    @Override
+    public void close() {
+        this.nfDatabaseInterface.close();
+    }
 }
