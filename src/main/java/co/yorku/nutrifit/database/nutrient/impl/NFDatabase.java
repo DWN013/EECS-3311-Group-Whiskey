@@ -15,4 +15,9 @@ public class NFDatabase implements INFDatabase {
         // TODO: connect to DB and stuff
         return new NutrientInfo(ingredient, 100, 25, 20, 5);
     }
+
+    @Override
+    public void close() {
+
+    }
 }
