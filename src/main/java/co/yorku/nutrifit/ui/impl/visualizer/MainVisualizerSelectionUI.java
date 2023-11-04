@@ -37,25 +37,25 @@ public class MainVisualizerSelectionUI extends NutrifitWindow {
 
         addButton("Calorie Visualizer", event -> {
             this.hideWindow();
-            new NutrifitVisualizer("Calorie Visualizer", this, this.visualizerUI.buildAverageUserPlateUI()).showWindow();
+            new NutrifitVisualizer("Calorie Visualizer", this, this.visualizerUI.buildCalorieUI()).showWindow();
 
         });
 
         addButton("CFG Plate Visualizer", event -> {
             this.hideWindow();
-            new NutrifitVisualizer("Canada Food Guide Plate Visualizer", this, this.visualizerUI.buildAverageUserPlateUI()).showWindow();
+            new NutrifitVisualizer("Canada Food Guide Plate Visualizer", this, this.visualizerUI.buildCFGPlateUI()).showWindow();
 
         });
 
         addButton("Exercise Visualizer", event -> {
             this.hideWindow();
-            new NutrifitVisualizer("Exercise Visualizer", this, this.visualizerUI.buildAverageUserPlateUI()).showWindow();
+            new NutrifitVisualizer("Exercise Visualizer", this, this.visualizerUI.buildDailyTotalEnergyExpenditure()).showWindow();
 
         });
 
         addButton("Nutrient Visualizer", event -> {
             this.hideWindow();
-            new NutrifitVisualizer("Nutrient Visualizer", this, this.visualizerUI.buildAverageUserPlateUI()).showWindow();
+            new NutrifitVisualizer("Nutrient Visualizer", this, this.visualizerUI.buildNutrientUI()).showWindow();
         });
 
         this.createButtonGroup(barGraphRadioButton, pieChartRadioButton);
