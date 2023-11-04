@@ -35,10 +35,18 @@ public class NutriFit {
         this.eventManager = new EventManager();
 
         this.iUserDatabase = new UserDatabaseAdapter(new UserDatabase());
-        this.iUserDatabase.setupDatabase();
+        if (!this.iUserDatabase.setupDatabase()) {
+            System.out.println("Could not connect to the user database.");
+            System.exit(0);
+            return;
+        }
 
         this.infDatabase = new NFDatabaseAdapter(new NFDatabase());
-        this.infDatabase.setupDatabase();
+        if (!this.infDatabase.setupDatabase()) {
+            System.out.println("Could not connect to the user NFDatabase.");
+            System.exit(0);
+            return;
+        }
 
         LogInOrSignUpPage.getInstance().showWindow();
     }

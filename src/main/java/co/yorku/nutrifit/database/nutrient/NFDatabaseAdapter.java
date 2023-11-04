@@ -11,8 +11,8 @@ public class NFDatabaseAdapter implements INFDatabase {
     }
 
     @Override
-    public void setupDatabase() {
-        this.nfDatabaseInterface.setupDatabase();
+    public boolean setupDatabase() {
+        return this.nfDatabaseInterface.setupDatabase();
     }
 
     @Override

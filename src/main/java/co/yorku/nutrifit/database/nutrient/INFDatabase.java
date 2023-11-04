@@ -4,7 +4,7 @@ import co.yorku.nutrifit.object.NutrientInfo;
 
 public interface INFDatabase {
 
-    void setupDatabase();
+    boolean setupDatabase();
 
     NutrientInfo getNutrientInfo(String ingredient);
 
