@@ -91,6 +91,21 @@ public abstract class NutrifitWindow extends JFrame {
         return button;
     }
 
+    public JRadioButton addRadioButton(String text, boolean selected, ActionListener onClick) {
+        JRadioButton jRadioButton = new JRadioButton(text);
+        jRadioButton.setSelected(selected);
+        jRadioButton.addActionListener(onClick);
+        this.mainJPanel.add(jRadioButton);
+        return jRadioButton;
+    }
+
+    public void createButtonGroup(JRadioButton... buttons) {
+        ButtonGroup buttonGroup = new ButtonGroup();
+        for (JRadioButton button : buttons) {
+            buttonGroup.add(button);
+        }
+    }
+
     public String openDropdownDialog(String windowName, String question, int defaultOption, String... options) {
         return (String) JOptionPane.showInputDialog(null, question,
                 windowName, JOptionPane.QUESTION_MESSAGE, null, // Use
