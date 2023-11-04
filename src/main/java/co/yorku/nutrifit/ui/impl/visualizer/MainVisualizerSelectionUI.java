@@ -20,55 +20,48 @@ public class MainVisualizerSelectionUI extends NutrifitWindow {
         return instance;
     }
 
+    private VisualizerUI visualizerUI;
+
     public MainVisualizerSelectionUI() {
         super("Visualizers", new GridLayout(5, 2));
+        this.visualizerUI = new BargraphUI();
 
-        JRadioButton barGraphRadioButton = new JRadioButton("Bar Graph");
-        JRadioButton pieChartRadioButton = new JRadioButton("Pie Chart");
+        JRadioButton barGraphRadioButton = addRadioButton("Bar Graph", true, event -> this.visualizerUI = new BargraphUI());
+        JRadioButton pieChartRadioButton = addRadioButton("Pie Chart", false, event -> this.visualizerUI = new PieChartUI());
 
-        barGraphRadioButton.setSelected(true);
-
-        ButtonGroup buttonGroup = new ButtonGroup();
-        buttonGroup.add(barGraphRadioButton);
-        buttonGroup.add(pieChartRadioButton);
-
-        addComponent(barGraphRadioButton);
-        addComponent(pieChartRadioButton);
 
         addButton("Average Food Plate Visualizer", event -> {
             this.hideWindow();
-            new NutrifitVisualizer("Average User Food Plate Visualizer", this, getVisualizerUI(barGraphRadioButton).buildAverageUserPlateUI()).showWindow();
+            new NutrifitVisualizer("Average User Food Plate Visualizer", this, this.visualizerUI.buildAverageUserPlateUI()).showWindow();
         });
 
         addButton("Calorie Visualizer", event -> {
             this.hideWindow();
-            new NutrifitVisualizer("Calorie Visualizer", this, getVisualizerUI(barGraphRadioButton).buildAverageUserPlateUI()).showWindow();
+            new NutrifitVisualizer("Calorie Visualizer", this, this.visualizerUI.buildAverageUserPlateUI()).showWindow();
 
         });
 
         addButton("CFG Plate Visualizer", event -> {
             this.hideWindow();
-            new NutrifitVisualizer("Canada Food Guide Plate Visualizer", this, getVisualizerUI(barGraphRadioButton).buildAverageUserPlateUI()).showWindow();
+            new NutrifitVisualizer("Canada Food Guide Plate Visualizer", this, this.visualizerUI.buildAverageUserPlateUI()).showWindow();
 
         });
 
         addButton("Exercise Visualizer", event -> {
             this.hideWindow();
-            new NutrifitVisualizer("Exercise Visualizer", this, getVisualizerUI(barGraphRadioButton).buildAverageUserPlateUI()).showWindow();
+            new NutrifitVisualizer("Exercise Visualizer", this, this.visualizerUI.buildAverageUserPlateUI()).showWindow();
 
         });
 
         addButton("Nutrient Visualizer", event -> {
             this.hideWindow();
-            new NutrifitVisualizer("Nutrient Visualizer", this, getVisualizerUI(barGraphRadioButton).buildAverageUserPlateUI()).showWindow();
+            new NutrifitVisualizer("Nutrient Visualizer", this, this.visualizerUI.buildAverageUserPlateUI()).showWindow();
         });
 
+        this.createButtonGroup(barGraphRadioButton, pieChartRadioButton);
         this.addBackButton(NutriFitMainUI.getInstance());
         this.build();
     }
 
-    private VisualizerUI getVisualizerUI(JRadioButton barGraphButton) {
-        return barGraphButton.isSelected() ? new BargraphUI() : new PieChartUI();
-    }
 
 }
