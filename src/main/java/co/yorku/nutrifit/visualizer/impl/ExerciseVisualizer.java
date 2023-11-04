@@ -52,7 +52,9 @@ public class ExerciseVisualizer extends IVisualizer {
     }
 
     @Override
-    public void onDateRangeUpdate(Date newFromDate, Date newToDate) {
+    public void onDateRangeUpdate(String type, Date newFromDate, Date newToDate) {
+
+        if (!type.equals(this.getChartName())) return;
 
         if (getDataset() instanceof DefaultCategoryDataset) {
             ((DefaultCategoryDataset) getDataset()).clear();

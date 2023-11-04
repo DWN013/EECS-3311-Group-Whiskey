@@ -19,17 +19,21 @@ import java.util.concurrent.TimeUnit;
 public class NutrifitVisualizer extends NutrifitWindow {
 
     private ChartPanel chartPanel;
+    private IVisualizer iVisualizer;
 
     public NutrifitVisualizer(String windowName, NutrifitWindow parent, Pair<JFreeChart, IVisualizer> data) {
         super(windowName, new GridLayout(1, 5));
+
 
         this.chartPanel = new ChartPanel(data.getKey());
         this.chartPanel.setPreferredSize(new Dimension(800, 600));
         this.chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         this.chartPanel.setBackground(Color.white);
 
+        this.iVisualizer = data.getValue();
+
         this.addFromToButtons();
-        this.addBackButton(parent, event -> NutriFit.getInstance().getEventManager().unsubscribe(data.getValue()));
+        this.addBackButton(parent, event -> NutriFit.getInstance().getEventManager().unsubscribe(this.iVisualizer));
 
         this.setSize(900, 600);
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -50,7 +54,7 @@ public class NutrifitVisualizer extends NutrifitWindow {
         toDate.setDateFormatString("yyyy-MM-dd");
         toDate.setDate(new Date(System.currentTimeMillis()));
         this.addComponent(toDate);
-        addButton("Update Date Range", event -> NutriFit.getInstance().getEventManager().notify(fromDate.getDate(), toDate.getDate()));
+        addButton("Update Date Range", event -> NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName(), fromDate.getDate(), toDate.getDate()));
     }
 
 
