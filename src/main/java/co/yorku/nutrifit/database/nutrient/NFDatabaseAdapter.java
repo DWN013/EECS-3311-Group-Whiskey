@@ -11,12 +11,17 @@ public class NFDatabaseAdapter implements INFDatabase {
     }
 
     @Override
-    public void setupDatabase() {
-        this.nfDatabaseInterface.setupDatabase();
+    public boolean setupDatabase() {
+        return this.nfDatabaseInterface.setupDatabase();
     }
 
     @Override
     public NutrientInfo getNutrientInfo(String ingredient) {
         return this.nfDatabaseInterface.getNutrientInfo(ingredient);
+    }
+
+    @Override
+    public void close() {
+        this.nfDatabaseInterface.close();
     }
 }

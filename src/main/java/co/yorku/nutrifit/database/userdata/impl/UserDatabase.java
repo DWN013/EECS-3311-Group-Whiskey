@@ -84,7 +84,7 @@ public class UserDatabase implements IUserDatabase {
         try {
             Class.forName("org.sqlite.JDBC");
             this.databaseConnection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
-            System.out.println("Established connection with sqlite database.");
+            System.out.println("Established connection with sqlite database. [UserDatabase]");
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -92,7 +92,7 @@ public class UserDatabase implements IUserDatabase {
     }
 
     @Override
-    public void setupDatabase() {
+    public boolean setupDatabase() {
         try {
             PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(this.CREATE_USER_TABLE);
             preparedStatement.execute();
@@ -105,8 +105,10 @@ public class UserDatabase implements IUserDatabase {
             preparedStatement = this.databaseConnection.prepareStatement(this.CREATE_MEALS_TABLE);
             preparedStatement.execute();
             preparedStatement.close();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            return false;
         }
     }
 
