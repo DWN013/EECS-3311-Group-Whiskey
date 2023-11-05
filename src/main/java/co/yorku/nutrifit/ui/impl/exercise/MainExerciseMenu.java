@@ -2,6 +2,11 @@ package co.yorku.nutrifit.ui.impl.exercise;
 
 import co.yorku.nutrifit.ui.NutrifitWindow;
 import co.yorku.nutrifit.ui.impl.main.NutriFitMainUI;
+import co.yorku.nutrifit.ui.impl.visualizer.AverageUserFoodPlateVisualizer;
+import co.yorku.nutrifit.ui.impl.visualizer.MainVisualizerSelectionUI;
+import co.yorku.nutrifit.ui.impl.exercise.ExerciseDisplayUI;
+import co.yorku.nutrifit.ui.impl.exercise.ExerciseInputUI;
+import co.yorku.nutrifit.visualizer.factory.impl.BargraphUI;
 
 import java.awt.*;
 

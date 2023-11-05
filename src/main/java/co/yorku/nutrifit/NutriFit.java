@@ -8,6 +8,7 @@ import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.database.userdata.impl.UserDatabase;
 import co.yorku.nutrifit.event.EventManager;
 import co.yorku.nutrifit.profile.IProfile;
+//import co.yorku.nutrifit.ui.ProfileSelectionUI;
 import co.yorku.nutrifit.ui.impl.main.LogInOrSignUpPage;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -35,28 +36,12 @@ public class NutriFit {
         this.eventManager = new EventManager();
 
         this.iUserDatabase = new UserDatabaseAdapter(new UserDatabase());
-        if (!this.iUserDatabase.setupDatabase()) {
-            System.out.println("Could not connect to the user database.");
-            System.exit(0);
-            return;
-        }
+        this.iUserDatabase.setupDatabase();
 
         this.infDatabase = new NFDatabaseAdapter(new NFDatabase());
-        if (!this.infDatabase.setupDatabase()) {
-            System.out.println("Could not connect to the user NFDatabase.");
-            System.exit(0);
-            return;
-        }
+        this.infDatabase.setupDatabase();
 
         LogInOrSignUpPage.getInstance().showWindow();
-    }
-
-
-    public void close() {
-        this.infDatabase.close();
-        this.iUserDatabase.close();
-        this.setLoadedProfile(null);
-        System.exit(0);
     }
 
     public Gson getGson() {
@@ -77,10 +62,6 @@ public class NutriFit {
 
     public IProfile getLoadedProfile() {
         return loadedProfile;
-    }
-
-    public boolean isProfileLoaded() {
-        return this.getLoadedProfile() != null;
     }
 
     public void setLoadedProfile(IProfile loadedProfile) {

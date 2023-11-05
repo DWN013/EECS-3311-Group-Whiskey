@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface IUserDatabase {
 
-    boolean setupDatabase();
+    void setupDatabase();
 
     int setupProfile(IProfile profile);
 

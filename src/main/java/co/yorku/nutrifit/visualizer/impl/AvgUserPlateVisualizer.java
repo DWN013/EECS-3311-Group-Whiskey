@@ -1,20 +1,21 @@
 package co.yorku.nutrifit.visualizer.impl;
 
+import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.visualizer.IVisualizer;
 import co.yorku.nutrifit.visualizer.calulcators.AvgUserFoodPlateCalculator;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.general.Dataset;
-import org.jfree.data.general.DefaultPieDataset;
 
 import java.util.Date;
 
 public class AvgUserPlateVisualizer extends IVisualizer {
 
     private AvgUserFoodPlateCalculator avgUserFoodPlateCalculator;
+    private DefaultCategoryDataset defaultCategoryDataset;
 
-    public AvgUserPlateVisualizer(AvgUserFoodPlateCalculator avgUserFoodPlateCalculator, Dataset dataset) {
-        super(dataset);
+    public AvgUserPlateVisualizer(AvgUserFoodPlateCalculator avgUserFoodPlateCalculator) {
+        super();
         this.avgUserFoodPlateCalculator = avgUserFoodPlateCalculator;
+        this.defaultCategoryDataset = new DefaultCategoryDataset();
     }
 
     @Override
@@ -33,40 +34,22 @@ public class AvgUserPlateVisualizer extends IVisualizer {
     }
 
     @Override
-    public DefaultCategoryDataset buildBargraphDataset() {
+    public DefaultCategoryDataset buildDataSet() {
         // TODO: Add Data here
-        ((DefaultCategoryDataset) getDataset()).setValue(100, "Calories Burned", "Today");
-        ((DefaultCategoryDataset) getDataset()).setValue(200, "Calories Burned", "Yesterday");
-        ((DefaultCategoryDataset) getDataset()).setValue(999, "Calories Burned", "Day Before Yesterday");
+        defaultCategoryDataset.setValue(100, "Calories Burned", "Today");
+        defaultCategoryDataset.setValue(200, "Calories Burned", "Yesterday");
+        defaultCategoryDataset.setValue(999, "Calories Burned", "Day Before Yesterday");
 
-        return ((DefaultCategoryDataset) getDataset());
+        return defaultCategoryDataset;
     }
 
     @Override
-    public DefaultPieDataset<String> buildPiechartDataset() {
+    public void onDateRangeUpdate(Date newFromDate, Date newToDate) {
+        this.defaultCategoryDataset.clear();
+        //this.buildDataSet();
 
-        ((DefaultPieDataset<String>) getDataset()).setValue("Today", 20.0);
-        ((DefaultPieDataset<String>) getDataset()).setValue("Yesterday", 80.0);
-
-        return ((DefaultPieDataset<String>) getDataset());
-    }
-
-    @Override
-    public void onDateRangeUpdate(String type, Date newFromDate, Date newToDate) {
-
-        if (!type.equals(this.getChartName())) return;
-
-        if (getDataset() instanceof DefaultCategoryDataset) {
-            ((DefaultCategoryDataset) getDataset()).clear();
-            ((DefaultCategoryDataset) getDataset()).setValue(111, "Calories Burned", "Today");
-            ((DefaultCategoryDataset) getDataset()).setValue(222, "Calories Burned", "Yesterday");
-            ((DefaultCategoryDataset) getDataset()).setValue(333, "Calories Burned", "Day Before Yesterday");
-        } else if (getDataset() instanceof DefaultPieDataset) {
-            ((DefaultPieDataset) getDataset()).clear();
-            ((DefaultPieDataset<String>) getDataset()).setValue("Today", 20.0);
-            ((DefaultPieDataset<String>) getDataset()).setValue("Yesterday", 20.0);
-            ((DefaultPieDataset<String>) getDataset()).setValue("AAA", 60.0);
-        }
-
+        defaultCategoryDataset.setValue(1234, "Calories Burned", "Test Today");
+        defaultCategoryDataset.setValue(99999, "Calories Burned", "Test Yesterday");
+        defaultCategoryDataset.setValue(420, "Calories Burned", "Test Day Before Yesterday");
     }
 }
