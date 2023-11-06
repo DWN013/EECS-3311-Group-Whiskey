@@ -12,6 +12,8 @@ import java.util.ArrayList;
 public class SettingsUI extends NutrifitWindow {
 
 	private static SettingsUI instance;
+	private NutriFit nf;
+	private IProfile userProfile;
 
 	public static SettingsUI getInstance() {
 		if (instance == null) {
@@ -27,15 +29,15 @@ public class SettingsUI extends NutrifitWindow {
 		
 		JComboBox<String> options = addComboBox("Name","Age","Gender","Height","Weight","Units of Measurement");
 		
-		NutriFit nf = NutriFit.getInstance();
-		IProfile profileData = nf.getLoadedProfile();
+		nf = NutriFit.getInstance();
+		userProfile = nf.getLoadedProfile();
 		
-		String name = "Name: " + profileData.getName();
-		String age = "Age: " + profileData.getAge();
-		String height = "Height: " + profileData.getHeight();
-		String weight = "Weight: " + profileData.getWeight();
-		boolean gender = profileData.isMale();
-		boolean unit = profileData.isMetric();
+		String name = "Name: " + userProfile.getName();
+		String age = "Age: " + userProfile.getAge();
+		String height = "Height: " +  String.format("%.2f", userProfile.getHeight());
+		String weight = "Weight: " + String.format("%.2f", userProfile.getWeight());
+		boolean gender = userProfile.isMale();
+		boolean unit = userProfile.isMetric();
 		String g = "Gender: " + (gender == false ? "Female" : "Male");
 		String u = "Unit of Measurement: " + (unit == false ? "Imperial" : "Metric");
 		if (unit == false) {
@@ -47,25 +49,150 @@ public class SettingsUI extends NutrifitWindow {
 			weight = weight + " Kg";
 		}
 		
-		this.addLabel(name);
-		this.addLabel(age);
-		this.addLabel(g);
-		this.addLabel(height);
-		this.addLabel(weight);
-		this.addLabel(u);
+		JLabel nameLabel = this.addLabel(name);
+		JLabel ageLabel = this.addLabel(age);
+		JLabel genderLabel = this.addLabel(g);
+		JLabel heightLabel = this.addLabel(height);
+		JLabel weightLabel = this.addLabel(weight);
+		JLabel unitLabel = this.addLabel(u);
 		
 		addButton("Submit", event -> {
 			//Action Listener of the Submit Button Code Here!
-			//String input = JOptionPane.showInputDialog("Change Age");
-			/*String[] choices = { "A", "B", "C", "D", "E", "F" };
-		    String input = (String) JOptionPane.showInputDialog(null, "Choose now...",
-		        "The Choice of a Lifetime", JOptionPane.QUESTION_MESSAGE, null, // Use
-		                                                                        // default
-		                                                                        // icon
-		        choices, // Array of choices
-		        choices[1]); // Initial choice
-		    System.out.println(input);*/
-			//System.out.println(input);
+			//System.out.println("LETS GO!");
+			int value = options.getSelectedIndex();
+			
+			if (value == 0) //Name
+			{
+				String newName = openTextInputDialog("Please Enter New Name:");
+				if (newName != null)
+				{
+					userProfile.setName(newName);
+					nameLabel.setText("Name: " + newName);
+				}
+			}
+			else if (value == 1) //Age
+			{
+				String newAge = openTextInputDialog("Please Enter New Age (integer):");
+				if (newAge != null)
+				{
+					try 
+					{
+						int numNewAge = Integer.valueOf(newAge);
+						//System.out.println(numNewAge);
+						userProfile.setAge(numNewAge);
+						ageLabel.setText("Age: " + newAge);
+					}
+					catch (NumberFormatException e)
+					{
+						showMessageDialog("Error: Please enter a valid integer value for Age");
+					}
+				}
+			}
+			else if (value == 2) //Gender
+			{
+				String newGender = openDropdownDialog("Choose Gender", "Please Choose Your Gender", 0, "Male", "Female");
+				if (newGender != null)
+				{
+					boolean temp = userProfile.isMale();
+					if (newGender.equals("Male"))
+					{
+						if (temp == false)
+						{
+							userProfile.setGender(true);
+						}
+					}
+					else
+					{
+						if (temp == true)
+						{
+							userProfile.setGender(false);
+						}
+					}
+					genderLabel.setText("Gender: " + newGender);
+				}
+			}
+			else if (value == 3) //Height
+			{
+				String newHeight = openTextInputDialog("Please Enter New Height (integer):");
+				if (newHeight != null)
+				{
+					try {
+						int numNewHeight = Integer.valueOf(newHeight);
+						//System.out.println(numNewAge);
+						userProfile.setHeight(numNewHeight);
+						String t = (unit==true) ? " cm" : " in";
+						heightLabel.setText("Height: " + newHeight + t);
+					}
+					catch (NumberFormatException e)
+					{
+						showMessageDialog("Error: Please enter a valid integer value for Height");
+					}
+				}
+			}
+			else if (value == 4) //Weight
+			{
+				String newWeight = openTextInputDialog("Please Enter New Weight (integer):");
+				if (newWeight != null)
+				{
+					try {
+						int numNewWeight = Integer.valueOf(newWeight);
+						//System.out.println(numNewAge);
+						userProfile.setWeight(numNewWeight);
+						String t = (unit==true) ? " Kg" : " lbs";
+						weightLabel.setText("Weight: " + newWeight + t);
+					}
+					catch (NumberFormatException e)
+					{
+						showMessageDialog("Error: Please enter a valid integer value for Weight");
+					}
+
+				}
+			}
+			else if (value == 5) //Unit
+			{
+				//System.out.println("Chosen to change Unit!");
+				//System.out.println(userProfile.getHeight() + "  " + userProfile.getWeight());
+				String newUnit = openDropdownDialog("Unit of Measurement", "Enter New Unit Of Measurement", 0, "Metric", "Imperial");
+				if (newUnit != null)
+				{
+					float tempHeight = 0.0f;
+					float tempWeight = 0.0f;
+					if (newUnit.equals("Metric"))
+					{
+						//System.out.println("Want to change to Metric");
+						if (userProfile.isMetric() == false) //changing from imperial to Metric 
+						{
+							tempHeight = userProfile.getHeight() * 2.54f;
+							tempWeight = userProfile.getWeight() / 2.2f;
+							heightLabel.setText("Height: " + String.format("%.2f", tempHeight) + " cm");
+							weightLabel.setText("Weight: " + String.format("%.2f", tempWeight) + " Kg");
+							unitLabel.setText("Unit of Measurement: " + newUnit);
+							userProfile.setHeight(tempHeight);
+							userProfile.setWeight(tempWeight);
+							userProfile.setUnit(true);
+						}
+					}
+					else
+					{
+						//System.out.println("Want to change to imperial");
+						if (userProfile.isMetric() == true) //changing from metric to imperial 
+						{
+							//.out.println(userProfile.isMetric());
+							tempHeight = userProfile.getHeight() / 2.54f;
+							tempWeight = userProfile.getWeight() * 2.2f;
+							heightLabel.setText("Height: " + String.format("%.2f", tempHeight) + " in");
+							weightLabel.setText("Weight: " + String.format("%.2f", tempWeight) + " lbs");
+							unitLabel.setText("Unit of Measurement: " + newUnit);
+							userProfile.setHeight(tempHeight);
+							userProfile.setWeight(tempWeight);
+							userProfile.setUnit(false);						
+						}
+					}
+				}
+			}
+			//System.out.println("Now edit the Profile!");
+			nf.editProfile(userProfile);
+			
 		});
 		this.addBackButton(NutriFitMainUI.getInstance());
 		

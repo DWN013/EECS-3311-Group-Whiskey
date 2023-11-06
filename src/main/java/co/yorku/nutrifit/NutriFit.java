@@ -67,6 +67,11 @@ public class NutriFit {
     public void setLoadedProfile(IProfile loadedProfile) {
         this.loadedProfile = loadedProfile;
     }
+    
+    public void editProfile (IProfile profile)
+    {
+    	this.iUserDatabase.updateProfile(profile);
+    }
 
 
     public static void main(String[] args) {
