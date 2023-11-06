@@ -1,5 +1,6 @@
 package co.yorku.nutrifit.ui.impl.main;
 
+import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.ui.NutrifitWindow;
 
 import java.awt.*;
@@ -29,7 +30,7 @@ public class LogInOrSignUpPage extends NutrifitWindow {
 			new SignUpPage(this).showWindow();
 		});
 
-		addButton("Exit", event -> System.exit(0));
+		addButton("Exit", event -> NutriFit.getInstance().close());
 		this.build();
 	}
 

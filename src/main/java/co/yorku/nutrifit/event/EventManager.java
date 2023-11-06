@@ -13,9 +13,9 @@ public class EventManager {
         listeners.remove(listener);
     }
 
-    public void notify(Date newFromDate, Date newToDate) {
+    public void notify(String type, Date newFromDate, Date newToDate) {
         for (IListener listener : listeners) {
-            listener.onDateRangeUpdate(newFromDate, newToDate);
+            listener.onDateRangeUpdate(type, newFromDate, newToDate);
         }
     }
 }
