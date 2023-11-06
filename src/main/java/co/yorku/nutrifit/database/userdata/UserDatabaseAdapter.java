@@ -17,8 +17,8 @@ public class UserDatabaseAdapter implements IUserDatabase {
     }
 
     @Override
-    public void setupDatabase() {
-        this.userDatabaseInterface.setupDatabase();
+    public boolean setupDatabase() {
+        return this.userDatabaseInterface.setupDatabase();
     }
 
     @Override

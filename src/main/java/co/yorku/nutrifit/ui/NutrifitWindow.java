@@ -1,46 +1,71 @@
 package co.yorku.nutrifit.ui;
 
+import co.yorku.nutrifit.NutriFit;
+import co.yorku.nutrifit.ui.impl.main.LogInOrSignUpPage;
+import co.yorku.nutrifit.ui.impl.main.NutriFitMainUI;
 import com.google.common.base.Preconditions;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public abstract class NutrifitWindow extends JFrame {
 
-    private JPanel layout;
+    private JPanel mainJPanel;
     private NutrifitWindow previousWindow;
 
-    public NutrifitWindow(String windowName, GridLayout layout) {
+    public NutrifitWindow(String windowName, GridLayout mainJPanel) {
         super(windowName);
-        Preconditions.checkNotNull(layout, "Layout cannot be null");
-        this.layout = new JPanel(layout);
+        Preconditions.checkNotNull(mainJPanel, "mainJPanel cannot be null");
+        this.mainJPanel = new JPanel(mainJPanel);
+
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if (showConfirmationDialog("Are you sure you want to exit Nutrifit?") == JOptionPane.YES_OPTION){
+                    NutriFit.getInstance().close();
+                } else {
+                    new Timer().schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            if (NutriFit.getInstance().isProfileLoaded()) {
+                                NutriFitMainUI.getInstance().showWindow();
+                            } else {
+                                LogInOrSignUpPage.getInstance().showWindow();
+                            }
+                        }
+                    }, 1);
+                }
+            }
+        });
 
         this.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
     }
 
     public JLabel addLabel(String text) {
         JLabel label = new JLabel(text);
-        this.layout.add(label);
+        this.mainJPanel.add(label);
         return label;
     }
 
     public JTextField addTextField(int columns) {
         JTextField jTextField = new JTextField(columns);
-        this.layout.add(jTextField);
+        this.mainJPanel.add(jTextField);
         return jTextField;
     }
 
     public JComboBox<Enum<?>> addComboBox(Enum<?>[] objects) {
         JComboBox<Enum<?>> comboBox = new JComboBox<>(objects);
-        this.layout.add(comboBox);
+        this.mainJPanel.add(comboBox);
         return comboBox;
     }
 
     public JComboBox<String> addComboBox(String... objects) {
         JComboBox<String> comboBox = new JComboBox<>(objects);
-        this.layout.add(comboBox);
+        this.mainJPanel.add(comboBox);
         return comboBox;
     }
 
@@ -55,15 +80,30 @@ public abstract class NutrifitWindow extends JFrame {
                 1000000,
                 1
         ));
-        this.layout.add(jSpinner);
+        this.mainJPanel.add(jSpinner);
         return jSpinner;
     }
 
     public JButton addButton(String text, ActionListener onClick) {
         JButton button = new JButton(text);
         button.addActionListener(onClick);
-        this.layout.add(button);
+        this.mainJPanel.add(button);
         return button;
+    }
+
+    public JRadioButton addRadioButton(String text, boolean selected, ActionListener onClick) {
+        JRadioButton jRadioButton = new JRadioButton(text);
+        jRadioButton.setSelected(selected);
+        jRadioButton.addActionListener(onClick);
+        this.mainJPanel.add(jRadioButton);
+        return jRadioButton;
+    }
+
+    public void createButtonGroup(JRadioButton... buttons) {
+        ButtonGroup buttonGroup = new ButtonGroup();
+        for (JRadioButton button : buttons) {
+            buttonGroup.add(button);
+        }
     }
 
     public String openDropdownDialog(String windowName, String question, int defaultOption, String... options) {
@@ -88,19 +128,27 @@ public abstract class NutrifitWindow extends JFrame {
     }
 
     public void addComponent(JComponent jComponent) {
-        this.layout.add(jComponent);
+        this.mainJPanel.add(jComponent);
     }
 
-    public void addBackButton(NutrifitWindow previousWindow) {
+
+    public void addBackButton(NutrifitWindow previousWindow, ActionListener preAction) {
         this.previousWindow = previousWindow;
         this.addButton("Back", event -> {
+            if (preAction != null) {
+                preAction.actionPerformed(event);
+            }
             this.previousWindow.showWindow();
             this.hideWindow();
         });
     }
 
+    public void addBackButton(NutrifitWindow previousWindow) {
+        this.addBackButton(previousWindow, null);
+    }
+
     public void build() {
-        this.getContentPane().add(layout);
+        this.getContentPane().add(mainJPanel);
         this.pack();
     }
 
@@ -112,4 +160,7 @@ public abstract class NutrifitWindow extends JFrame {
         this.setVisible(false);
     }
 
+    public JPanel getMainJPanel() {
+        return mainJPanel;
+    }
 }
