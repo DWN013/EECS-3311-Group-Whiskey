@@ -62,6 +62,7 @@ public class SettingsUI extends NutrifitWindow {
 				{
 					NutriFit.getInstance().getLoadedProfile().setName(newName);
 					nameLabel.setText("Name: " + newName);
+					showMessageDialog("Profile Successfully Edited");
 				}
 			}
 			else if (value == 1) //Age
@@ -74,6 +75,7 @@ public class SettingsUI extends NutrifitWindow {
 						int numNewAge = Integer.valueOf(newAge);
 						NutriFit.getInstance().getLoadedProfile().setAge(numNewAge);
 						ageLabel.setText("Age: " + newAge);
+						showMessageDialog("Profile Successfully Edited");
 					}
 					catch (NumberFormatException e)
 					{
@@ -86,16 +88,9 @@ public class SettingsUI extends NutrifitWindow {
 				String newGender = openDropdownDialog("Choose Gender", "Please Choose Your Gender", 0, "Male", "Female");
 				if (newGender != null)
 				{
-					boolean temp = NutriFit.getInstance().getLoadedProfile().isMale();
-					if (newGender.equals("Male") && !temp)
-					{
-						NutriFit.getInstance().getLoadedProfile().setGender(true);
-					}
-					else if (newGender.equals("Female") && temp)
-					{
-						NutriFit.getInstance().getLoadedProfile().setGender(false);
-					}
+					NutriFit.getInstance().getLoadedProfile().setGender(newGender.equals("Male"));
 					genderLabel.setText("Gender: " + newGender);
+					showMessageDialog("Profile Successfully Edited");
 				}
 			}
 			else if (value == 3) //Height
@@ -108,6 +103,7 @@ public class SettingsUI extends NutrifitWindow {
 						NutriFit.getInstance().getLoadedProfile().setHeight(numNewHeight);
 						String t = (unit==true) ? " cm" : " in";
 						heightLabel.setText("Height: " + newHeight + t);
+						showMessageDialog("Profile Successfully Edited");
 					}
 					catch (NumberFormatException e)
 					{
@@ -125,6 +121,7 @@ public class SettingsUI extends NutrifitWindow {
 						NutriFit.getInstance().getLoadedProfile().setWeight(numNewWeight);
 						String t = (NutriFit.getInstance().getLoadedProfile().isMetric()) ? " Kg" : " lbs";
 						weightLabel.setText("Weight: " + newWeight + t);
+						showMessageDialog("Profile Successfully Edited");
 					}
 					catch (NumberFormatException e)
 					{
@@ -162,10 +159,10 @@ public class SettingsUI extends NutrifitWindow {
 						NutriFit.getInstance().getLoadedProfile().setWeight(tempWeight);
 						NutriFit.getInstance().getLoadedProfile().setUnit(false);						
 					}
+					showMessageDialog("Profile Successfully Edited");
 				}
 			}
 			NutriFit.getInstance().editProfile(NutriFit.getInstance().getLoadedProfile());
-			showMessageDialog("Profile Successfully Edited");
 			
 		});
 		this.addBackButton(NutriFitMainUI.getInstance());
