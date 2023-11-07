@@ -33,8 +33,8 @@ public class SettingsUI extends NutrifitWindow {
 		String weight = "Weight: " + String.format("%.2f", NutriFit.getInstance().getLoadedProfile().getWeight());
 		boolean gender = NutriFit.getInstance().getLoadedProfile().isMale();
 		boolean unit = NutriFit.getInstance().getLoadedProfile().isMetric();
-		String g = "Gender: " + (gender == false ? "Female" : "Male");
-		String u = "Unit of Measurement: " + (unit == false ? "Imperial" : "Metric");
+		String genderDisplay = "Gender: " + (gender == false ? "Female" : "Male");
+		String unitDisplay = "Unit of Measurement: " + (unit == false ? "Imperial" : "Metric");
 		if (unit == false) {
 			height = height + " in";
 			weight = weight + " lbs";
@@ -46,10 +46,10 @@ public class SettingsUI extends NutrifitWindow {
 		
 		JLabel nameLabel = this.addLabel(name);
 		JLabel ageLabel = this.addLabel(age);
-		JLabel genderLabel = this.addLabel(g);
+		JLabel genderLabel = this.addLabel(genderDisplay);
 		JLabel heightLabel = this.addLabel(height);
 		JLabel weightLabel = this.addLabel(weight);
-		JLabel unitLabel = this.addLabel(u);
+		JLabel unitLabel = this.addLabel(unitDisplay);
 		
 		addButton("Submit", event -> {
 			//Action Listener of the Submit Button Code Here!
@@ -104,8 +104,8 @@ public class SettingsUI extends NutrifitWindow {
 					try {
 						int numNewHeight = Integer.valueOf(newHeight);
 						NutriFit.getInstance().getLoadedProfile().setHeight(numNewHeight);
-						String t = (unit==true) ? " cm" : " in";
-						heightLabel.setText("Height: " + newHeight + t);
+						String userHeightUnit = (unit==true) ? " cm" : " in";
+						heightLabel.setText("Height: " + newHeight + userHeightUnit);
 						NutriFit.getInstance().editProfile(NutriFit.getInstance().getLoadedProfile());
 						showMessageDialog("Profile Successfully Edited");
 					}
@@ -123,8 +123,8 @@ public class SettingsUI extends NutrifitWindow {
 					try {
 						int numNewWeight = Integer.valueOf(newWeight);
 						NutriFit.getInstance().getLoadedProfile().setWeight(numNewWeight);
-						String t = (NutriFit.getInstance().getLoadedProfile().isMetric()) ? " Kg" : " lbs";
-						weightLabel.setText("Weight: " + newWeight + t);
+						String userWeightUnit = (NutriFit.getInstance().getLoadedProfile().isMetric()) ? " Kg" : " lbs";
+						weightLabel.setText("Weight: " + newWeight + userWeightUnit);
 						NutriFit.getInstance().editProfile(NutriFit.getInstance().getLoadedProfile());
 						showMessageDialog("Profile Successfully Edited");
 					}
@@ -140,28 +140,28 @@ public class SettingsUI extends NutrifitWindow {
 				String newUnit = openDropdownDialog("Unit of Measurement", "Enter New Unit Of Measurement", 0, "Metric", "Imperial");
 				if (newUnit != null)
 				{
-					float tempHeight = 0.0f;
-					float tempWeight = 0.0f;
+					float newHeight = 0.0f;
+					float newWeight = 0.0f;
 					if (newUnit.equals("Metric") && !NutriFit.getInstance().getLoadedProfile().isMetric())
 					{
-						tempHeight = NutriFit.getInstance().getLoadedProfile().getHeight() * 2.54f;
-						tempWeight = NutriFit.getInstance().getLoadedProfile().getWeight() / 2.2f;
-						heightLabel.setText("Height: " + String.format("%.2f", tempHeight) + " cm");
-						weightLabel.setText("Weight: " + String.format("%.2f", tempWeight) + " Kg");
+						newHeight = NutriFit.getInstance().getLoadedProfile().getHeight() * 2.54f;
+						newWeight = NutriFit.getInstance().getLoadedProfile().getWeight() / 2.2f;
+						heightLabel.setText("Height: " + String.format("%.2f", newHeight) + " cm");
+						weightLabel.setText("Weight: " + String.format("%.2f", newWeight) + " Kg");
 						unitLabel.setText("Unit of Measurement: " + newUnit);
-						NutriFit.getInstance().getLoadedProfile().setHeight(tempHeight);
-						NutriFit.getInstance().getLoadedProfile().setWeight(tempWeight);
+						NutriFit.getInstance().getLoadedProfile().setHeight(newHeight);
+						NutriFit.getInstance().getLoadedProfile().setWeight(newWeight);
 						NutriFit.getInstance().getLoadedProfile().setUnit(true);
 					}
 					else if (newUnit.equals("Imperial") && NutriFit.getInstance().getLoadedProfile().isMetric())
 					{
-						tempHeight = NutriFit.getInstance().getLoadedProfile().getHeight() / 2.54f;
-						tempWeight = NutriFit.getInstance().getLoadedProfile().getWeight() * 2.2f;
-						heightLabel.setText("Height: " + String.format("%.2f", tempHeight) + " in");
-						weightLabel.setText("Weight: " + String.format("%.2f", tempWeight) + " lbs");
+						newHeight = NutriFit.getInstance().getLoadedProfile().getHeight() / 2.54f;
+						newWeight = NutriFit.getInstance().getLoadedProfile().getWeight() * 2.2f;
+						heightLabel.setText("Height: " + String.format("%.2f", newHeight) + " in");
+						weightLabel.setText("Weight: " + String.format("%.2f", newWeight) + " lbs");
 						unitLabel.setText("Unit of Measurement: " + newUnit);
-						NutriFit.getInstance().getLoadedProfile().setHeight(tempHeight);
-						NutriFit.getInstance().getLoadedProfile().setWeight(tempWeight);
+						NutriFit.getInstance().getLoadedProfile().setHeight(newHeight);
+						NutriFit.getInstance().getLoadedProfile().setWeight(newWeight);
 						NutriFit.getInstance().getLoadedProfile().setUnit(false);						
 					}
 					NutriFit.getInstance().editProfile(NutriFit.getInstance().getLoadedProfile());
