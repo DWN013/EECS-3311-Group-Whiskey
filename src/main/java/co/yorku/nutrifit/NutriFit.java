@@ -68,7 +68,7 @@ public class NutriFit {
         this.loadedProfile = loadedProfile;
     }
     
-    public void editProfile (IProfile profile)
+    public void editProfile (IProfile profile) //This Method will take the Edited Profile and give it to the User Database to be updated with the new values 
     {
     	this.iUserDatabase.updateProfile(profile);
     }
