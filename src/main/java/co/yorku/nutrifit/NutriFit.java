@@ -53,9 +53,15 @@ public class NutriFit {
 
 
     public void close() {
-        this.infDatabase.close();
-        this.iUserDatabase.close();
+
         this.setLoadedProfile(null);
+
+        if (infDatabase != null) {
+            this.infDatabase.close();
+        }
+        if (iUserDatabase != null) {
+            this.iUserDatabase.close();
+        }
         System.exit(0);
     }
 
@@ -85,6 +91,11 @@ public class NutriFit {
 
     public void setLoadedProfile(IProfile loadedProfile) {
         this.loadedProfile = loadedProfile;
+    }
+    
+    public void editProfile (IProfile profile) //This Method will take the Edited Profile and give it to the User Database to be updated with the new values 
+    {
+    	this.iUserDatabase.updateProfile(profile);
     }
 
 
