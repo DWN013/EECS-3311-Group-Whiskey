@@ -192,10 +192,5 @@ public class SettingsUI extends NutrifitWindow {
 		
 		this.build(); //Add all the components made to the Content Pane
 	}
-	
-	public void showToUser() //Will show the created Content Pane to user if user wishes to see this page - makes all labels and buttons - entire Content pane visible 
-	{
-		setVisible(true); 
-	}
 
 }
