@@ -13,7 +13,7 @@ public class BMRCalculator {
 	{
 
 	}
-	
+
 	public int getBMR(IProfile p)
 	{
 		double bmr = 0.0;

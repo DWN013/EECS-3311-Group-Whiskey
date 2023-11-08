@@ -4,8 +4,6 @@ import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.exercise.IExercise;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Exercise;
-import co.yorku.nutrifit.logs.impl.Meal;
-import co.yorku.nutrifit.profile.IProfile;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -25,15 +23,15 @@ public class ActivityRatingCalculator {
             ex_iterator.sortByDateAscending();
             int totalExerciseTime = 0;
 
-                while (ex_iterator.hasNext()){
+            while (ex_iterator.hasNext()){
                 Exercise exercise = (Exercise) ex_iterator.getNext();
                 if (exercise != null) {
                     // Add exercise duration to total exercise time in minutes
                     totalExerciseTime += ((exercise.getTimeSpentInSeconds()) / 60);
                 }
             }
-            double averageExerciseTimePerWeek = ((double) totalExerciseTime)/14;
-                if (averageExerciseTimePerWeek <= 0.0) {
+            double averageExerciseTimePerWeek = ((double) totalExerciseTime)/2;
+            if (averageExerciseTimePerWeek <= 0.0) {
                 return 1.2;
             } else if (averageExerciseTimePerWeek > 0.0 && averageExerciseTimePerWeek <= 180.0) {
                 return 1.375;
