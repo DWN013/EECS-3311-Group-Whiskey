@@ -53,9 +53,15 @@ public class NutriFit {
 
 
     public void close() {
-        this.infDatabase.close();
-        this.iUserDatabase.close();
+
         this.setLoadedProfile(null);
+
+        if (infDatabase != null) {
+            this.infDatabase.close();
+        }
+        if (iUserDatabase != null) {
+            this.iUserDatabase.close();
+        }
         System.exit(0);
     }
 
