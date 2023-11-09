@@ -50,13 +50,14 @@ public class WeightLossCalculator {
         }
         //Average amount of calories eaten per day.
         double totalAverageCalorieIntake = ((double) totalCalorieIntake)/14;
+        //Initialize variables
+        this.actRating = new ActivityRatingCalculator();
+        this.bmr = new BMRCalculator();
 
         double act_rating = actRating.getUserActivityRating();
         int  bmrCalc = bmr.getBMR(NutriFit.getInstance().getLoadedProfile());
         double caloriesExpendedPerDay = (act_rating * bmrCalc);
-
-        // Left to do:
-        // Get the date right now and use that with the date in the future provided to calculate how many kg they will gain/lose
+        
         selectedDate.setHours(0);
         selectedDate.setMinutes(0);
         selectedDate.setSeconds(0);

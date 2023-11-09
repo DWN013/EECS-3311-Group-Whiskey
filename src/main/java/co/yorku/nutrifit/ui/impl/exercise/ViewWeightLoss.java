@@ -37,13 +37,16 @@ public class ViewWeightLoss extends NutrifitWindow {
 
         addButton("Calculate", event -> {
             Date formattedDate = dateChooser.getDate();
+            System.out.println(formattedDate);
+            //Initialize weight loss calculator
+            this.weightLossCalc = new WeightLossCalculator();
             double kgGainedOrLost = weightLossCalc.getWeightLossForDate(formattedDate);
 
             //Decision tree for if the user gained or lost weight and what message will be displayed
             if(kgGainedOrLost > 0.0) {
-                showMessageDialog(String.format("You're gonna gain %f kg!", kgGainedOrLost));
+                showMessageDialog(String.format("You're gonna gain %.2f kg!", kgGainedOrLost));
             } else if (kgGainedOrLost < 0.0){
-                showMessageDialog(String.format("You're gonna lose %f kg!", kgGainedOrLost));
+                showMessageDialog(String.format("You're gonna lose %.2f kg!", kgGainedOrLost));
             } else {
                 showMessageDialog("You will maintain your current weight.");
             }
