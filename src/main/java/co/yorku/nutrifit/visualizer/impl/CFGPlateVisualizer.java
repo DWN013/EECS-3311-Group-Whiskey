@@ -30,7 +30,7 @@ public class CFGPlateVisualizer extends IVisualizer {
     }
 
     @Override
-    public DefaultCategoryDataset buildBargraphDataset() {
+    public DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate) {
         // TODO: Add Data here
         ((DefaultCategoryDataset) getDataset()).setValue(100, "Calories Burned", "Today");
         ((DefaultCategoryDataset) getDataset()).setValue(200, "Calories Burned", "Yesterday");
@@ -40,7 +40,7 @@ public class CFGPlateVisualizer extends IVisualizer {
     }
 
     @Override
-    public DefaultPieDataset<String> buildPiechartDataset() {
+    public DefaultPieDataset<String> buildPiechartDataset(Date fromDate, Date toDate) {
 
         ((DefaultPieDataset<String>) getDataset()).setValue("Today", 20.0);
         ((DefaultPieDataset<String>) getDataset()).setValue("Yesterday", 80.0);

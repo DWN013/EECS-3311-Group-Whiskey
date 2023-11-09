@@ -21,7 +21,6 @@ public class NutriFit {
         return i;
     }
 
-    // Some stuff
     public Gson gson;
     private EventManager eventManager;
     private IProfile loadedProfile;

@@ -12,34 +12,36 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
+import java.util.Date;
+
 public class BargraphUI implements VisualizerUI {
 
     @Override
-    public Pair<JFreeChart, IVisualizer> buildAverageUserPlateUI() {
+    public Pair<JFreeChart, IVisualizer> buildAverageUserPlateUI(Date fromDate, Date toDate) {
         IVisualizer iVisualizer = new AvgUserPlateVisualizer(new AvgUserFoodPlateCalculator(), new DefaultCategoryDataset());
-        return new Pair<>(iVisualizer.buildBarGraph(), iVisualizer);
+        return new Pair<>(iVisualizer.buildBarGraph(fromDate, toDate), iVisualizer);
     }
 
     @Override
-    public Pair<JFreeChart, IVisualizer> buildCalorieUI() {
+    public Pair<JFreeChart, IVisualizer> buildCalorieUI(Date fromDate, Date toDate) {
         IVisualizer iVisualizer =  new CalorieVisualizer(new CalorieCalculator(), new DefaultCategoryDataset());
-        return new Pair<>(iVisualizer.buildBarGraph(), iVisualizer);
+        return new Pair<>(iVisualizer.buildBarGraph(fromDate, toDate), iVisualizer);
     }
 
     @Override
-    public Pair<JFreeChart, IVisualizer> buildCFGPlateUI() {
+    public Pair<JFreeChart, IVisualizer> buildCFGPlateUI(Date fromDate, Date toDate) {
         IVisualizer iVisualizer =  new CFGPlateVisualizer(new DefaultCategoryDataset());
-        return new Pair<>(iVisualizer.buildBarGraph(), iVisualizer);
+        return new Pair<>(iVisualizer.buildBarGraph(fromDate, toDate), iVisualizer);
     }
     @Override
-    public Pair<JFreeChart, IVisualizer> buildNutrientUI() {
+    public Pair<JFreeChart, IVisualizer> buildNutrientUI(Date fromDate, Date toDate) {
         IVisualizer iVisualizer =  new NutrientVisualizer(new NutrientCalculator(), new DefaultCategoryDataset());
-        return new Pair<>(iVisualizer.buildBarGraph(), iVisualizer);
+        return new Pair<>(iVisualizer.buildBarGraph(fromDate, toDate), iVisualizer);
     }
 
     @Override
-    public Pair<JFreeChart, IVisualizer> buildDailyTotalEnergyExpenditure() {
+    public Pair<JFreeChart, IVisualizer> buildDailyTotalEnergyExpenditure(Date fromDate, Date toDate) {
         IVisualizer iVisualizer =  new ExerciseVisualizer(new DailyTotalEnergyExpenditureCalculator(), new DefaultCategoryDataset());
-        return new Pair<>(iVisualizer.buildBarGraph(), iVisualizer);
+        return new Pair<>(iVisualizer.buildBarGraph(fromDate, toDate), iVisualizer);
     }
 }

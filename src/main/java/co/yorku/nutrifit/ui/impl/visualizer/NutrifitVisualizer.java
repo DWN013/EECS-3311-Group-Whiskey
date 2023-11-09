@@ -21,7 +21,7 @@ public class NutrifitVisualizer extends NutrifitWindow {
     private ChartPanel chartPanel;
     private IVisualizer iVisualizer;
 
-    public NutrifitVisualizer(String windowName, NutrifitWindow parent, Pair<JFreeChart, IVisualizer> data) {
+    public NutrifitVisualizer(String windowName, NutrifitWindow parent, Pair<JFreeChart, IVisualizer> data, Date defaultFromDate, Date defaultToDate) {
         super(windowName, new GridLayout(1, 5));
 
 
@@ -32,7 +32,7 @@ public class NutrifitVisualizer extends NutrifitWindow {
 
         this.iVisualizer = data.getValue();
 
-        this.addFromToButtons();
+        this.addFromToButtons(defaultFromDate, defaultToDate);
         this.addBackButton(parent, event -> NutriFit.getInstance().getEventManager().unsubscribe(this.iVisualizer));
 
         this.setSize(900, 600);
@@ -42,17 +42,17 @@ public class NutrifitVisualizer extends NutrifitWindow {
     }
 
     // By Default we will show the last 7 days
-    public void addFromToButtons() {
+    public void addFromToButtons(Date defaultFromDate, Date defaultToDate) {
 
         addLabel("Date From To:");
         JDateChooser fromDate = new JDateChooser();
         fromDate.setDateFormatString("yyyy-MM-dd");
-        fromDate.setDate(new Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7)));
+        fromDate.setDate(defaultFromDate);
         this.addComponent(fromDate);
 
         JDateChooser toDate = new JDateChooser();
         toDate.setDateFormatString("yyyy-MM-dd");
-        toDate.setDate(new Date(System.currentTimeMillis()));
+        toDate.setDate(defaultToDate);
         this.addComponent(toDate);
         addButton("Update Date Range", event -> NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName(), fromDate.getDate(), toDate.getDate()));
     }

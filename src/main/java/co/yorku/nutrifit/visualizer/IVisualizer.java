@@ -9,6 +9,8 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DefaultPieDataset;
 
+import java.util.Date;
+
 public abstract class IVisualizer implements IListener {
 
     private Dataset dataset;
@@ -29,23 +31,23 @@ public abstract class IVisualizer implements IListener {
 
     public abstract String getBarGraphValueAxisLabel();
 
-    public abstract DefaultCategoryDataset buildBargraphDataset();
+    public abstract DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate);
 
-    public abstract DefaultPieDataset<String> buildPiechartDataset();
+    public abstract DefaultPieDataset<String> buildPiechartDataset(Date fromDate, Date toDate);
 
-    public JFreeChart buildBarGraph() {
+    public JFreeChart buildBarGraph(Date fromDate, Date toDate) {
         return ChartFactory.createBarChart(
                 this.getChartName(),
                 this.getBarGraphCategoryAxisLabel(),
                 this.getBarGraphValueAxisLabel(),
-                this.buildBargraphDataset(),
+                this.buildBargraphDataset(fromDate, toDate),
                 PlotOrientation.VERTICAL,
                 true, true, false);
     }
-    public JFreeChart buildPieChart() {
+    public JFreeChart buildPieChart(Date fromDate, Date toDate) {
         return ChartFactory.createPieChart(
                 this.getChartName(),
-                this.buildPiechartDataset()
+                this.buildPiechartDataset(fromDate, toDate)
         );
     }
 }
