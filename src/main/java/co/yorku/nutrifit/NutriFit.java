@@ -62,6 +62,7 @@ public class NutriFit {
         if (iUserDatabase != null) {
             this.iUserDatabase.close();
         }
+
         System.exit(0);
     }
 
