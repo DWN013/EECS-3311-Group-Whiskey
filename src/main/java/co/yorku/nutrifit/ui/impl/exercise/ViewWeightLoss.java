@@ -39,6 +39,7 @@ public class ViewWeightLoss extends NutrifitWindow {
             Date formattedDate = dateChooser.getDate();
             double kgGainedOrLost = weightLossCalc.getWeightLossForDate(formattedDate);
 
+            //Decision tree for if the user gained or lost weight and what message will be displayed
             if(kgGainedOrLost > 0.0) {
                 showMessageDialog(String.format("You're gonna gain %f kg!", kgGainedOrLost));
             } else if (kgGainedOrLost < 0.0){
@@ -46,27 +47,6 @@ public class ViewWeightLoss extends NutrifitWindow {
             } else {
                 showMessageDialog("You will maintain your current weight.");
             }
-
-
-            /*
-            ActivityType activityType = (ActivityType) exerciseComboBox.getSelectedItem();
-            Intensity intensity = (Intensity) intensityComboBox.getSelectedItem();
-            int durationInSeconds = Integer.parseInt(secondsField.getText());
-            int totalCaloriesBurned = exercise.getTotalCaloriesBurned(activityType, intensity, durationInSeconds, NutriFit.getInstance().getLoadedProfile());
-
-            Date formattedDateTime = dateChooser.getDate();
-            String[] timeSplit = timeField.getText().split(":");
-            formattedDateTime.setHours(Integer.parseInt(timeSplit[0]));
-            formattedDateTime.setMinutes(Integer.parseInt(timeSplit[1]));
-
-            System.out.println(new Date(formattedDateTime.getTime()));
-
-            Exercise exerciseObj = new Exercise(formattedDateTime, durationInSeconds, activityType, intensity, totalCaloriesBurned);
-
-            NutriFit.getInstance().getUserDatabase().addUserExerciseLog(NutriFit.getInstance().getLoadedProfile().getId(), exerciseObj);
-            JOptionPane.showMessageDialog(null, "Exercise Logging Successful!");
-
-             */
         });
 
         this.addBackButton(MainExerciseMenu.getInstance());
