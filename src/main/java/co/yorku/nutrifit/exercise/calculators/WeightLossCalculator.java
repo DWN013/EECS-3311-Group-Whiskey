@@ -67,7 +67,8 @@ public class WeightLossCalculator {
 
         // Multiplies gain or loss by the amount of days we are getting a prediction for (assumes rate will remain the same)
         double caloriesGainedOrLost = (totalAverageCalorieIntake - caloriesExpendedPerDay) * daysApart;
-        double kgGainedOrLost = caloriesGainedOrLost/7700;
+        int calsTokg = 7700;
+        double kgGainedOrLost = (caloriesGainedOrLost/calsTokg);
 
         return kgGainedOrLost;
     }
