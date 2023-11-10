@@ -3,10 +3,10 @@ package co.yorku.nutrifit.ui.impl.meal;
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Meal;
-import co.yorku.nutrifit.object.Ingredients;
+import co.yorku.nutrifit.object.FoodInfo;
 import co.yorku.nutrifit.object.MealType;
 import co.yorku.nutrifit.ui.NutrifitWindow;
-import co.yorku.nutrifit.ui.impl.main.NutriFitMainUI;
+import com.google.common.collect.Maps;
 import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
@@ -16,12 +16,13 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MealInputUI extends NutrifitWindow {
 
     private static MealInputUI instance;
     private DefaultTableModel tableModel;
-    private JTable ingredientsTable;
+    private JTable foodsTable;
 
 
     public static MealInputUI getInstance() {
@@ -32,7 +33,7 @@ public class MealInputUI extends NutrifitWindow {
         return instance;
     }
 
-    private Map<String, Integer> ingredientsMap = new HashMap<>();
+    private Map<String, Integer> foodMap = new HashMap<>();
 
 
     private MealInputUI() {
@@ -50,77 +51,72 @@ public class MealInputUI extends NutrifitWindow {
         addLabel("Meal Type:");
         JComboBox<Enum<?>> mealTypeDropdown = addComboBox(MealType.values());
 
-        addLabel("Ingredients:");
-        JComboBox<Enum<?>> ingredientsField = addComboBox(Ingredients.values());
+        addLabel("Food:");
+        JTextField foodField = addTextField(20);
 
         addLabel("Quantity:");
         JSpinner quantityDropdown = addSpinner();
 
         tableModel = new DefaultTableModel();
-        tableModel.addColumn("Ingredients");
+        tableModel.addColumn("Foods");
         tableModel.addColumn("Quantity");
 
-        ingredientsTable = new JTable(tableModel);
-        addComponent(new JScrollPane(ingredientsTable));
+        foodsTable = new JTable(tableModel);
+
+        JScrollPane jScrollPane = new JScrollPane(foodsTable);
+        jScrollPane.setPreferredSize(new Dimension(150, 75));
+
+        addComponent(jScrollPane);
 
 
-        addButton("Add Ingredient", event -> {
-            String ingredient = ingredientsField.getSelectedItem().toString();
+        addButton("Add Food", event -> {
+            String food = getFood(foodField.getText());
             int quantity = Integer.parseInt(quantityDropdown.getValue().toString());
 
-//            if (NutriFit.getInstance().getNutrientDatabase().isValidFoodType(ingredient)) {
-//                System.out.println("Valid food in NF Database...");
-//            } else {
-//
-//                List<String> similar = NutriFit.getInstance().getNutrientDatabase().getOtherFoodTypes("%" + ingredient + "%");
-//                String userSelected = openDropdownDialog("Could not find food type.", "Select Food Type", 0, similar.toArray(new String[0]));
-//                if (userSelected != null) {
-//                    System.out.println(NutriFit.getInstance().getNutrientDatabase().isValidFoodType(userSelected) + " : " + userSelected);
-//                }
-//            }
-
             // Validate input
-            if (ingredient.isEmpty()) {
-                showMessageDialog( "Please fill in the ingredient field.");
+            if (food == null) {
+                showMessageDialog( "Could not find food specified. Please try again.");
                 return;
             }
 
-            ingredientsMap.put(ingredient, quantity);
+            foodMap.put(food, quantity);
             quantityDropdown.setValue(1);
-            updateIngredientsTable();
+            updateFoodsTable();
         });
 
-        addButton("Edit Ingredient", event -> {
+        addButton("Edit Food", event -> {
 
-            String selectedIngredient = ingredientsField.getSelectedItem().toString();
-            if (ingredientsMap.containsKey(selectedIngredient)) {
-                int currentQuantity = ingredientsMap.get(selectedIngredient);
-                String input = openTextInputDialog("Enter the new quantity for " + selectedIngredient + " (current: " + currentQuantity + ")");
+            String inputtedFood = getFood(foodField.getText());
+
+            if (inputtedFood != null && foodMap.containsKey(inputtedFood)) {
+                int currentQuantity = foodMap.get(inputtedFood);
+                String input = openTextInputDialog("Enter the new quantity for " + inputtedFood + " (current: " + currentQuantity + ")");
                 if (input != null && !input.isEmpty()) {
                     try {
                         int newQuantity = Integer.parseInt(input);
-                        ingredientsMap.put(selectedIngredient, newQuantity);
-                        updateIngredientsTable();
+                        foodMap.put(inputtedFood, newQuantity);
+                        updateFoodsTable();
                     } catch (NumberFormatException e) {
                         showMessageDialog("Please enter a valid integer for the quantity.");
                     }
                 }
             } else {
-                showMessageDialog( "Please add the ingredient before editing.");
+                showMessageDialog( "Please add the food before editing.");
             }
 
         });
-        addButton("Delete Ingredient", event -> {
+        addButton("Delete Food", event -> {
 
-            String selectedIngredient = ingredientsField.getSelectedItem().toString();
-            if (ingredientsMap.containsKey(selectedIngredient)) {
-                int option = showConfirmationDialog( "Do you want to delete " + selectedIngredient + " from the ingredients list?");
+            String selectedFood = getFood(foodField.getText());
+
+            if (selectedFood != null && foodMap.containsKey(selectedFood)) {
+                int option = showConfirmationDialog( "Do you want to delete " + selectedFood + " from the food list?");
                 if (option == JOptionPane.YES_OPTION) {
-                    ingredientsMap.remove(selectedIngredient);
-                    updateIngredientsTable();
+                    foodMap.remove(selectedFood);
+                    updateFoodsTable();
                 }
             } else {
-                showMessageDialog( "Please add the ingredient before deleting.");
+                showMessageDialog( "Please add the food before deleting.");
             }
         });
 
@@ -168,20 +164,22 @@ public class MealInputUI extends NutrifitWindow {
                 formattedDateTime.setHours(Integer.parseInt(timeSplit[0]));
                 formattedDateTime.setMinutes(Integer.parseInt(timeSplit[1]));
 
-                // Code that logs the meal log
-                // ****DO NOT DELETE****
+                Map<FoodInfo, Integer> foodInfo = createFoodMap();
+                Map<Integer, Integer> foodIDToFoodAmountMap = foodInfo.entrySet().stream().collect(Collectors.toMap(e -> e.getKey().getFoodID(), Map.Entry::getValue));
+
                 NutriFit.getInstance().getUserDatabase().addUserMealLog(
                         NutriFit.getInstance().getLoadedProfile().getId(),
                         new Meal(
                                 formattedDateTime,
                                 mealType,
-                                ingredientsMap,
-                                100 // TODO: calculate this
+                                foodIDToFoodAmountMap,
+                                NutriFit.getInstance().getMeal().calculateTotalMealCalories(foodIDToFoodAmountMap)
                         )
                 );
 
+                foodField.setText("");
+                clearFoodsTable();
                 showMessageDialog( "Meal Logging Successful!");
-                clearIngredientsTable();
             } catch (NumberFormatException e) {
                 showMessageDialog("Please enter a valid time in the format HH:mm.");
             } catch (NullPointerException e) {
@@ -190,26 +188,46 @@ public class MealInputUI extends NutrifitWindow {
 
         });
 
-        this.addBackButton(NutriFitMainUI.getInstance());
+        this.addBackButton(MainMealMenu.getInstance());
         this.build();
     }
 
-    private void updateIngredientsTable() {
-        clearIngredientsTable();
+    private String getFood(String inputtedUserText) {
+        List<String> foodNames = NutriFit.getInstance().getNutrientDatabase().getFoodTypesSimilar(inputtedUserText);
 
-        for (Map.Entry<String, Integer> entry : ingredientsMap.entrySet()) {
-            String ingredient = entry.getKey();
+        if (foodNames.isEmpty()) {
+            return null;
+        }
+
+        return openDropdownDialog("Select Food", "Select Food", 0, foodNames.toArray(new String[0]));
+    }
+
+    private Map<FoodInfo, Integer> createFoodMap() {
+        Map<FoodInfo, Integer> foodNamesMappedToFoodIDs = Maps.newHashMap();
+
+        for (Map.Entry<String, Integer> stringIntegerEntry : this.foodMap.entrySet()) {
+            foodNamesMappedToFoodIDs.put(NutriFit.getInstance().getNutrientDatabase().getFoodInfo(stringIntegerEntry.getKey()), stringIntegerEntry.getValue());
+        }
+
+        return foodNamesMappedToFoodIDs;
+    }
+
+    private void updateFoodsTable() {
+        clearFoodsTable();
+
+        for (Map.Entry<String, Integer> entry : foodMap.entrySet()) {
+            String food = entry.getKey();
             Integer quantity = entry.getValue();
-            tableModel.addRow(new Object[]{ingredient, quantity});
+            tableModel.addRow(new Object[]{food, quantity});
         }
     }
 
-    private void clearIngredientsTable() {
+    private void clearFoodsTable() {
         tableModel.setRowCount(0);
     }
     public void reset() {
-        this.clearIngredientsTable();
-        this.ingredientsMap.clear();
+        this.clearFoodsTable();
+        this.foodMap.clear();
     }
 
 }

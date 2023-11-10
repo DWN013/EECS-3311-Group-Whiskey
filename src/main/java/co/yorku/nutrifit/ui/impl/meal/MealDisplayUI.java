@@ -30,8 +30,8 @@ public class MealDisplayUI extends NutrifitWindow {
 
             String mapAsANiceString = "";
 
-            for (Map.Entry<String, Integer> stringIntegerEntry : meal.getIngredientsAndQuantities().entrySet()) {
-                mapAsANiceString += "[" + stringIntegerEntry.getKey() + "=" + stringIntegerEntry.getValue() + "]";
+            for (Map.Entry<Integer, Integer> stringIntegerEntry : meal.getFoodIDAndAmounts().entrySet()) {
+                mapAsANiceString += "[" + NutriFit.getInstance().getNutrientDatabase().getFoodInfo(stringIntegerEntry.getKey()).getFoodName() + "=" + stringIntegerEntry.getValue() + "]";
             }
 
             String toShow = meal.getDate().toString() + " [TYPE=" + meal.getMealType().name() + ", TOTAL_CALORIES=" + meal.getTotalMealCalories() + "]: " + mapAsANiceString;
@@ -43,9 +43,5 @@ public class MealDisplayUI extends NutrifitWindow {
         this.addComponent(new JList<>(data));
         this.addBackButton(NutriFitMainUI.getInstance());
         this.build();
-    }
-
-    public void showToUser() {
-        setVisible(true);
     }
 }

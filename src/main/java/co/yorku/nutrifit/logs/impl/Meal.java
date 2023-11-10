@@ -8,13 +8,13 @@ import java.util.Map;
 
 public class Meal extends ILog {
     private MealType mealType;
-    private Map<String, Integer> ingredientsAndQuantities;
+    private Map<Integer, Integer> foodIDAndAmounts;
     private int totalMealCalories;
 
-    public Meal(Date date, MealType mealType, Map<String, Integer> ingredientsAndQuantities, int totalMealCalories) {
+    public Meal(Date date, MealType mealType, Map<Integer, Integer> foodIDAndAmounts, int totalMealCalories) {
         super(date);
         this.mealType = mealType;
-        this.ingredientsAndQuantities = ingredientsAndQuantities;
+        this.foodIDAndAmounts = foodIDAndAmounts;
         this.totalMealCalories = totalMealCalories;
     }
 
@@ -22,8 +22,8 @@ public class Meal extends ILog {
         return mealType;
     }
 
-    public Map<String, Integer> getIngredientsAndQuantities() {
-        return ingredientsAndQuantities;
+    public Map<Integer, Integer> getFoodIDAndAmounts() {
+        return foodIDAndAmounts;
     }
 
     public int getTotalMealCalories() {

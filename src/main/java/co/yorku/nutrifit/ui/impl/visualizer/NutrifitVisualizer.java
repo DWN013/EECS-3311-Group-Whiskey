@@ -6,13 +6,17 @@ import co.yorku.nutrifit.visualizer.IVisualizer;
 import com.google.common.base.Preconditions;
 import com.toedter.calendar.JDateChooser;
 import javafx.util.Pair;
+import org.jfree.chart.ChartMouseEvent;
+import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PiePlot;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -24,11 +28,45 @@ public class NutrifitVisualizer extends NutrifitWindow {
     public NutrifitVisualizer(String windowName, NutrifitWindow parent, Pair<JFreeChart, IVisualizer> data, Date defaultFromDate, Date defaultToDate) {
         super(windowName, new GridLayout(1, 5));
 
-
         this.chartPanel = new ChartPanel(data.getKey());
         this.chartPanel.setPreferredSize(new Dimension(800, 600));
         this.chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         this.chartPanel.setBackground(Color.white);
+
+        this.chartPanel.addChartMouseListener(new ChartMouseListener() {
+            @Override
+            public void chartMouseClicked(ChartMouseEvent chartMouseEvent) {
+                if (chartMouseEvent.getChart().getPlot() instanceof PiePlot) {
+
+                    if (chartMouseEvent.getEntity() == null) return;
+
+                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd yyyy");
+                    String dateText = chartMouseEvent.getEntity().getToolTipText();
+                    try {
+                        Date fromDate = simpleDateFormat.parse(dateText);
+                        Date toDate = simpleDateFormat.parse(dateText);
+
+                        fromDate.setHours(0);
+                        fromDate.setMinutes(0);
+                        fromDate.setSeconds(0);
+
+                        toDate.setHours(23);
+                        toDate.setMinutes(59);
+                        toDate.setSeconds(59);
+
+                        NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName() + "_EXPAND", fromDate, toDate);
+
+                    } catch (Exception e) {
+                        return;
+                    }
+
+                }
+            }
+
+            @Override
+            public void chartMouseMoved(ChartMouseEvent chartMouseEvent) {
+            }
+        });
 
         this.iVisualizer = data.getValue();
 

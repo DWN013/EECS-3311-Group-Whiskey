@@ -8,27 +8,24 @@ import com.google.common.collect.Maps;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class CalorieCalculator {
 
-    public LinkedHashMap<String, Integer> getCalories(Date dateFrom, Date dateTo) {
+    public LinkedHashMap<String, Integer> getCaloriesPerDay(Date dateFrom, Date dateTo) {
 
         LogIterator logIterator = NutriFit.getInstance().getUserDatabase().getUserMealLogs(
                 NutriFit.getInstance().getLoadedProfile().getId(),
                 dateFrom,
                 dateTo
         );
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd yyyy");
-
         logIterator.sortByDateAscending();
 
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd yyyy");
         LinkedHashMap<String, Integer> caloriesPerDay = Maps.newLinkedHashMap();
+
         while (logIterator.hasNext()) {
             Meal meal = (Meal)  logIterator.getNext();
             Date date = meal.getDate();
-
             String key = simpleDateFormat.format(date);
 
             caloriesPerDay.put(key, caloriesPerDay.getOrDefault(key, 0) + meal.getTotalMealCalories());

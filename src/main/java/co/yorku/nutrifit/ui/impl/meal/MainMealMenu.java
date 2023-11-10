@@ -20,11 +20,12 @@ public class MainMealMenu extends NutrifitWindow {
         super("Meal Menu", new GridLayout());
         addButton("Log Meal", event -> {
             this.hideWindow();
+            MealInputUI.getInstance().reset();
             MealInputUI.getInstance().showWindow();
         });
         addButton("Show Meal Log", event -> {
             this.hideWindow();
-            new MealDisplayUI().showToUser();
+            new MealDisplayUI().showWindow();
         });
 
         this.addBackButton(NutriFitMainUI.getInstance());

@@ -1,6 +1,5 @@
 package co.yorku.nutrifit;
 
-import co.yorku.nutrifit.database.IDatabase;
 import co.yorku.nutrifit.database.nutrient.INFDatabase;
 import co.yorku.nutrifit.database.nutrient.NFDatabaseAdapter;
 import co.yorku.nutrifit.database.nutrient.impl.NFDatabase;
@@ -8,6 +7,8 @@ import co.yorku.nutrifit.database.userdata.UserDatabaseAdapter;
 import co.yorku.nutrifit.database.userdata.IUserDatabase;
 import co.yorku.nutrifit.database.userdata.impl.UserDatabase;
 import co.yorku.nutrifit.event.EventManager;
+import co.yorku.nutrifit.meal.IMeal;
+import co.yorku.nutrifit.meal.impl.MealHandler;
 import co.yorku.nutrifit.profile.IProfile;
 import co.yorku.nutrifit.ui.impl.main.LogInOrSignUpPage;
 import com.google.gson.Gson;
@@ -24,6 +25,8 @@ public class NutriFit {
 
     public Gson gson;
     private EventManager eventManager;
+
+    private IMeal iMeal;
     private IProfile loadedProfile;
     private IUserDatabase iUserDatabase;
     private INFDatabase infDatabase;
@@ -33,6 +36,7 @@ public class NutriFit {
 
         this.gson = new GsonBuilder().create();
         this.eventManager = new EventManager();
+        this.iMeal = new MealHandler();
 
         this.iUserDatabase = new UserDatabaseAdapter(new UserDatabase());
         if (!this.iUserDatabase.connect() || !this.iUserDatabase.setupDatabase()) {
@@ -73,6 +77,10 @@ public class NutriFit {
 
     public EventManager getEventManager() {
         return eventManager;
+    }
+
+    public IMeal getMeal() {
+        return iMeal;
     }
 
     public IUserDatabase getUserDatabase() {

@@ -1,6 +1,8 @@
 package co.yorku.nutrifit.database.nutrient;
 
-import co.yorku.nutrifit.object.NutrientInfo;
+import co.yorku.nutrifit.object.FoodInfo;
+import co.yorku.nutrifit.object.NutrientData;
+import co.yorku.nutrifit.object.FoodNutrientInfo;
 
 import java.util.List;
 
@@ -28,17 +30,27 @@ public class NFDatabaseAdapter implements INFDatabase {
     }
 
     @Override
-    public NutrientInfo getNutrientInfo(String ingredient) {
-        return this.nfDatabaseInterface.getNutrientInfo(ingredient);
+    public FoodInfo getFoodInfo(String ingredient) {
+        return this.nfDatabaseInterface.getFoodInfo(ingredient);
     }
 
     @Override
-    public boolean isValidFoodType(String foodType) {
-        return this.nfDatabaseInterface.isValidFoodType(foodType);
+    public FoodInfo getFoodInfo(int foodID) {
+        return this.nfDatabaseInterface.getFoodInfo(foodID);
     }
 
     @Override
-    public List<String> getOtherFoodTypes(String checkFoodType) {
-        return this.nfDatabaseInterface.getOtherFoodTypes(checkFoodType);
+    public FoodNutrientInfo getNutrientInfo(int foodID) {
+        return this.nfDatabaseInterface.getNutrientInfo(foodID);
+    }
+
+    @Override
+    public NutrientData getNutrientData(int nutrientID) {
+        return this.nfDatabaseInterface.getNutrientData(nutrientID);
+    }
+
+    @Override
+    public List<String> getFoodTypesSimilar(String checkFoodType) {
+        return this.nfDatabaseInterface.getFoodTypesSimilar(checkFoodType);
     }
 }
