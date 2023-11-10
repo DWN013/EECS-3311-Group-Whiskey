@@ -25,7 +25,7 @@ public class MainExerciseMenu extends NutrifitWindow {
             this.hideWindow();
             new ExerciseDisplayUI().showToUser();
         });
-        addButton("View Weight Loss", event -> {
+        addButton("View Projected Weight Loss", event -> {
             this.hideWindow();
 
             //AverageUserFoodPlateVisualizer averageUserFoodPlateVisualizer = new AverageUserFoodPlateVisualizer(new BargraphUI().buildAverageUserPlateUI(), this);

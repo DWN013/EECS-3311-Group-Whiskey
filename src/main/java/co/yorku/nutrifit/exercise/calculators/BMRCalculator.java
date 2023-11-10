@@ -9,14 +9,11 @@ import co.yorku.nutrifit.profile.IProfile;
 
 
 public class BMRCalculator {
-	
-	
 	public BMRCalculator ()
 	{
-		
-		
+
 	}
-	
+
 	public int getBMR(IProfile p)
 	{
 		double bmr = 0.0;
@@ -42,6 +39,4 @@ public class BMRCalculator {
 		}
 		return (int)bmr;
 	}
-
-
 }
