@@ -100,10 +100,10 @@ public class NutrientCalculator {
 
         for (Map.Entry<String, Map<String, Pair<Double, Integer>>> stringLinkedHashMapEntry : data.entrySet()) {
 
-            String key = stringLinkedHashMapEntry.getKey();
+            String day = stringLinkedHashMapEntry.getKey();
             Map<String, Double> averageNutrients = calculateAverage(stringLinkedHashMapEntry);
 
-            averageNutrientsPerDay.put(key, averageNutrients);
+            averageNutrientsPerDay.put(day, averageNutrients);
         }
         return averageNutrientsPerDay;
     }
