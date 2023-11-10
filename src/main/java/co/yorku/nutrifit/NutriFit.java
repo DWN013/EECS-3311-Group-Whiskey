@@ -1,5 +1,6 @@
 package co.yorku.nutrifit;
 
+import co.yorku.nutrifit.database.IDatabase;
 import co.yorku.nutrifit.database.nutrient.INFDatabase;
 import co.yorku.nutrifit.database.nutrient.NFDatabaseAdapter;
 import co.yorku.nutrifit.database.nutrient.impl.NFDatabase;
@@ -21,7 +22,6 @@ public class NutriFit {
         return i;
     }
 
-    // Some stuff
     public Gson gson;
     private EventManager eventManager;
     private IProfile loadedProfile;
@@ -35,14 +35,14 @@ public class NutriFit {
         this.eventManager = new EventManager();
 
         this.iUserDatabase = new UserDatabaseAdapter(new UserDatabase());
-        if (!this.iUserDatabase.setupDatabase()) {
+        if (!this.iUserDatabase.connect() || !this.iUserDatabase.setupDatabase()) {
             System.out.println("Could not connect to the user database.");
             System.exit(0);
             return;
         }
 
         this.infDatabase = new NFDatabaseAdapter(new NFDatabase());
-        if (!this.infDatabase.setupDatabase()) {
+        if (!this.infDatabase.connect() || !this.infDatabase.setupDatabase()) {
             System.out.println("Could not connect to the user NFDatabase.");
             System.exit(0);
             return;
@@ -57,13 +57,15 @@ public class NutriFit {
         this.setLoadedProfile(null);
 
         if (infDatabase != null) {
-            this.infDatabase.close();
+            this.infDatabase.closeConnection();
         }
         if (iUserDatabase != null) {
-            this.iUserDatabase.close();
+            this.iUserDatabase.closeConnection();
         }
+
         System.exit(0);
     }
+
 
     public Gson getGson() {
         return gson;

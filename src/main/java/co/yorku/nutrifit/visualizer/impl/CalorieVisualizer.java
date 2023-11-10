@@ -7,6 +7,7 @@ import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import java.util.Date;
+import java.util.Map;
 
 public class CalorieVisualizer extends IVisualizer {
 
@@ -19,34 +20,40 @@ public class CalorieVisualizer extends IVisualizer {
 
     @Override
     public String getChartName() {
-        return "Calories Burned";
+        return "Calories Consumed";
     }
 
     @Override
     public String getBarGraphCategoryAxisLabel() {
-        return "Something";
+        return "Date";
     }
 
     @Override
     public String getBarGraphValueAxisLabel() {
-        return "Something Else";
+        return "Calories Consumed";
     }
 
     @Override
-    public DefaultCategoryDataset buildBargraphDataset() {
-        // TODO: Add Data here
-        ((DefaultCategoryDataset) getDataset()).setValue(100, "Calories Burned", "Today");
-        ((DefaultCategoryDataset) getDataset()).setValue(200, "Calories Burned", "Yesterday");
-        ((DefaultCategoryDataset) getDataset()).setValue(999, "Calories Burned", "Day Before Yesterday");
+    public DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate) {
+
+        Map<String, Integer> calorieData = calorieCalculator.getCalories(fromDate, toDate);
+
+        for (Map.Entry<String, Integer> stringIntegerEntry : calorieData.entrySet()) {
+            ((DefaultCategoryDataset) getDataset()).setValue(stringIntegerEntry.getValue(), "Calories Consumed", stringIntegerEntry.getKey());
+        }
 
         return ((DefaultCategoryDataset) getDataset());
     }
 
     @Override
-    public DefaultPieDataset<String> buildPiechartDataset() {
+    public DefaultPieDataset<String> buildPiechartDataset(Date fromDate, Date toDate) {
 
-        ((DefaultPieDataset<String>) getDataset()).setValue("Today", 20.0);
-        ((DefaultPieDataset<String>) getDataset()).setValue("Yesterday", 80.0);
+        Map<String, Integer> calorieData = calorieCalculator.getCalories(fromDate, toDate);
+
+        for (Map.Entry<String, Integer> stringIntegerEntry : calorieData.entrySet()) {
+            ((DefaultPieDataset<String>) getDataset()).setValue(stringIntegerEntry.getKey(), stringIntegerEntry.getValue());
+        }
+
 
         return ((DefaultPieDataset<String>) getDataset());
     }
@@ -58,14 +65,10 @@ public class CalorieVisualizer extends IVisualizer {
         
         if (getDataset() instanceof DefaultCategoryDataset) {
             ((DefaultCategoryDataset) getDataset()).clear();
-            ((DefaultCategoryDataset) getDataset()).setValue(111, "Calories Burned", "Today");
-            ((DefaultCategoryDataset) getDataset()).setValue(222, "Calories Burned", "Yesterday");
-            ((DefaultCategoryDataset) getDataset()).setValue(333, "Calories Burned", "Day Before Yesterday");
+            this.buildBargraphDataset(newFromDate, newToDate);
         } else if (getDataset() instanceof DefaultPieDataset) {
-            ((DefaultPieDataset) getDataset()).clear();
-            ((DefaultPieDataset<String>) getDataset()).setValue("Today", 20.0);
-            ((DefaultPieDataset<String>) getDataset()).setValue("Yesterday", 20.0);
-            ((DefaultPieDataset<String>) getDataset()).setValue("AAA", 60.0);
+            ((DefaultPieDataset<String>) getDataset()).clear();
+            this.buildPiechartDataset(newFromDate, newToDate);
         }
 
     }
