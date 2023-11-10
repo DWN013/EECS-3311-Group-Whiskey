@@ -5,6 +5,7 @@ import co.yorku.nutrifit.object.NutrientData;
 import co.yorku.nutrifit.object.FoodNutrientInfo;
 
 import java.util.List;
+import java.util.Map;
 
 public class NFDatabaseAdapter implements INFDatabase {
 
@@ -47,6 +48,16 @@ public class NFDatabaseAdapter implements INFDatabase {
     @Override
     public NutrientData getNutrientData(int nutrientID) {
         return this.nfDatabaseInterface.getNutrientData(nutrientID);
+    }
+
+    @Override
+    public String getFoodGroupName(int foodGroupID) {
+        return this.nfDatabaseInterface.getFoodGroupName(foodGroupID);
+    }
+
+    @Override
+    public Map<Integer, String> getAllFoodGroups() {
+        return this.nfDatabaseInterface.getAllFoodGroups();
     }
 
     @Override

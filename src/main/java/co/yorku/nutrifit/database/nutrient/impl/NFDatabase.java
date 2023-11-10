@@ -19,8 +19,9 @@ public class NFDatabase implements INFDatabase {
     private String GET_FOOD_DATA_FROM_NAME = "SELECT * FROM food_names WHERE FoodDescription=?";
     private String GET_FOOD_DATA_FROM_FOODID = "SELECT * FROM food_names WHERE foodID=?";
     private String GET_NUTRIENT_INFO_FROM_FOODID = "SELECT * FROM nutrient_amounts WHERE foodID=?";
-
     private String GET_NUTRIENT_DATA_FROM_NUTRIENTID = "SELECT * FROM nutrient_names WHERE nutrientID=?";
+
+    private String GET_ALL_FOOD_GROUS = "SELECT * FROM food_groups";
 
     private String GET_SIMILAR_FOOD_TYPES = "SELECT * FROM food_names WHERE FoodDescription LIKE ?;";
 
@@ -192,6 +193,39 @@ public class NFDatabase implements INFDatabase {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public String getFoodGroupName(int foodGroupID) {
+        return this.getAllFoodGroups().getOrDefault(foodGroupID, null);
+    }
+
+    @Override
+    public Map<Integer, String> getAllFoodGroups() {
+
+        Map<Integer, String> data = Maps.newHashMap();
+
+        try {
+
+            PreparedStatement preparedStatement = this.databaseConnection.prepareStatement(this.GET_ALL_FOOD_GROUS);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet != null) {
+
+                while (resultSet.next()) {
+                    data.put(resultSet.getInt("FoodGroupID"), resultSet.getString("FoodGroupName"));
+                }
+                resultSet.close();
+            }
+
+            preparedStatement.close();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        return data;
     }
 
     @Override

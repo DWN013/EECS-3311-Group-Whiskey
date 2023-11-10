@@ -6,6 +6,7 @@ import co.yorku.nutrifit.object.NutrientData;
 import co.yorku.nutrifit.object.FoodNutrientInfo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface INFDatabase extends IDatabase {
 
@@ -16,6 +17,10 @@ public interface INFDatabase extends IDatabase {
     FoodNutrientInfo getNutrientInfo(int foodID);
 
     NutrientData getNutrientData(int nutrientID);
+
+    String getFoodGroupName(int foodGroupID);
+
+    Map<Integer, String> getAllFoodGroups();
 
     List<String> getFoodTypesSimilar(String checkFoodType);
 

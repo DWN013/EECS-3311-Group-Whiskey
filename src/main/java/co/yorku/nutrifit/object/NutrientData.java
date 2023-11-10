@@ -7,7 +7,6 @@ public class NutrientData {
     private String symbolText;
     private String unit;
     private String name;
-
     private String tag;
 
     public NutrientData(int nutrientID, int nutrientCode, String symbolText, String unit, String name, String tag) {
