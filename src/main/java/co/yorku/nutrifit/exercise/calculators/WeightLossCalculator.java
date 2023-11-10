@@ -57,7 +57,7 @@ public class WeightLossCalculator {
         double act_rating = actRating.getUserActivityRating();
         int  bmrCalc = bmr.getBMR(NutriFit.getInstance().getLoadedProfile());
         double caloriesExpendedPerDay = (act_rating * bmrCalc);
-        
+
         selectedDate.setHours(0);
         selectedDate.setMinutes(0);
         selectedDate.setSeconds(0);
@@ -67,8 +67,10 @@ public class WeightLossCalculator {
         int daysApart = (int) (timeDifference / (1000 * 60 * 60 * 24));
 
         // Multiplies gain or loss by the amount of days we are getting a prediction for (assumes rate will remain the same)
+        //Calorie intake - RMR
         double caloriesGainedOrLost = (totalAverageCalorieIntake - caloriesExpendedPerDay) * daysApart;
         int calsTokg = 7700;
+        //Makes final calculation
         double kgGainedOrLost = (caloriesGainedOrLost/calsTokg);
 
         return kgGainedOrLost;

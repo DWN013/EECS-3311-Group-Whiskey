@@ -46,7 +46,7 @@ public class ViewWeightLoss extends NutrifitWindow {
             if(kgGainedOrLost > 0.0) {
                 showMessageDialog(String.format("You're gonna gain %.2f kg!", kgGainedOrLost));
             } else if (kgGainedOrLost < 0.0){
-                showMessageDialog(String.format("You're gonna lose %.2f kg!", kgGainedOrLost));
+                showMessageDialog(String.format("You're gonna lose %.2f kg!", (kgGainedOrLost*-1)));
             } else {
                 showMessageDialog("You will maintain your current weight.");
             }
