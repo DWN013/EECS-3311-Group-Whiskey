@@ -1,5 +1,6 @@
 package co.yorku.nutrifit.database.userdata;
 
+import co.yorku.nutrifit.database.IDatabase;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Exercise;
 import co.yorku.nutrifit.logs.impl.Meal;
@@ -8,9 +9,7 @@ import co.yorku.nutrifit.profile.IProfile;
 import java.util.Date;
 import java.util.List;
 
-public interface IUserDatabase {
-
-    boolean setupDatabase();
+public interface IUserDatabase extends IDatabase {
 
     int setupProfile(IProfile profile);
 
@@ -27,6 +26,4 @@ public interface IUserDatabase {
     LogIterator getUserMealLogs(int userId, Date fromDate, Date toDate);
 
     boolean addUserMealLog(int userId, Meal mealLog);
-
-    void close();
 }

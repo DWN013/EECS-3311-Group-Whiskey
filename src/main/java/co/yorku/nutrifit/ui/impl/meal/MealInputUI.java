@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MealInputUI extends NutrifitWindow {
@@ -66,6 +67,17 @@ public class MealInputUI extends NutrifitWindow {
         addButton("Add Ingredient", event -> {
             String ingredient = ingredientsField.getSelectedItem().toString();
             int quantity = Integer.parseInt(quantityDropdown.getValue().toString());
+
+//            if (NutriFit.getInstance().getNutrientDatabase().isValidFoodType(ingredient)) {
+//                System.out.println("Valid food in NF Database...");
+//            } else {
+//
+//                List<String> similar = NutriFit.getInstance().getNutrientDatabase().getOtherFoodTypes("%" + ingredient + "%");
+//                String userSelected = openDropdownDialog("Could not find food type.", "Select Food Type", 0, similar.toArray(new String[0]));
+//                if (userSelected != null) {
+//                    System.out.println(NutriFit.getInstance().getNutrientDatabase().isValidFoodType(userSelected) + " : " + userSelected);
+//                }
+//            }
 
             // Validate input
             if (ingredient.isEmpty()) {

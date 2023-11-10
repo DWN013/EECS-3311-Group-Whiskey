@@ -1,13 +1,16 @@
 package co.yorku.nutrifit.database.nutrient;
 
+import co.yorku.nutrifit.database.IDatabase;
 import co.yorku.nutrifit.object.NutrientInfo;
 
-public interface INFDatabase {
+import java.util.List;
 
-    boolean setupDatabase();
+public interface INFDatabase extends IDatabase {
 
     NutrientInfo getNutrientInfo(String ingredient);
 
-    void close();
+    boolean isValidFoodType(String foodType);
+
+    List<String> getOtherFoodTypes(String checkFoodType);
 
 }

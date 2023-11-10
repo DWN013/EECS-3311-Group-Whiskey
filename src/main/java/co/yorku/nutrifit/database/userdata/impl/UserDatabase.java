@@ -70,14 +70,16 @@ public class UserDatabase implements IUserDatabase {
     private String GET_USER_MEAL_LOGS = "SELECT * FROM user_meal_logs WHERE userId=? AND date BETWEEN ? and ?;";
     private Connection databaseConnection;
 
-    public UserDatabase() {
+    @Override
+    public boolean connect() {
 
         File dbFile = new File("userdatabase.db");
         if (!dbFile.exists()) {
             try {
                 dbFile.createNewFile();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
+                return false;
             }
         }
 
@@ -87,8 +89,9 @@ public class UserDatabase implements IUserDatabase {
             System.out.println("Established connection with sqlite database. [UserDatabase]");
         } catch (Exception e) {
             e.printStackTrace();
-            return;
+            return false;
         }
+        return true;
     }
 
     @Override
@@ -109,6 +112,17 @@ public class UserDatabase implements IUserDatabase {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+    }
+
+    @Override
+    public void closeConnection() {
+        if (this.databaseConnection != null) {
+            try {
+                this.databaseConnection.close();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -340,16 +354,5 @@ public class UserDatabase implements IUserDatabase {
         }
 
         return true;
-    }
-
-    @Override
-    public void close() {
-        if (this.databaseConnection != null) {
-            try {
-                this.databaseConnection.close();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
     }
 }

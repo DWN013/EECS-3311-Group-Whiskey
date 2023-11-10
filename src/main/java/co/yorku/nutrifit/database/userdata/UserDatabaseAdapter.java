@@ -17,8 +17,18 @@ public class UserDatabaseAdapter implements IUserDatabase {
     }
 
     @Override
+    public boolean connect() {
+        return this.userDatabaseInterface.connect();
+    }
+
+    @Override
     public boolean setupDatabase() {
         return this.userDatabaseInterface.setupDatabase();
+    }
+
+    @Override
+    public void closeConnection() {
+        this.userDatabaseInterface.closeConnection();
     }
 
     @Override
@@ -59,10 +69,5 @@ public class UserDatabaseAdapter implements IUserDatabase {
     @Override
     public boolean addUserMealLog(int userId, Meal mealLog) {
         return this.userDatabaseInterface.addUserMealLog(userId, mealLog);
-    }
-
-    @Override
-    public void close() {
-        this.userDatabaseInterface.close();
     }
 }
