@@ -36,7 +36,7 @@ public class CalorieVisualizer extends IVisualizer {
     @Override
     public DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate) {
 
-        Map<String, Integer> calorieData = calorieCalculator.getCalories(fromDate, toDate);
+        Map<String, Integer> calorieData = calorieCalculator.getCaloriesPerDay(fromDate, toDate);
 
         for (Map.Entry<String, Integer> stringIntegerEntry : calorieData.entrySet()) {
             ((DefaultCategoryDataset) getDataset()).setValue(stringIntegerEntry.getValue(), "Calories Consumed", stringIntegerEntry.getKey());
@@ -46,9 +46,9 @@ public class CalorieVisualizer extends IVisualizer {
     }
 
     @Override
-    public DefaultPieDataset<String> buildPiechartDataset(Date fromDate, Date toDate) {
+    public DefaultPieDataset<String> buildPiechartDataset(boolean expand, Date fromDate, Date toDate) {
 
-        Map<String, Integer> calorieData = calorieCalculator.getCalories(fromDate, toDate);
+        Map<String, Integer> calorieData = calorieCalculator.getCaloriesPerDay(fromDate, toDate);
 
         for (Map.Entry<String, Integer> stringIntegerEntry : calorieData.entrySet()) {
             ((DefaultPieDataset<String>) getDataset()).setValue(stringIntegerEntry.getKey(), stringIntegerEntry.getValue());
@@ -68,7 +68,7 @@ public class CalorieVisualizer extends IVisualizer {
             this.buildBargraphDataset(newFromDate, newToDate);
         } else if (getDataset() instanceof DefaultPieDataset) {
             ((DefaultPieDataset<String>) getDataset()).clear();
-            this.buildPiechartDataset(newFromDate, newToDate);
+            this.buildPiechartDataset(false, newFromDate, newToDate);
         }
 
     }

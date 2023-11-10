@@ -43,7 +43,7 @@ public class ExerciseVisualizer extends IVisualizer {
     }
 
     @Override
-    public DefaultPieDataset<String> buildPiechartDataset(Date fromDate, Date toDate) {
+    public DefaultPieDataset<String> buildPiechartDataset(boolean expand, Date fromDate, Date toDate) {
 
         ((DefaultPieDataset<String>) getDataset()).setValue("Today", 20.0);
         ((DefaultPieDataset<String>) getDataset()).setValue("Yesterday", 80.0);
@@ -58,14 +58,10 @@ public class ExerciseVisualizer extends IVisualizer {
 
         if (getDataset() instanceof DefaultCategoryDataset) {
             ((DefaultCategoryDataset) getDataset()).clear();
-            ((DefaultCategoryDataset) getDataset()).setValue(111, "Calories Burned", "Today");
-            ((DefaultCategoryDataset) getDataset()).setValue(222, "Calories Burned", "Yesterday");
-            ((DefaultCategoryDataset) getDataset()).setValue(333, "Calories Burned", "Day Before Yesterday");
+            this.buildBargraphDataset(newFromDate, newToDate);
         } else if (getDataset() instanceof DefaultPieDataset) {
-            ((DefaultPieDataset) getDataset()).clear();
-            ((DefaultPieDataset<String>) getDataset()).setValue("Today", 20.0);
-            ((DefaultPieDataset<String>) getDataset()).setValue("Yesterday", 20.0);
-            ((DefaultPieDataset<String>) getDataset()).setValue("AAA", 60.0);
+            ((DefaultPieDataset<String>) getDataset()).clear();
+            this.buildPiechartDataset(false, newFromDate, newToDate);
         }
 
     }

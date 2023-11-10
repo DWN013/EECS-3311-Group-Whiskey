@@ -1,16 +1,27 @@
 package co.yorku.nutrifit.database.nutrient;
 
 import co.yorku.nutrifit.database.IDatabase;
-import co.yorku.nutrifit.object.NutrientInfo;
+import co.yorku.nutrifit.object.FoodInfo;
+import co.yorku.nutrifit.object.NutrientData;
+import co.yorku.nutrifit.object.FoodNutrientInfo;
 
 import java.util.List;
+import java.util.Map;
 
 public interface INFDatabase extends IDatabase {
 
-    NutrientInfo getNutrientInfo(String ingredient);
+    FoodInfo getFoodInfo(String ingredient);
 
-    boolean isValidFoodType(String foodType);
+    FoodInfo getFoodInfo(int foodID);
 
-    List<String> getOtherFoodTypes(String checkFoodType);
+    FoodNutrientInfo getNutrientInfo(int foodID);
+
+    NutrientData getNutrientData(int nutrientID);
+
+    String getFoodGroupName(int foodGroupID);
+
+    Map<Integer, String> getAllFoodGroups();
+
+    List<String> getFoodTypesSimilar(String checkFoodType);
 
 }

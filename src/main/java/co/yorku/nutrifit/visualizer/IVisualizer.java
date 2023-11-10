@@ -33,7 +33,7 @@ public abstract class IVisualizer implements IListener {
 
     public abstract DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate);
 
-    public abstract DefaultPieDataset<String> buildPiechartDataset(Date fromDate, Date toDate);
+    public abstract DefaultPieDataset<String> buildPiechartDataset(boolean expand, Date fromDate, Date toDate);
 
     public JFreeChart buildBarGraph(Date fromDate, Date toDate) {
         return ChartFactory.createBarChart(
@@ -47,7 +47,7 @@ public abstract class IVisualizer implements IListener {
     public JFreeChart buildPieChart(Date fromDate, Date toDate) {
         return ChartFactory.createPieChart(
                 this.getChartName(),
-                this.buildPiechartDataset(fromDate, toDate)
+                this.buildPiechartDataset(false, fromDate, toDate)
         );
     }
 }
