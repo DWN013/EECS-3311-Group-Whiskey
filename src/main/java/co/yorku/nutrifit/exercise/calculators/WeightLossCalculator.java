@@ -2,11 +2,7 @@ package co.yorku.nutrifit.exercise.calculators;
 
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
-import co.yorku.nutrifit.logs.impl.Exercise;
 import co.yorku.nutrifit.logs.impl.Meal;
-import co.yorku.nutrifit.profile.IProfile;
-import co.yorku.nutrifit.visualizer.calulcators.DailyTotalEnergyExpenditureCalculator;
-import com.sun.xml.internal.bind.v2.TODO;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
