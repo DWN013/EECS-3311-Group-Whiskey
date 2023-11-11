@@ -35,10 +35,12 @@ public class AvgUserPlateVisualizer extends IVisualizer {
 
     @Override
     public DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate) {
-        // TODO: Add Data here
-        ((DefaultCategoryDataset) getDataset()).setValue(100, "Calories Burned", "Today");
-        ((DefaultCategoryDataset) getDataset()).setValue(200, "Calories Burned", "Yesterday");
-        ((DefaultCategoryDataset) getDataset()).setValue(999, "Calories Burned", "Day Before Yesterday");
+
+        Map<String, Integer> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(fromDate, toDate);
+
+        for(Map.Entry<String, Integer> stringIntegerEntry : avgUserFoodPlate.entrySet()){
+            ((DefaultCategoryDataset) getDataset()).setValue(stringIntegerEntry.getValue(), "Food Group Category", stringIntegerEntry.getKey());
+        }
 
         return ((DefaultCategoryDataset) getDataset());
     }
@@ -48,8 +50,9 @@ public class AvgUserPlateVisualizer extends IVisualizer {
 
         Map<String, Integer> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(fromDate, toDate);
 
-        ((DefaultPieDataset<String>) getDataset()).setValue("Today", 20.0);
-        ((DefaultPieDataset<String>) getDataset()).setValue("Yesterday", 80.0);
+        for(Map.Entry<String, Integer> stringIntegerEntry : avgUserFoodPlate.entrySet()){
+            ((DefaultPieDataset<String>) getDataset()).setValue(stringIntegerEntry.getKey(), stringIntegerEntry.getValue());
+        }
 
         return ((DefaultPieDataset<String>) getDataset());
     }
