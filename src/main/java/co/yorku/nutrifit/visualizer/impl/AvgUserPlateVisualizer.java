@@ -7,6 +7,7 @@ import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import java.util.Date;
+import java.util.Map;
 
 public class AvgUserPlateVisualizer extends IVisualizer {
 
@@ -24,12 +25,12 @@ public class AvgUserPlateVisualizer extends IVisualizer {
 
     @Override
     public String getBarGraphCategoryAxisLabel() {
-        return "Something";
+        return "Date";
     }
 
     @Override
     public String getBarGraphValueAxisLabel() {
-        return "Something Else";
+        return "Food Group";
     }
 
     @Override
@@ -44,6 +45,8 @@ public class AvgUserPlateVisualizer extends IVisualizer {
 
     @Override
     public DefaultPieDataset<String> buildPiechartDataset(boolean expand, Date fromDate, Date toDate) {
+
+        Map<String, Integer> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(fromDate, toDate);
 
         ((DefaultPieDataset<String>) getDataset()).setValue("Today", 20.0);
         ((DefaultPieDataset<String>) getDataset()).setValue("Yesterday", 80.0);
