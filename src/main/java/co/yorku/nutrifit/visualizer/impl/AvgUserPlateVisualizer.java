@@ -25,12 +25,12 @@ public class AvgUserPlateVisualizer extends IVisualizer {
 
     @Override
     public String getBarGraphCategoryAxisLabel() {
-        return "Date";
+        return "Food Group";
     }
 
     @Override
     public String getBarGraphValueAxisLabel() {
-        return "Food Group";
+        return "Percentage over period";
     }
 
     @Override

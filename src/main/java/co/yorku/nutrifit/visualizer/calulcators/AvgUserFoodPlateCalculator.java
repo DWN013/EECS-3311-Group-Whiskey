@@ -34,12 +34,13 @@ public class AvgUserFoodPlateCalculator {
                 FoodInfo foodInfo = NutriFit.getInstance().getNutrientDatabase().getFoodInfo(foodID);
                 //Gets the food group of that specific item by using the food group ID
                 String foodGroup = NutriFit.getInstance().getNutrientDatabase().getFoodGroupName(foodInfo.getFoodGroupID());
-
+                //
                 fGdata.put(foodGroup, fGdata.getOrDefault(foodGroup, 0) + 1);
-
             }
-
         }
+
+        
+
         //Returns hashmap with all food groups and total amount
         return fGdata;
     }
