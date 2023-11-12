@@ -6,16 +6,24 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DefaultPieDataset;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Map;
 
 public class AvgUserPlateVisualizer extends IVisualizer {
 
     private AvgUserFoodPlateCalculator avgUserFoodPlateCalculator;
+    private DecimalFormat decimalFormat;
 
     public AvgUserPlateVisualizer(AvgUserFoodPlateCalculator avgUserFoodPlateCalculator, Dataset dataset) {
         super(dataset);
         this.avgUserFoodPlateCalculator = avgUserFoodPlateCalculator;
+        this.decimalFormat = new DecimalFormat();
+    }
+
+    @Override
+    public boolean isBargraphShownInPercentage() {
+        return true;
     }
 
     @Override
@@ -25,21 +33,24 @@ public class AvgUserPlateVisualizer extends IVisualizer {
 
     @Override
     public String getBarGraphCategoryAxisLabel() {
-        return "Date";
+        return "Food Group";
     }
 
     @Override
     public String getBarGraphValueAxisLabel() {
-        return "Food Group";
+        return "Food Group Percentage";
     }
 
     @Override
     public DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate) {
 
-        Map<String, Integer> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(fromDate, toDate);
+        Map<String, Double> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(fromDate, toDate);
 
-        for(Map.Entry<String, Integer> stringIntegerEntry : avgUserFoodPlate.entrySet()){
-            ((DefaultCategoryDataset) getDataset()).setValue(stringIntegerEntry.getValue(), "Food Group Category", stringIntegerEntry.getKey());
+        for(Map.Entry<String, Double> stringIntegerEntry : avgUserFoodPlate.entrySet()){
+
+            int asPercentage = (int) (stringIntegerEntry.getValue() * 100);
+
+            ((DefaultCategoryDataset) getDataset()).setValue(stringIntegerEntry.getValue(), "Food Group Category", stringIntegerEntry.getKey() + " (" + decimalFormat.format(asPercentage) + "%)");
         }
 
         return ((DefaultCategoryDataset) getDataset());
@@ -48,10 +59,13 @@ public class AvgUserPlateVisualizer extends IVisualizer {
     @Override
     public DefaultPieDataset<String> buildPiechartDataset(boolean expand, Date fromDate, Date toDate) {
 
-        Map<String, Integer> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(fromDate, toDate);
+        Map<String, Double> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(fromDate, toDate);
 
-        for(Map.Entry<String, Integer> stringIntegerEntry : avgUserFoodPlate.entrySet()){
-            ((DefaultPieDataset<String>) getDataset()).setValue(stringIntegerEntry.getKey(), stringIntegerEntry.getValue());
+        for(Map.Entry<String, Double> stringIntegerEntry : avgUserFoodPlate.entrySet()){
+
+            int asPercentage = (int) (stringIntegerEntry.getValue() * 100);
+
+            ((DefaultPieDataset<String>) getDataset()).setValue(stringIntegerEntry.getKey() + " (" + decimalFormat.format(asPercentage) + "%)", stringIntegerEntry.getValue() * 100);
         }
 
         return ((DefaultPieDataset<String>) getDataset());

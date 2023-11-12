@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class AvgUserFoodPlateCalculator {
 
-    public LinkedHashMap<String, Integer>  getPlate(Date dateFrom, Date dateTo){
+    public LinkedHashMap<String, Double>  getPlate(Date dateFrom, Date dateTo){
 
         LogIterator logIterator = NutriFit.getInstance().getUserDatabase().getUserMealLogs(
                 NutriFit.getInstance().getLoadedProfile().getId(), dateFrom, dateTo
@@ -38,9 +38,16 @@ public class AvgUserFoodPlateCalculator {
                 fGdata.put(foodGroup, fGdata.getOrDefault(foodGroup, 0) + 1);
 
             }
-
         }
+
+        int totalFoodGroups = fGdata.values().stream().mapToInt(m -> m).sum();
+        LinkedHashMap<String, Double> percentages = Maps.newLinkedHashMap();
+
+        for (Map.Entry<String, Integer> stringIntegerEntry : fGdata.entrySet()) {
+            percentages.put(stringIntegerEntry.getKey(), stringIntegerEntry.getValue() / (double) totalFoodGroups);
+        }
+
         //Returns hashmap with all food groups and total amount
-        return fGdata;
+        return percentages;
     }
 }
