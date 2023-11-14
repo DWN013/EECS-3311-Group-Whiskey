@@ -3,10 +3,10 @@ package co.yorku.nutrifit.visualizer.calulcators;
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Meal;
+import co.yorku.nutrifit.object.AverageCalculator;
 import co.yorku.nutrifit.object.NutrientData;
 import co.yorku.nutrifit.object.FoodNutrientInfo;
 import com.google.common.collect.Maps;
-import javafx.util.Pair;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -24,14 +24,14 @@ public class NutrientCalculator {
         logIterator.sortByDateAscending();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd yyyy");
-        LinkedHashMap<String, Map<String, Pair<Double, Integer>>> data = Maps.newLinkedHashMap(); // <Day, <NutrientID, <SumOfNutrientValueToday, TotalNutrientValues>>>
+        LinkedHashMap<String, Map<String, AverageCalculator>> data = Maps.newLinkedHashMap(); // <Day, <NutrientID, <SumOfNutrientValueToday, TotalNutrientValues>>>
 
         while (logIterator.hasNext()) {
             Meal meal = (Meal)  logIterator.getNext();
             Date date = meal.getDate();
             String dayKey = simpleDateFormat.format(date);
 
-            Map<String, Pair<Double, Integer>> nutrientsPerDay = data.computeIfAbsent(dayKey, k -> Maps.newLinkedHashMap()); // holds the nutrient ID, the sum of nutrient values for that day and the total amount added to that sum so we can calc. the average later
+            Map<String,AverageCalculator> nutrientsPerDay = data.computeIfAbsent(dayKey, k -> Maps.newLinkedHashMap()); // holds the nutrient ID, the sum of nutrient values for that day and the total amount added to that sum so we can calc. the average later
 
             for (Map.Entry<Integer, Integer> integerIntegerEntry : meal.getFoodIDAndAmounts().entrySet()) { // get all the food ids and amount
 
@@ -41,7 +41,7 @@ public class NutrientCalculator {
                     NutrientData nutrientData = NutriFit.getInstance().getNutrientDatabase().getNutrientData(integerDoubleEntry.getKey());
                     if (nutrientData == null) continue;
 
-                    Pair<Double, Integer> sums = nutrientsPerDay.computeIfAbsent(nutrientData.getName(), id -> new Pair<>(0.0, 0));
+                    AverageCalculator averageCalculator = nutrientsPerDay.computeIfAbsent(nutrientData.getName(), id -> new AverageCalculator());
 
                     double toAdd = integerDoubleEntry.getValue();;
 
@@ -49,7 +49,7 @@ public class NutrientCalculator {
                         toAdd/=1000;
                     }
 
-                    nutrientsPerDay.put(nutrientData.getName(), new Pair<>(sums.getKey() + toAdd, sums.getValue() + 1));
+                    averageCalculator.add(toAdd);
                 }
             }
 
@@ -95,10 +95,10 @@ public class NutrientCalculator {
         return finalData;
     }
 
-    private LinkedHashMap<String, Map<String, Double>> averageOutNutrientsPerDay(LinkedHashMap<String, Map<String, Pair<Double, Integer>>> data) {
+    private LinkedHashMap<String, Map<String, Double>> averageOutNutrientsPerDay(LinkedHashMap<String, Map<String, AverageCalculator>> data) {
         LinkedHashMap<String, Map<String, Double>> averageNutrientsPerDay = Maps.newLinkedHashMap();
 
-        for (Map.Entry<String, Map<String, Pair<Double, Integer>>> stringLinkedHashMapEntry : data.entrySet()) {
+        for (Map.Entry<String, Map<String, AverageCalculator>> stringLinkedHashMapEntry : data.entrySet()) {
 
             String day = stringLinkedHashMapEntry.getKey();
             Map<String, Double> averageNutrients = calculateAverage(stringLinkedHashMapEntry);
@@ -108,15 +108,15 @@ public class NutrientCalculator {
         return averageNutrientsPerDay;
     }
 
-    private static Map<String, Double> calculateAverage(Map.Entry<String, Map<String, Pair<Double, Integer>>> stringLinkedHashMapEntry) {
+    private static Map<String, Double> calculateAverage(Map.Entry<String, Map<String,AverageCalculator>> stringLinkedHashMapEntry) {
         LinkedHashMap<String, Double> averageNutrients = Maps.newLinkedHashMap();
 
-        for (Map.Entry<String, Pair<Double, Integer>> integerPairEntry : stringLinkedHashMapEntry.getValue().entrySet()) {
-            Pair<Double, Integer> pair = integerPairEntry.getValue();
-            if (pair.getValue() <= 0) continue; // skip, no nutrient values found
+        for (Map.Entry<String, AverageCalculator> averageCalculatorEntry : stringLinkedHashMapEntry.getValue().entrySet()) {
+            AverageCalculator averageCalculator = averageCalculatorEntry.getValue();
+            double average = averageCalculator.calculateAverage();
+            if (average <= 0) continue; // skip, no nutrient values found
 
-            double average = pair.getKey() / (double) pair.getValue();
-            averageNutrients.put(integerPairEntry.getKey(), average);
+            averageNutrients.put(averageCalculatorEntry.getKey(), average);
         }
 
         return averageNutrients.entrySet().stream()

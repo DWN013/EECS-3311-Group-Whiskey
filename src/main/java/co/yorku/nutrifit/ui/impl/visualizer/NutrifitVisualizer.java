@@ -1,34 +1,29 @@
 package co.yorku.nutrifit.ui.impl.visualizer;
 
 import co.yorku.nutrifit.NutriFit;
+import co.yorku.nutrifit.object.VisualizerData;
 import co.yorku.nutrifit.ui.NutrifitWindow;
 import co.yorku.nutrifit.visualizer.IVisualizer;
-import com.google.common.base.Preconditions;
 import com.toedter.calendar.JDateChooser;
-import javafx.util.Pair;
 import org.jfree.chart.ChartMouseEvent;
 import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
-import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 public class NutrifitVisualizer extends NutrifitWindow {
 
     private ChartPanel chartPanel;
     private IVisualizer iVisualizer;
 
-    public NutrifitVisualizer(String windowName, NutrifitWindow parent, Pair<JFreeChart, IVisualizer> data, Date defaultFromDate, Date defaultToDate) {
+    public NutrifitVisualizer(String windowName, NutrifitWindow parent, VisualizerData data, Date defaultFromDate, Date defaultToDate) {
         super(windowName, new GridLayout(1, 5));
 
-        this.chartPanel = new ChartPanel(data.getKey());
+        this.chartPanel = new ChartPanel(data.getChart());
         this.chartPanel.setPreferredSize(new Dimension(800, 600));
         this.chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
         this.chartPanel.setBackground(Color.white);
@@ -68,7 +63,7 @@ public class NutrifitVisualizer extends NutrifitWindow {
             }
         });
 
-        this.iVisualizer = data.getValue();
+        this.iVisualizer = data.getVisualizer();
 
         this.addFromToButtons(defaultFromDate, defaultToDate);
         this.addBackButton(parent, event -> NutriFit.getInstance().getEventManager().unsubscribe(this.iVisualizer));
