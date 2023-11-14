@@ -20,7 +20,7 @@ public class ExerciseVisualizer extends IVisualizer {
 
     @Override
     public String getChartName() {
-        return "Exercise";
+        return "Total Daily Energy Expenditure";
     }
 
     @Override
@@ -35,8 +35,7 @@ public class ExerciseVisualizer extends IVisualizer {
 
     @Override
     public DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate) {
-        // TODO: Add Data here
-    	
+    
     	Map<String, Integer> tdeeValues = dailyTotalEnergyExpenditureCalculator.getTDEE(fromDate, toDate);
     	
     	for (Map.Entry<String, Integer> stringIntegerEntry : tdeeValues.entrySet()) {
