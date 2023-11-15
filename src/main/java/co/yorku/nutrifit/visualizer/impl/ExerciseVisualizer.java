@@ -7,6 +7,7 @@ import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 import java.util.Date;
+import java.util.Map;
 
 public class ExerciseVisualizer extends IVisualizer {
 
@@ -19,25 +20,27 @@ public class ExerciseVisualizer extends IVisualizer {
 
     @Override
     public String getChartName() {
-        return "Exercise";
+        return "Total Daily Energy Expenditure";
     }
 
     @Override
     public String getBarGraphCategoryAxisLabel() {
-        return "Something";
+        return "Date";
     }
 
     @Override
     public String getBarGraphValueAxisLabel() {
-        return "Something Else";
+        return "Total Daily Energy Expenditure Value";
     }
 
     @Override
     public DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate) {
-        // TODO: Add Data here
-        ((DefaultCategoryDataset) getDataset()).setValue(100, "Calories Burned", "Today");
-        ((DefaultCategoryDataset) getDataset()).setValue(200, "Calories Burned", "Yesterday");
-        ((DefaultCategoryDataset) getDataset()).setValue(999, "Calories Burned", "Day Before Yesterday");
+    
+    	Map<String, Integer> tdeeValues = dailyTotalEnergyExpenditureCalculator.getTDEE(fromDate, toDate);
+    	
+    	for (Map.Entry<String, Integer> stringIntegerEntry : tdeeValues.entrySet()) {
+            ((DefaultCategoryDataset) getDataset()).setValue(stringIntegerEntry.getValue(), "Total Daily Energy Expenditure", stringIntegerEntry.getKey());
+        }
 
         return ((DefaultCategoryDataset) getDataset());
     }
@@ -45,8 +48,11 @@ public class ExerciseVisualizer extends IVisualizer {
     @Override
     public DefaultPieDataset<String> buildPiechartDataset(boolean expand, Date fromDate, Date toDate) {
 
-        ((DefaultPieDataset<String>) getDataset()).setValue("Today", 20.0);
-        ((DefaultPieDataset<String>) getDataset()).setValue("Yesterday", 80.0);
+    	Map<String, Integer> tdeeValues = dailyTotalEnergyExpenditureCalculator.getTDEE(fromDate, toDate);
+
+        for (Map.Entry<String, Integer> stringIntegerEntry : tdeeValues.entrySet()) {
+            ((DefaultPieDataset<String>) getDataset()).setValue(stringIntegerEntry.getKey(), stringIntegerEntry.getValue());
+        }
 
         return ((DefaultPieDataset<String>) getDataset());
     }
