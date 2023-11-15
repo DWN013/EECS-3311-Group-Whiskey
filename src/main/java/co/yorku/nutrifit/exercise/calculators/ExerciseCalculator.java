@@ -1,6 +1,6 @@
 package co.yorku.nutrifit.exercise.calculators;
 
-import co.yorku.nutrifit.exercise.impl.ActivityCalorieTemp;
+import co.yorku.nutrifit.exercise.impl.CaloriesBurntList;
 import co.yorku.nutrifit.object.ActivityType;
 import co.yorku.nutrifit.object.Intensity;
 import co.yorku.nutrifit.profile.IProfile;
@@ -13,7 +13,7 @@ public class ExerciseCalculator {
         if (profile.isMetric()) {
             userWeight *= 2.2f;
         }
-        float caloriesBurned = new ActivityCalorieTemp().getCaloriesBurnedForActivityType(activityType, intensity, userWeight);
+        float caloriesBurned = new CaloriesBurntList().getCaloriesBurnedForActivityType(activityType, intensity, userWeight);
         return (int) (caloriesBurned * durationInSeconds);
     }
 

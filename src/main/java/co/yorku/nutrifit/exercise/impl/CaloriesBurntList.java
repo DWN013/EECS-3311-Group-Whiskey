@@ -6,7 +6,7 @@ import co.yorku.nutrifit.object.Intensity;
 /*
 Calorie data file for exercises
  */
-public class ActivityCalorieTemp {
+public class CaloriesBurntList {
 	
 	private float [] [] [] activityCalorieList = { 
 			//For the weight aspect - 0=130lbs, 1=155lbs, 2=180lbs, 3=205+lbs
@@ -22,7 +22,7 @@ public class ActivityCalorieTemp {
 			{{264,348,405,479},{304,382,440,518},{354,422,490,558},{442,527,612,698},{531,633,735,838}} 
 			};
 	
-	public ActivityCalorieTemp ()
+	public CaloriesBurntList()
 	{
 		//activityCalorieList = new int [10] [5];
 		/*
