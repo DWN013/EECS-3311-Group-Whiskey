@@ -64,10 +64,6 @@ public class NutrifitVisualizer extends NutrifitWindow {
                     toDate.setMinutes(59);
                     toDate.setSeconds(59);
 
-                    // Don't update the stored date range in this class because we are "expanding" the bar/pie entity to show specific data about that day
-                    // such as calorie information for THAT day, in theroy shouldn't matter because when the user clicks the update button
-                    // it will update the date range in this class anyways...
-
                     NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName(), fromDate + ":" + toDate, fromDate, toDate);
                     NutrifitVisualizer.this.expanded = true;
                 } catch (Exception e) {
