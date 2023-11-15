@@ -86,7 +86,6 @@ public class UserDatabase implements IUserDatabase {
         try {
             Class.forName("org.sqlite.JDBC");
             this.databaseConnection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
-            System.out.println("Established connection with sqlite database. [UserDatabase]");
         } catch (Exception e) {
             e.printStackTrace();
             return false;

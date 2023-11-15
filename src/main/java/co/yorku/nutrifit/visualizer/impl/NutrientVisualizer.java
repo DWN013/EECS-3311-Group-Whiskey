@@ -1,8 +1,7 @@
 package co.yorku.nutrifit.visualizer.impl;
 
 import co.yorku.nutrifit.visualizer.IVisualizer;
-import co.yorku.nutrifit.visualizer.calulcators.NutrientCalculator;
-import org.jfree.chart.entity.PieSectionEntity;
+import co.yorku.nutrifit.visualizer.calculators.NutrientCalculator;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -36,13 +35,34 @@ public class NutrientVisualizer extends IVisualizer {
     }
 
     @Override
-    public DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate) {
+    public boolean isChartExpandable() {
+        return true;
+    }
+
+    @Override
+    public DefaultCategoryDataset buildBargraphDataset(String expandInfo, Date fromDate, Date toDate) {
 
         LinkedHashMap<String, Map<String, Double>> data = this.nutrientCalculator.getNutrientInfoPerDate(fromDate, toDate);
+        boolean expand = expandInfo != null;
 
         for (Map.Entry<String, Map<String, Double>> stringMapEntry : data.entrySet()) {
+
+            String day = stringMapEntry.getKey();
+            double dayTotal = 0.0;
+
             for (Map.Entry<String, Double> stringDoubleEntry : stringMapEntry.getValue().entrySet()) {
-                ((DefaultCategoryDataset) getDataset()).setValue(stringDoubleEntry.getValue(), stringDoubleEntry.getKey(), stringMapEntry.getKey());
+
+                String nutrientName = stringDoubleEntry.getKey();
+                double average = stringDoubleEntry.getValue();
+
+                if (!expand) {
+                    dayTotal += average;
+                } else {
+                    ((DefaultCategoryDataset) getDataset()).setValue(average, nutrientName, stringMapEntry.getKey());
+                }
+            }
+            if (!expand) {
+                ((DefaultCategoryDataset) getDataset()).setValue(dayTotal, "Day", day);
             }
         }
 
@@ -50,9 +70,10 @@ public class NutrientVisualizer extends IVisualizer {
     }
 
     @Override
-    public DefaultPieDataset<String> buildPiechartDataset(boolean expand, Date fromDate, Date toDate) {
+    public DefaultPieDataset<String> buildPiechartDataset(String expandInfo, Date fromDate, Date toDate) {
 
         LinkedHashMap<String, Map<String, Double>> data = this.nutrientCalculator.getNutrientInfoPerDate(fromDate, toDate);
+        boolean expand = expandInfo != null;
 
         for (Map.Entry<String, Map<String, Double>> stringMapEntry : data.entrySet()) {
 
@@ -79,17 +100,16 @@ public class NutrientVisualizer extends IVisualizer {
     }
 
     @Override
-    public void onDateRangeUpdate(String type, Date newFromDate, Date newToDate) {
+    public void onDateRangeUpdate(String type, String expandData, Date newFromDate, Date newToDate) {
 
-        if (!type.equals(this.getChartName()) && (!type.startsWith(this.getChartName()) && !type.endsWith("_EXPAND"))) return;
+        if (!type.equals(this.getChartName())) return;
 
         if (getDataset() instanceof DefaultCategoryDataset) {
             ((DefaultCategoryDataset) getDataset()).clear();
-            this.buildBargraphDataset(newFromDate, newToDate);
+            this.buildBargraphDataset(expandData, newFromDate, newToDate);
         } else if (getDataset() instanceof DefaultPieDataset) {
             ((DefaultPieDataset<String>) getDataset()).clear();
-            this.buildPiechartDataset(type.endsWith("_EXPAND"), newFromDate, newToDate);
+            this.buildPiechartDataset(expandData, newFromDate, newToDate);
         }
-
     }
 }

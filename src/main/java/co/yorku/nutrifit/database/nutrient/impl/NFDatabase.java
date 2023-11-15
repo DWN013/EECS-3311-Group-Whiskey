@@ -1,6 +1,7 @@
 package co.yorku.nutrifit.database.nutrient.impl;
 
 import co.yorku.nutrifit.database.nutrient.INFDatabase;
+import co.yorku.nutrifit.object.FoodGroupData;
 import co.yorku.nutrifit.object.FoodInfo;
 import co.yorku.nutrifit.object.NutrientData;
 import co.yorku.nutrifit.object.FoodNutrientInfo;
@@ -13,6 +14,7 @@ import java.sql.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class NFDatabase implements INFDatabase {
 
@@ -20,9 +22,7 @@ public class NFDatabase implements INFDatabase {
     private String GET_FOOD_DATA_FROM_FOODID = "SELECT * FROM food_names WHERE foodID=?";
     private String GET_NUTRIENT_INFO_FROM_FOODID = "SELECT * FROM nutrient_amounts WHERE foodID=?";
     private String GET_NUTRIENT_DATA_FROM_NUTRIENTID = "SELECT * FROM nutrient_names WHERE nutrientID=?";
-
-    private String GET_ALL_FOOD_GROUS = "SELECT * FROM food_groups";
-
+    private String GET_ALL_FOOD_GROUS = "SELECT * FROM food_groups;";
     private String GET_SIMILAR_FOOD_TYPES = "SELECT * FROM food_names WHERE FoodDescription LIKE ?;";
 
     private Connection databaseConnection;
@@ -42,7 +42,6 @@ public class NFDatabase implements INFDatabase {
         try {
             Class.forName("org.sqlite.JDBC");
             this.databaseConnection = DriverManager.getConnection("jdbc:sqlite:" + dbFile.getAbsolutePath());
-            System.out.println("Established connection with sqlite database. [NFDatabase]");
         } catch (Exception e) {
             e.printStackTrace();
             return false;
@@ -197,13 +196,19 @@ public class NFDatabase implements INFDatabase {
 
     @Override
     public String getFoodGroupName(int foodGroupID) {
-        return this.getAllFoodGroups().getOrDefault(foodGroupID, null);
+
+        FoodGroupData foodGroupData = this.getAllFoodGroups().stream().filter(f -> f.getFoodGroupID() == foodGroupID).findFirst().orElse(null);
+        if (foodGroupData == null) {
+            return null;
+        }
+
+        return foodGroupData.getFoodGroupName();
     }
 
     @Override
-    public Map<Integer, String> getAllFoodGroups() {
+    public List<FoodGroupData> getAllFoodGroups() {
 
-        Map<Integer, String> data = Maps.newHashMap();
+        List<FoodGroupData> data = Lists.newArrayList();
 
         try {
 
@@ -213,19 +218,27 @@ public class NFDatabase implements INFDatabase {
             if (resultSet != null) {
 
                 while (resultSet.next()) {
-                    data.put(resultSet.getInt("FoodGroupID"), resultSet.getString("FoodGroupName"));
+
+                    FoodGroupData foodGroupData = new FoodGroupData(
+                            resultSet.getInt("FoodGroupID"),
+                            resultSet.getInt("FoodGroupCode"),
+                            resultSet.getString("FoodGroupName"),
+                            resultSet.getInt("ParentFoodGroupID"),
+                            resultSet.getInt("Percentage")
+                    );
+
+                    data.add(foodGroupData);
                 }
                 resultSet.close();
             }
 
             preparedStatement.close();
 
+            return data;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
-
-        return data;
     }
 
     @Override

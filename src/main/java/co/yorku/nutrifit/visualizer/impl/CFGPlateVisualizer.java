@@ -1,6 +1,7 @@
 package co.yorku.nutrifit.visualizer.impl;
 
 import co.yorku.nutrifit.visualizer.IVisualizer;
+import co.yorku.nutrifit.visualizer.calculators.CFGPlateCalculator;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -8,17 +9,17 @@ import org.jfree.data.general.DefaultPieDataset;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Date;
+import java.util.Map;
 
 public class CFGPlateVisualizer extends IVisualizer {
 
+    private CFGPlateCalculator cfgPlateCalculator;
 
-
-    public CFGPlateVisualizer(Dataset dataset) {
+    public CFGPlateVisualizer(Dataset dataset, CFGPlateCalculator cfgPlateCalculator) {
         super(dataset);
+        this.cfgPlateCalculator = cfgPlateCalculator;
 
     }
-
-
 
     @Override
     public String getChartName() {
@@ -41,42 +42,45 @@ public class CFGPlateVisualizer extends IVisualizer {
     }
 
     @Override
-    public DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate) {
+    public boolean isChartExpandable() {
+        return true;
+    }
 
-        ((DefaultCategoryDataset) getDataset()).setValue((double)48/100, "Percentage", "Vegetables and Fruits");
-        ((DefaultCategoryDataset) getDataset()).setValue((double)24/100, "Percentage", "Whole Grain Foods");
-        ((DefaultCategoryDataset) getDataset()).setValue((double)23/100, "Percentage", "Proteins");
-        ((DefaultCategoryDataset) getDataset()).setValue((double)5/100, "Percentage", "Others");
+    @Override
+    public DefaultCategoryDataset buildBargraphDataset(String expandInfo, Date fromDate, Date toDate) {
 
+        Map<String, Double> data = cfgPlateCalculator.getFoodGroupData(expandInfo);
 
+        for (Map.Entry<String, Double> stringIntegerEntry : data.entrySet()) {
+            ((DefaultCategoryDataset) getDataset()).setValue(stringIntegerEntry.getValue(), "Food Group", stringIntegerEntry.getKey() + " (" + getDecimalFormat().format(stringIntegerEntry.getValue() * 100.0) + "%)");
+        }
 
         return ((DefaultCategoryDataset) getDataset());
     }
 
     @Override
-    public DefaultPieDataset<String> buildPiechartDataset(boolean expand, Date fromDate, Date toDate) {
-        ((DefaultPieDataset<String>) getDataset()).setValue("Vegetables and Fruits (48%)", 48.0);
-        ((DefaultPieDataset<String>) getDataset()).setValue("Proteins (23%)", 23.0);
-        ((DefaultPieDataset<String>) getDataset()).setValue("Whole Grain Foods (24%)", 24.0);
-        ((DefaultPieDataset<String>) getDataset()).setValue("Others (5%)", 5.0);
+    public DefaultPieDataset<String> buildPiechartDataset(String expandInfo, Date fromDate, Date toDate) {
 
+        Map<String, Double> data = cfgPlateCalculator.getFoodGroupData(expandInfo);
 
+        for (Map.Entry<String, Double> stringIntegerEntry : data.entrySet()) {
+            ((DefaultPieDataset<String>) getDataset()).setValue(stringIntegerEntry.getKey() + " (" + getDecimalFormat().format(stringIntegerEntry.getValue() * 100.0) + "%)", stringIntegerEntry.getValue());
+        }
 
         return ((DefaultPieDataset<String>) getDataset());
     }
 
     @Override
-    public void onDateRangeUpdate(String type, Date newFromDate, Date newToDate) {
+    public void onDateRangeUpdate(String type, String expandData, Date newFromDate, Date newToDate) {
+
         if (!type.equals(this.getChartName())) return;
 
         if (getDataset() instanceof DefaultCategoryDataset) {
             ((DefaultCategoryDataset) getDataset()).clear();
-            this.buildBargraphDataset(newFromDate, newToDate);
+            this.buildBargraphDataset(expandData, newFromDate, newToDate);
         } else if (getDataset() instanceof DefaultPieDataset) {
             ((DefaultPieDataset<String>) getDataset()).clear();
-            this.buildPiechartDataset(false, newFromDate, newToDate);
+            this.buildPiechartDataset(expandData, newFromDate, newToDate);
         }
     }
-
-
 }

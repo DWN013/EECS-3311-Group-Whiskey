@@ -47,9 +47,9 @@ public class MainVisualizerSelectionUI extends NutrifitWindow {
             new NutrifitVisualizer("Average User Food Plate Visualizer", this, this.visualizerUI.buildAverageUserPlateUI(defaultFromDate, defaultToDate), defaultFromDate, defaultToDate).showWindow();
         });
 
-        addButton("Calorie Visualizer", event -> {
+        addButton("Calorie Intake Visualizer", event -> {
             this.hideWindow();
-            new NutrifitVisualizer("Calorie Visualizer", this, this.visualizerUI.buildCalorieUI(defaultFromDate, defaultToDate), defaultFromDate, defaultToDate).showWindow();
+            new NutrifitVisualizer("Calorie Intake Visualizer", this, this.visualizerUI.buildCalorieUI(defaultFromDate, defaultToDate), defaultFromDate, defaultToDate).showWindow();
 
         });
 
@@ -59,9 +59,9 @@ public class MainVisualizerSelectionUI extends NutrifitWindow {
 
         });
 
-        addButton("Exercise Visualizer", event -> {
+        addButton("Energy Expenditure Visualizer", event -> {
             this.hideWindow();
-            new NutrifitVisualizer("Exercise Visualizer", this, this.visualizerUI.buildDailyTotalEnergyExpenditure(defaultFromDate, defaultToDate), defaultFromDate, defaultToDate).showWindow();
+            new NutrifitVisualizer("Energy Expenditure Visualizer", this, this.visualizerUI.buildDailyTotalEnergyExpenditure(defaultFromDate, defaultToDate), defaultFromDate, defaultToDate).showWindow();
 
         });
 

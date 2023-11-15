@@ -17,9 +17,11 @@ import java.util.Date;
 public abstract class IVisualizer implements IListener {
 
     private Dataset dataset;
+    private DecimalFormat decimalFormat;
 
     public IVisualizer(Dataset dataset) {
         this.dataset = dataset;
+        this.decimalFormat = new DecimalFormat();
         // Subscribe this class
         NutriFit.getInstance().getEventManager().subscribe(this);
     }
@@ -28,9 +30,15 @@ public abstract class IVisualizer implements IListener {
         return dataset;
     }
 
+    public DecimalFormat getDecimalFormat() {
+        return decimalFormat;
+    }
+
     public boolean isBargraphShownInPercentage() {
         return false;
     }
+
+    public boolean isChartExpandable() { return false; }
 
     public abstract String getChartName();
 
@@ -38,16 +46,16 @@ public abstract class IVisualizer implements IListener {
 
     public abstract String getBarGraphValueAxisLabel();
 
-    public abstract DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate);
+    public abstract DefaultCategoryDataset buildBargraphDataset(String expandInfo, Date fromDate, Date toDate);
 
-    public abstract DefaultPieDataset<String> buildPiechartDataset(boolean expand, Date fromDate, Date toDate);
+    public abstract DefaultPieDataset<String> buildPiechartDataset(String expandInfo, Date fromDate, Date toDate);
 
     public JFreeChart buildBarGraph(Date fromDate, Date toDate) {
         JFreeChart jFreeChart = ChartFactory.createBarChart(
                 this.getChartName(),
                 this.getBarGraphCategoryAxisLabel(),
                 this.getBarGraphValueAxisLabel(),
-                this.buildBargraphDataset(fromDate, toDate),
+                this.buildBargraphDataset(null, fromDate, toDate),
                 PlotOrientation.VERTICAL,
                 true, true, false);
 
@@ -63,7 +71,7 @@ public abstract class IVisualizer implements IListener {
     public JFreeChart buildPieChart(Date fromDate, Date toDate) {
         return ChartFactory.createPieChart(
                 this.getChartName(),
-                this.buildPiechartDataset(false, fromDate, toDate)
+                this.buildPiechartDataset(null, fromDate, toDate)
         );
     }
 }

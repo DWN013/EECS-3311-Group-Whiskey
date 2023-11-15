@@ -1,5 +1,6 @@
 package co.yorku.nutrifit.database.nutrient;
 
+import co.yorku.nutrifit.object.FoodGroupData;
 import co.yorku.nutrifit.object.FoodInfo;
 import co.yorku.nutrifit.object.NutrientData;
 import co.yorku.nutrifit.object.FoodNutrientInfo;
@@ -56,7 +57,7 @@ public class NFDatabaseAdapter implements INFDatabase {
     }
 
     @Override
-    public Map<Integer, String> getAllFoodGroups() {
+    public List<FoodGroupData> getAllFoodGroups() {
         return this.nfDatabaseInterface.getAllFoodGroups();
     }
 

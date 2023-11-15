@@ -1,7 +1,7 @@
 package co.yorku.nutrifit.visualizer.impl;
 
 import co.yorku.nutrifit.visualizer.IVisualizer;
-import co.yorku.nutrifit.visualizer.calulcators.CalorieCalculator;
+import co.yorku.nutrifit.visualizer.calculators.CalorieCalculator;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -34,7 +34,7 @@ public class CalorieVisualizer extends IVisualizer {
     }
 
     @Override
-    public DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate) {
+    public DefaultCategoryDataset buildBargraphDataset(String expandInfo, Date fromDate, Date toDate) {
 
         Map<String, Integer> calorieData = calorieCalculator.getCaloriesPerDay(fromDate, toDate);
 
@@ -46,7 +46,7 @@ public class CalorieVisualizer extends IVisualizer {
     }
 
     @Override
-    public DefaultPieDataset<String> buildPiechartDataset(boolean expand, Date fromDate, Date toDate) {
+    public DefaultPieDataset<String> buildPiechartDataset(String expandInfo, Date fromDate, Date toDate) {
 
         Map<String, Integer> calorieData = calorieCalculator.getCaloriesPerDay(fromDate, toDate);
 
@@ -59,17 +59,16 @@ public class CalorieVisualizer extends IVisualizer {
     }
 
     @Override
-    public void onDateRangeUpdate(String type, Date newFromDate, Date newToDate) {
+    public void onDateRangeUpdate(String type, String expandData, Date newFromDate, Date newToDate) {
 
         if (!type.equals(this.getChartName())) return;
-        
+
         if (getDataset() instanceof DefaultCategoryDataset) {
             ((DefaultCategoryDataset) getDataset()).clear();
-            this.buildBargraphDataset(newFromDate, newToDate);
+            this.buildBargraphDataset(expandData, newFromDate, newToDate);
         } else if (getDataset() instanceof DefaultPieDataset) {
             ((DefaultPieDataset<String>) getDataset()).clear();
-            this.buildPiechartDataset(false, newFromDate, newToDate);
+            this.buildPiechartDataset(expandData, newFromDate, newToDate);
         }
-
     }
 }

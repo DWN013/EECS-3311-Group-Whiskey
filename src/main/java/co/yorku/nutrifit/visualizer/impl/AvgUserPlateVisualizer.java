@@ -1,7 +1,7 @@
 package co.yorku.nutrifit.visualizer.impl;
 
 import co.yorku.nutrifit.visualizer.IVisualizer;
-import co.yorku.nutrifit.visualizer.calulcators.AvgUserFoodPlateCalculator;
+import co.yorku.nutrifit.visualizer.calculators.AvgUserFoodPlateCalculator;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DefaultPieDataset;
@@ -13,17 +13,10 @@ import java.util.Map;
 public class AvgUserPlateVisualizer extends IVisualizer {
 
     private AvgUserFoodPlateCalculator avgUserFoodPlateCalculator;
-    private DecimalFormat decimalFormat;
 
     public AvgUserPlateVisualizer(AvgUserFoodPlateCalculator avgUserFoodPlateCalculator, Dataset dataset) {
         super(dataset);
         this.avgUserFoodPlateCalculator = avgUserFoodPlateCalculator;
-        this.decimalFormat = new DecimalFormat();
-    }
-
-    @Override
-    public boolean isBargraphShownInPercentage() {
-        return true;
     }
 
     @Override
@@ -42,47 +35,58 @@ public class AvgUserPlateVisualizer extends IVisualizer {
     }
 
     @Override
-    public DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate) {
+    public boolean isBargraphShownInPercentage() {
+        return true;
+    }
 
-        Map<String, Double> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(fromDate, toDate);
+    @Override
+    public boolean isChartExpandable() {
+        return true;
+    }
+
+    @Override
+    public DefaultCategoryDataset buildBargraphDataset(String expandInfo, Date fromDate, Date toDate) {
+
+        boolean expand = expandInfo != null;
+        Map<String, Double> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(expand, fromDate, toDate);
 
         for(Map.Entry<String, Double> stringIntegerEntry : avgUserFoodPlate.entrySet()){
 
             int asPercentage = (int) (stringIntegerEntry.getValue() * 100);
 
-            ((DefaultCategoryDataset) getDataset()).setValue(stringIntegerEntry.getValue(), "Food Group Category", stringIntegerEntry.getKey() + " (" + decimalFormat.format(asPercentage) + "%)");
+            ((DefaultCategoryDataset) getDataset()).setValue(stringIntegerEntry.getValue(), "Food Group Category", stringIntegerEntry.getKey() + " (" + getDecimalFormat().format(asPercentage) + "%)");
         }
 
         return ((DefaultCategoryDataset) getDataset());
     }
 
     @Override
-    public DefaultPieDataset<String> buildPiechartDataset(boolean expand, Date fromDate, Date toDate) {
+    public DefaultPieDataset<String> buildPiechartDataset(String expandInfo, Date fromDate, Date toDate) {
 
-        Map<String, Double> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(fromDate, toDate);
+        boolean expand = expandInfo != null;
+        Map<String, Double> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(expand, fromDate, toDate);
 
         for(Map.Entry<String, Double> stringIntegerEntry : avgUserFoodPlate.entrySet()){
 
             int asPercentage = (int) (stringIntegerEntry.getValue() * 100);
 
-            ((DefaultPieDataset<String>) getDataset()).setValue(stringIntegerEntry.getKey() + " (" + decimalFormat.format(asPercentage) + "%)", stringIntegerEntry.getValue() * 100);
+            ((DefaultPieDataset<String>) getDataset()).setValue(stringIntegerEntry.getKey() + " (" + getDecimalFormat().format(asPercentage) + "%)", stringIntegerEntry.getValue() * 100);
         }
 
         return ((DefaultPieDataset<String>) getDataset());
     }
 
     @Override
-    public void onDateRangeUpdate(String type, Date newFromDate, Date newToDate) {
+    public void onDateRangeUpdate(String type, String expandData, Date newFromDate, Date newToDate) {
 
         if (!type.equals(this.getChartName())) return;
 
         if (getDataset() instanceof DefaultCategoryDataset) {
             ((DefaultCategoryDataset) getDataset()).clear();
-            this.buildBargraphDataset(newFromDate, newToDate);
+            this.buildBargraphDataset(expandData, newFromDate, newToDate);
         } else if (getDataset() instanceof DefaultPieDataset) {
             ((DefaultPieDataset<String>) getDataset()).clear();
-            this.buildPiechartDataset(false, newFromDate, newToDate);
+            this.buildPiechartDataset(expandData, newFromDate, newToDate);
         }
-
     }
 }

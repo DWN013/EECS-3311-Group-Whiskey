@@ -4,6 +4,6 @@ import java.util.Date;
 
 public interface IListener {
 
-    void onDateRangeUpdate(String type, Date newFromDate, Date newToDate);
+    void onDateRangeUpdate(String type, String expandData, Date newFromDate, Date newToDate);
 
 }
