@@ -25,7 +25,6 @@ public class ViewWeightLoss extends NutrifitWindow {
 
         addButton("Calculate", event -> {
             Date formattedDate = dateChooser.getDate();
-            System.out.println(formattedDate);
             //Initialize weight loss calculator
             this.weightLossCalc = new WeightLossCalculator();
             double kgGainedOrLost = weightLossCalc.getWeightLossForDate(formattedDate);

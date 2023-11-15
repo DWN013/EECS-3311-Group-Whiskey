@@ -72,8 +72,6 @@ public class ExerciseInputUI extends NutrifitWindow {
             formattedDateTime.setHours(Integer.parseInt(timeSplit[0]));
             formattedDateTime.setMinutes(Integer.parseInt(timeSplit[1]));
 
-            System.out.println(new Date(formattedDateTime.getTime()));
-
             Exercise exerciseObj = new Exercise(formattedDateTime, durationInSeconds, activityType, intensity, totalCaloriesBurned);
 
             NutriFit.getInstance().getUserDatabase().addUserExerciseLog(NutriFit.getInstance().getLoadedProfile().getId(), exerciseObj);

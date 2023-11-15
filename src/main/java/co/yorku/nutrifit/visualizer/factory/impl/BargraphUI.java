@@ -2,10 +2,7 @@ package co.yorku.nutrifit.visualizer.factory.impl;
 
 import co.yorku.nutrifit.object.VisualizerData;
 import co.yorku.nutrifit.visualizer.IVisualizer;
-import co.yorku.nutrifit.visualizer.calulcators.AvgUserFoodPlateCalculator;
-import co.yorku.nutrifit.visualizer.calulcators.CalorieCalculator;
-import co.yorku.nutrifit.visualizer.calulcators.DailyTotalEnergyExpenditureCalculator;
-import co.yorku.nutrifit.visualizer.calulcators.NutrientCalculator;
+import co.yorku.nutrifit.visualizer.calculators.*;
 import co.yorku.nutrifit.visualizer.factory.VisualizerUI;
 import co.yorku.nutrifit.visualizer.impl.*;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -28,7 +25,7 @@ public class BargraphUI implements VisualizerUI {
 
     @Override
     public VisualizerData buildCFGPlateUI(Date fromDate, Date toDate) {
-        IVisualizer iVisualizer =  new CFGPlateVisualizer(new DefaultCategoryDataset());
+        IVisualizer iVisualizer =  new CFGPlateVisualizer(new DefaultCategoryDataset(), new CFGPlateCalculator());
         return new VisualizerData(iVisualizer.buildBarGraph(fromDate, toDate), iVisualizer);
     }
     @Override
@@ -39,7 +36,7 @@ public class BargraphUI implements VisualizerUI {
 
     @Override
     public VisualizerData buildDailyTotalEnergyExpenditure(Date fromDate, Date toDate) {
-        IVisualizer iVisualizer =  new ExerciseVisualizer(new DailyTotalEnergyExpenditureCalculator(), new DefaultCategoryDataset());
+        IVisualizer iVisualizer =  new DailyTotalEnergyExpenditureVisualizer(new DailyTotalEnergyExpenditureCalculator(), new DefaultCategoryDataset());
         return new VisualizerData(iVisualizer.buildBarGraph(fromDate, toDate), iVisualizer);
     }
 }

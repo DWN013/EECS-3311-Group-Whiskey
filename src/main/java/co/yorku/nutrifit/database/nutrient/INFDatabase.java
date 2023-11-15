@@ -1,6 +1,7 @@
 package co.yorku.nutrifit.database.nutrient;
 
 import co.yorku.nutrifit.database.IDatabase;
+import co.yorku.nutrifit.object.FoodGroupData;
 import co.yorku.nutrifit.object.FoodInfo;
 import co.yorku.nutrifit.object.NutrientData;
 import co.yorku.nutrifit.object.FoodNutrientInfo;
@@ -20,7 +21,7 @@ public interface INFDatabase extends IDatabase {
 
     String getFoodGroupName(int foodGroupID);
 
-    Map<Integer, String> getAllFoodGroups();
+    List<FoodGroupData> getAllFoodGroups();
 
     List<String> getFoodTypesSimilar(String checkFoodType);
 

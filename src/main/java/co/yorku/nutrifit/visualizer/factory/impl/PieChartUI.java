@@ -2,15 +2,11 @@ package co.yorku.nutrifit.visualizer.factory.impl;
 
 import co.yorku.nutrifit.object.VisualizerData;
 import co.yorku.nutrifit.visualizer.IVisualizer;
-import co.yorku.nutrifit.visualizer.calulcators.AvgUserFoodPlateCalculator;
-import co.yorku.nutrifit.visualizer.calulcators.CalorieCalculator;
-import co.yorku.nutrifit.visualizer.calulcators.DailyTotalEnergyExpenditureCalculator;
-import co.yorku.nutrifit.visualizer.calulcators.NutrientCalculator;
+import co.yorku.nutrifit.visualizer.calculators.*;
 import co.yorku.nutrifit.visualizer.factory.VisualizerUI;
 import co.yorku.nutrifit.visualizer.impl.*;
 import org.jfree.data.general.DefaultPieDataset;
 
-import javax.swing.*;
 import java.util.Date;
 
 public class PieChartUI implements VisualizerUI {
@@ -29,7 +25,7 @@ public class PieChartUI implements VisualizerUI {
 
     @Override
     public VisualizerData buildCFGPlateUI(Date fromDate, Date toDate) {
-        IVisualizer iVisualizer =  new CFGPlateVisualizer(new DefaultPieDataset<>());
+        IVisualizer iVisualizer =  new CFGPlateVisualizer(new DefaultPieDataset<>(), new CFGPlateCalculator());
         return new VisualizerData(iVisualizer.buildPieChart(fromDate, toDate), iVisualizer);
 
     }
@@ -41,7 +37,7 @@ public class PieChartUI implements VisualizerUI {
 
     @Override
     public VisualizerData buildDailyTotalEnergyExpenditure(Date fromDate, Date toDate) {
-        IVisualizer iVisualizer =  new ExerciseVisualizer(new DailyTotalEnergyExpenditureCalculator(), new DefaultPieDataset<>());
+        IVisualizer iVisualizer =  new DailyTotalEnergyExpenditureVisualizer(new DailyTotalEnergyExpenditureCalculator(), new DefaultPieDataset<>());
         return new VisualizerData(iVisualizer.buildPieChart(fromDate, toDate), iVisualizer);
     }
 }
