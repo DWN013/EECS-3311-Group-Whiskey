@@ -7,14 +7,30 @@ import co.yorku.nutrifit.profile.IProfile;
 
 import java.util.Date;
 import java.util.List;
+/*
 
+    This UserDatabaseAdapter wraps an implementation for the IUserDatabase interface
+    so that we can pass whatever implementation of IUserDatabase into it.
+    This also uses the "Adapter" design pattern
+
+ */
 public class UserDatabaseAdapter implements IUserDatabase {
 
+    // Variable that holds the IUserDatabase instance
     private IUserDatabase userDatabaseInterface;
 
+    // Constructor for the UserDatabaseAdapter
     public UserDatabaseAdapter(IUserDatabase userDatabaseInterface) {
         this.userDatabaseInterface = userDatabaseInterface;
     }
+
+    /*
+
+        Below are methods used to interact with the IUserDdatabase
+        Specific comments about these methods can be found
+        in the respective interface classes
+
+     */
 
     @Override
     public boolean connect() {
