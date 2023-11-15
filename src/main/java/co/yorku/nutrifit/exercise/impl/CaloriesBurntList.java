@@ -4,11 +4,9 @@ import co.yorku.nutrifit.object.ActivityType;
 import co.yorku.nutrifit.object.Intensity;
 
 /*
-
-This class is temp to hold some dummy data until database implementation is done
-
+Calorie data file for exercises
  */
-public class ActivityCalorieTemp {
+public class CaloriesBurntList {
 	
 	private float [] [] [] activityCalorieList = { 
 			//For the weight aspect - 0=130lbs, 1=155lbs, 2=180lbs, 3=205+lbs
@@ -24,7 +22,7 @@ public class ActivityCalorieTemp {
 			{{264,348,405,479},{304,382,440,518},{354,422,490,558},{442,527,612,698},{531,633,735,838}} 
 			};
 	
-	public ActivityCalorieTemp ()
+	public CaloriesBurntList()
 	{
 		//activityCalorieList = new int [10] [5];
 		/*
@@ -40,7 +38,7 @@ public class ActivityCalorieTemp {
 		 * Array Row 9 = Boxing
 		 * */
 	}
-	
+	//Gets calories burned for an exercise
 	public float getCaloriesBurnedForActivityType(ActivityType activityType, Intensity intensity, float weight) //Assuming weight = pounds
 	{
 		float value = 0;
@@ -60,9 +58,9 @@ public class ActivityCalorieTemp {
 		{
 			value = activityCalorieList[activityType.ordinal()][intensity.ordinal()][3];
 		}
-		
-		value = value / 3600.00f; //because these values are calories burnt for an hour of doing this exercise, we divide by the number of seconds in an hour to get calories burnt per second 
-		
+		//because these values are calories burnt for an hour of doing this exercise,
+		//we divide by the number of seconds in an hour to get calories burnt per second
+		value = value / 3600.00f;
 		return value;
 	}
 

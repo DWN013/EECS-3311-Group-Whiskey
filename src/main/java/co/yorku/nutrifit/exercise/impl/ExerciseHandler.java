@@ -6,7 +6,7 @@ import co.yorku.nutrifit.exercise.calculators.WeightLossCalculator;
 import co.yorku.nutrifit.object.ActivityType;
 import co.yorku.nutrifit.object.Intensity;
 import co.yorku.nutrifit.profile.IProfile;
-
+//Handler for calling exercise and weight loss calculators
 public class ExerciseHandler implements IExercise {
 
     private ExerciseCalculator exerciseCalculator;

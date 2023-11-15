@@ -7,12 +7,15 @@ import co.yorku.nutrifit.logs.impl.Meal;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+/*
+    Need to know how many calories I burn living (figure out how activate user is)
+    Weightloss calc uses BMR and Activity rating calc and multiplies them
+    RMR == Resting Metabolic Rate
+ */
+
 public class WeightLossCalculator {
     private ActivityRatingCalculator actRating;
     private BMRCalculator bmr;
-    // Need to know how many calories I burn living (figure out how activate user is)
-    // Weightloss calc uses BMR and Activity rating calc and multiplies em,
-    // RMR == Resting Metabolic Rate
 
     public double getWeightLossForDate(Date selectedDate){
         Date today = new Date(System.currentTimeMillis());
@@ -46,14 +49,14 @@ public class WeightLossCalculator {
         }
         //Average amount of calories eaten per day.
         double totalAverageCalorieIntake = ((double) totalCalorieIntake)/14;
-        //Initialize variables
+        //Initialize variables/calculators
         this.actRating = new ActivityRatingCalculator();
         this.bmr = new BMRCalculator();
-
+        //Gets information needed for calculation
         double act_rating = actRating.getUserActivityRating();
         int  bmrCalc = bmr.getBMR(NutriFit.getInstance().getLoadedProfile());
         double caloriesExpendedPerDay = (act_rating * bmrCalc);
-
+        //Sets selected date time to 00:00:00
         selectedDate.setHours(0);
         selectedDate.setMinutes(0);
         selectedDate.setSeconds(0);
@@ -65,10 +68,11 @@ public class WeightLossCalculator {
         // Multiplies gain or loss by the amount of days we are getting a prediction for (assumes rate will remain the same)
         //Calorie intake - RMR
         double caloriesGainedOrLost = (totalAverageCalorieIntake - caloriesExpendedPerDay) * daysApart;
+        //7700 kCal == 1kg
         int calsTokg = 7700;
         //Makes final calculation
         double kgGainedOrLost = (caloriesGainedOrLost/calsTokg);
-
+        //Returns final result
         return kgGainedOrLost;
     }
 }

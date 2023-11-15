@@ -15,24 +15,27 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 public class NutriFit {
-
-    // Singleton Instance
-    private static NutriFit i;
+    // Singleton Instance of NutriFit
+    private static NutriFit instance;
 
     public static NutriFit getInstance() {
-        return i;
+        return instance;
     }
 
     public Gson gson;
+
     private EventManager eventManager;
 
     private IMeal iMeal;
+
     private IProfile loadedProfile;
+
     private IUserDatabase iUserDatabase;
+
     private INFDatabase infDatabase;
 
     private NutriFit() {
-        NutriFit.i = this;
+        NutriFit.instance = this;
 
         this.gson = new GsonBuilder().create();
         this.eventManager = new EventManager();
@@ -51,26 +54,25 @@ public class NutriFit {
             System.exit(0);
             return;
         }
-
+        //Calls login/signup page
         LogInOrSignUpPage.getInstance().showWindow();
     }
 
-
+    //Actions when NutriFit is closed
     public void close() {
-
         this.setLoadedProfile(null);
-
+        //Closes connection to database
         if (infDatabase != null) {
             this.infDatabase.closeConnection();
         }
         if (iUserDatabase != null) {
             this.iUserDatabase.closeConnection();
         }
-
+        //Exit status 0
         System.exit(0);
     }
 
-
+    //
     public Gson getGson() {
         return gson;
     }
@@ -102,15 +104,15 @@ public class NutriFit {
     public void setLoadedProfile(IProfile loadedProfile) {
         this.loadedProfile = loadedProfile;
     }
-    
-    public void editProfile (IProfile profile) //This Method will take the Edited Profile and give it to the User Database to be updated with the new values 
+
+    //This Method will take the Edited Profile and
+    //give it to the User Database to be updated with the new values
+    public void editProfile (IProfile profile)
     {
     	this.iUserDatabase.updateProfile(profile);
     }
 
-
     public static void main(String[] args) {
         new NutriFit();
     }
-
 }
