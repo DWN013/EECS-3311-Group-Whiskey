@@ -5,14 +5,20 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DefaultPieDataset;
 
+import javax.swing.*;
+import java.awt.*;
 import java.util.Date;
 
 public class CFGPlateVisualizer extends IVisualizer {
 
 
+
     public CFGPlateVisualizer(Dataset dataset) {
         super(dataset);
+
     }
+
+
 
     @Override
     public String getChartName() {
@@ -21,36 +27,46 @@ public class CFGPlateVisualizer extends IVisualizer {
 
     @Override
     public String getBarGraphCategoryAxisLabel() {
-        return "Something";
+        return "Food Categories";
     }
 
     @Override
     public String getBarGraphValueAxisLabel() {
-        return "Something Else";
+        return "Percentage";
+    }
+
+    @Override
+    public boolean isBargraphShownInPercentage() {
+        return true;
     }
 
     @Override
     public DefaultCategoryDataset buildBargraphDataset(Date fromDate, Date toDate) {
-        // TODO: Add Data here
-        ((DefaultCategoryDataset) getDataset()).setValue(100, "Calories Burned", "Today");
-        ((DefaultCategoryDataset) getDataset()).setValue(200, "Calories Burned", "Yesterday");
-        ((DefaultCategoryDataset) getDataset()).setValue(999, "Calories Burned", "Day Before Yesterday");
+
+        ((DefaultCategoryDataset) getDataset()).setValue((double)48/100, "Percentage", "Vegetables and Fruits");
+        ((DefaultCategoryDataset) getDataset()).setValue((double)24/100, "Percentage", "Whole Grain Foods");
+        ((DefaultCategoryDataset) getDataset()).setValue((double)23/100, "Percentage", "Proteins");
+        ((DefaultCategoryDataset) getDataset()).setValue((double)5/100, "Percentage", "Others");
+
+
 
         return ((DefaultCategoryDataset) getDataset());
     }
 
     @Override
     public DefaultPieDataset<String> buildPiechartDataset(boolean expand, Date fromDate, Date toDate) {
+        ((DefaultPieDataset<String>) getDataset()).setValue("Vegetables and Fruits (48%)", 48.0);
+        ((DefaultPieDataset<String>) getDataset()).setValue("Proteins (23%)", 23.0);
+        ((DefaultPieDataset<String>) getDataset()).setValue("Whole Grain Foods (24%)", 24.0);
+        ((DefaultPieDataset<String>) getDataset()).setValue("Others (5%)", 5.0);
 
-        ((DefaultPieDataset<String>) getDataset()).setValue("Today", 20.0);
-        ((DefaultPieDataset<String>) getDataset()).setValue("Yesterday", 80.0);
+
 
         return ((DefaultPieDataset<String>) getDataset());
     }
 
     @Override
     public void onDateRangeUpdate(String type, Date newFromDate, Date newToDate) {
-
         if (!type.equals(this.getChartName())) return;
 
         if (getDataset() instanceof DefaultCategoryDataset) {
@@ -60,6 +76,7 @@ public class CFGPlateVisualizer extends IVisualizer {
             ((DefaultPieDataset<String>) getDataset()).clear();
             this.buildPiechartDataset(false, newFromDate, newToDate);
         }
-
     }
+
+
 }

@@ -10,6 +10,7 @@ import co.yorku.nutrifit.visualizer.factory.VisualizerUI;
 import co.yorku.nutrifit.visualizer.impl.*;
 import org.jfree.data.general.DefaultPieDataset;
 
+import javax.swing.*;
 import java.util.Date;
 
 public class PieChartUI implements VisualizerUI {
@@ -30,6 +31,7 @@ public class PieChartUI implements VisualizerUI {
     public VisualizerData buildCFGPlateUI(Date fromDate, Date toDate) {
         IVisualizer iVisualizer =  new CFGPlateVisualizer(new DefaultPieDataset<>());
         return new VisualizerData(iVisualizer.buildPieChart(fromDate, toDate), iVisualizer);
+
     }
     @Override
     public VisualizerData buildNutrientUI(Date fromDate, Date toDate) {
