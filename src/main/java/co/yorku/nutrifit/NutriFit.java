@@ -17,10 +17,10 @@ import com.google.gson.GsonBuilder;
 public class NutriFit {
 
     // Singleton Instance
-    private static NutriFit i;
+    private static NutriFit nutrifit_instance;
 
     public static NutriFit getInstance() {
-        return i;
+        return nutrifit_instance;
     }
 
     public Gson gson;
@@ -32,7 +32,7 @@ public class NutriFit {
     private INFDatabase infDatabase;
 
     private NutriFit() {
-        NutriFit.i = this;
+        NutriFit.nutrifit_instance = this;
 
         this.gson = new GsonBuilder().create();
         this.eventManager = new EventManager();
