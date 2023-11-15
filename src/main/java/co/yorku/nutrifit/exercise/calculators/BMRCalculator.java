@@ -11,12 +11,14 @@ public class BMRCalculator {
 	//Logic for calculating BMR
 	public int getBMR(IProfile p)
 	{
+		//Gets existing profile info from user first
 		double bmr = 0.0;
 		boolean gender = p.isMale();
 		boolean isMetric = p.isMetric();
 		double weight = p.getWeight();
 		double height = p.getHeight();
 		int age = p.getAge();
+		//Starts calculation based on user profile parameters
 		if (isMetric == false)
 		{
 			weight = weight / 2.2;
