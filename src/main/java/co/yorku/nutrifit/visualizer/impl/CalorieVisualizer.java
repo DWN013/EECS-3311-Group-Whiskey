@@ -10,8 +10,8 @@ import java.util.Date;
 import java.util.Map;
 
 /*
-CalorieVisualizer is designed to visualize calorie consumption data. Utilizes JFreeChart library to create
-bar graphs and pie charts. The class implements a method to update the visualizer when the user modifies the date range.
+	CalorieVisualizer is designed to visualize calorie consumption data. Utilizes JFreeChart library to create
+	bar graphs and pie charts. The class implements a method to update the visualizer when the user modifies the date range.
  */
 
 public class CalorieVisualizer extends IVisualizer {

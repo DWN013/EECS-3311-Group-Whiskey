@@ -1,7 +1,6 @@
 package co.yorku.nutrifit.exercise.calculators;
 
 import co.yorku.nutrifit.NutriFit;
-import co.yorku.nutrifit.exercise.IExercise;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Exercise;
 
@@ -15,8 +14,6 @@ In other words, the class calculates how active you are.
  */
 
 public class ActivityRatingCalculator {
-
-    private IExercise exercise;
 
     public double getUserActivityRating(){
         //Gets the logs for 14 days worth of exercises or as many as possible up to 14 days

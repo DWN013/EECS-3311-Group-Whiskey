@@ -1,6 +1,9 @@
 package co.yorku.nutrifit.object;
 
-// Class FoodGroupData for storing information related to food groups
+/*
+ * Class FoodGroupData for storing information related to food groups
+ */
+
 public class FoodGroupData {
 
     // Private instance variables representing food group data

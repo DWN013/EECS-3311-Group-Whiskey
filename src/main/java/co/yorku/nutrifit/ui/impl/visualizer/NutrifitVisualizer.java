@@ -10,11 +10,6 @@ import org.jfree.chart.ChartMouseListener;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.entity.CategoryItemEntity;
 import org.jfree.chart.entity.PieSectionEntity;
-import org.jfree.chart.entity.PlotEntity;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PiePlot;
-import org.jfree.data.general.DefaultPieDataset;
-
 import javax.swing.*;
 import java.awt.*;
 import java.text.SimpleDateFormat;
@@ -41,14 +36,14 @@ public class NutrifitVisualizer extends NutrifitWindow {
     private boolean expanded;
 
     public NutrifitVisualizer(String windowName, NutrifitWindow parent, VisualizerData data, Date fromDate, Date toDate) {
-        super(windowName, new GridLayout(1, 5)); // Call parent with params
+        super(windowName, new GridLayout(1, 5)); // Call parent with parameters 
 
         this.iVisualizer = data.getVisualizer(); // Set visualizer object in class
         this.fromDate = fromDate; // Set from date
         this.toDate = toDate; // Set to date
         this.expanded = false; // By default, we are not expanded
 
-        // Construct and set the ChartPanel and it's params
+        // Construct and set the ChartPanel and it's parameters 
         this.chartPanel = new ChartPanel(data.getChart());
         this.chartPanel.setPreferredSize(new Dimension(800, 600));
         this.chartPanel.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
@@ -151,7 +146,7 @@ public class NutrifitVisualizer extends NutrifitWindow {
         container.add(this.chartPanel); // Add the chart (or the Bar/Pie chart)
         container.add(getMainJPanel()); // Add the Main panel (which contains our buttons)
 
-        // Add the JPanel to the content pane and packit
+        // Add the JPanel to the content pane and pack it
         this.getContentPane().add(container);
         this.pack();
     }

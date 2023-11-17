@@ -81,7 +81,7 @@ public class SettingsUI extends NutrifitWindow {
 				{
 					try //To ensure the user is entering an integer value. If user enters non-number value, throw error
 					{
-						int numNewAge = Integer.valueOf(newAge); //Stirng to Integer conversion
+						int numNewAge = Integer.valueOf(newAge); //String to Integer conversion
 						NutriFit.getInstance().getLoadedProfile().setAge(numNewAge); //Set new value for Age in Profile Instance
 						ageLabel.setText("Age: " + newAge); //Change Label text to new age value for the user
 						NutriFit.getInstance().getUserDatabase().updateProfile(NutriFit.getInstance().getLoadedProfile()); //Change to Database with new Age value

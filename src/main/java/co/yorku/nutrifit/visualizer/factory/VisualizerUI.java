@@ -4,7 +4,6 @@ import co.yorku.nutrifit.object.VisualizerData;
 
 import java.util.Date;
 /*
-
     This is the VisualizerUI interface. (Factory Method)
     It holds methods related to building the charts
     and each return a VisualizerData object which contain

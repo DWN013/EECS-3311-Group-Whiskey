@@ -11,10 +11,8 @@ import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /*
-
     This is the AvgUserFoodPlateCalculator.
     It's purpose is to calculate the user's average food plate
     over a period of time (Food Groups)
@@ -84,7 +82,7 @@ public class AvgUserFoodPlateCalculator {
         }
 
         LinkedHashMap<String, Integer> totals = Maps.newLinkedHashMap(); // Data to be finalized and returned
-        int total = 0; // Total number of occurences of food groups
+        int total = 0; // Total number of occurrences of food groups
 
         for (Map.Entry<String, Integer> stringIntegerEntry : fGdata.entrySet()) { // Loop through all the food groups the user has consumed over the time period
 

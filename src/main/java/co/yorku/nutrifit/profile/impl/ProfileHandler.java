@@ -18,7 +18,7 @@ public class ProfileHandler implements IProfile {
     private boolean isMetric;
 
     public ProfileHandler(int id, String name, boolean isMale, float height, int age, float weight, boolean isMetric) {
-    	//Take user inputed values for the profile and set these values for the profile instance
+    	//Take inputed values for the profile and set these values for the profile instance
         this.id = id;
         this.name = name;
         this.isMale = isMale;

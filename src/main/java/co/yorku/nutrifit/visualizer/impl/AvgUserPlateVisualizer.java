@@ -6,7 +6,6 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.Dataset;
 import org.jfree.data.general.DefaultPieDataset;
 
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.Map;
 

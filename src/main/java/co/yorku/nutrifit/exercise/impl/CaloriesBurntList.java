@@ -4,8 +4,24 @@ import co.yorku.nutrifit.object.ActivityType;
 import co.yorku.nutrifit.object.Intensity;
 
 /*
-Calorie data file for exercises
+ * Calorie Data File for Exercises
+ * List that has stored the amount of calories that the user will burn doing a specific exercise, at some intensity or a person of a specific weight class (3-dimensional array)
  */
+
+/*
+ * Calorie List exercises:
+ * Array Row 0 = Zumba
+ * Array Row 1 = Walking
+ * Array Row 2 = Jump Rope
+ * Array Row 3 = Ice Skating
+ * Array Row 4 = Jogging
+ * Array Row 5 = Basketball
+ * Array Row 6 = Running
+ * Array Row 7 = Swimming
+ * Array Row 8 = Biking
+ * Array Row 9 = Boxing
+ * */
+
 public class CaloriesBurntList {
 	
 	private float [] [] [] activityCalorieList = { 
@@ -22,22 +38,8 @@ public class CaloriesBurntList {
 			{{264,348,405,479},{304,382,440,518},{354,422,490,558},{442,527,612,698},{531,633,735,838}} 
 			};
 	
-	public CaloriesBurntList()
-	{
-		//activityCalorieList = new int [10] [5];
-		/*
-		 * Array Row 0 = Zumba
-		 * Array Row 1 = Walking
-		 * Array Row 2 = Jump Rope
-		 * Array Row 3 = Ice Skating
-		 * Array Row 4 = Jogging
-		 * Array Row 5 = Basketball
-		 * Array Row 6 = Running
-		 * Array Row 7 = Swimming
-		 * Array Row 8 = Biking
-		 * Array Row 9 = Boxing
-		 * */
-	}
+	public CaloriesBurntList() {}
+	
 	//Gets calories burned for an exercise
 	public float getCaloriesBurnedForActivityType(ActivityType activityType, Intensity intensity, float weight) //Assuming weight = pounds
 	{

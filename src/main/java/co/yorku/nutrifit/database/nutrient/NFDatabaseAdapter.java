@@ -6,7 +6,6 @@ import co.yorku.nutrifit.object.NutrientData;
 import co.yorku.nutrifit.object.FoodNutrientInfo;
 
 import java.util.List;
-import java.util.Map;
 
 /*
 

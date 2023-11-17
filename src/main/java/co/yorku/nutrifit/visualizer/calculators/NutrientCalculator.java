@@ -12,11 +12,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /*
-
     This is the NutrientCalculator.
     It's purpose is to calculate the user's Nutrients consumed
     over a period of time
-
  */
 public class NutrientCalculator {
 

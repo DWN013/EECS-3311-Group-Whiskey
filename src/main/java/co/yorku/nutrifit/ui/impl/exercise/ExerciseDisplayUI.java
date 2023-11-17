@@ -4,8 +4,6 @@ import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Exercise;
 import co.yorku.nutrifit.ui.NutrifitWindow;
-import co.yorku.nutrifit.ui.impl.main.NutriFitMainUI;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Date;
