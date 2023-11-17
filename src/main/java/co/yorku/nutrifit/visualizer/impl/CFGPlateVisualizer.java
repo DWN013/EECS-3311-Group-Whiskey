@@ -12,8 +12,8 @@ import java.util.Date;
 import java.util.Map;
 
 /*
- * The CFGPlateVisualizer class is designed to visualize data related to the user's plate and
- * the CFG (Canada Food Guide). Uses JFreeChart to create bar graphs and pie charts to represent food group data.
+ * The CFGPlateVisualizer class is designed to visualize data related to the CFG (Canada Food Guide).
+ * Uses JFreeChart to create bar graphs and pie charts to represent food group data.
  *
  * The class includes methods for building bar graph and pie chart datasets, as well as
  * handling date range updates. It offers customization options for chart labels and expandability.
@@ -73,7 +73,7 @@ public class CFGPlateVisualizer extends IVisualizer {
     }
 
     @Override
-    //Same as above but for pie chart
+    // Logic works the same as the "buildBarGraphDataset" method above, however instead this method will create a Pie Chart
     public DefaultPieDataset<String> buildPiechartDataset(String expandInfo, Date fromDate, Date toDate) {
 
         Map<String, Double> data = cfgPlateCalculator.getFoodGroupData(expandInfo);
@@ -87,10 +87,12 @@ public class CFGPlateVisualizer extends IVisualizer {
 
     @Override
     // Method called when the date range is updated by user
+    // Will update chart based on chosen view accordingly
     public void onDateRangeUpdate(String type, String expandData, Date newFromDate, Date newToDate) {
-
+        // If the user has multiple visualizers open, and they want to update one visualizer,
+        // this will ensure that the program is not going to update the wrong visualizer
         if (!type.equals(this.getChartName())) return;
-
+        //Otherwise, this will update the pie chart
         if (getDataset() instanceof DefaultCategoryDataset) {
             ((DefaultCategoryDataset) getDataset()).clear();
             this.buildBargraphDataset(expandData, newFromDate, newToDate);

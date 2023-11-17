@@ -54,7 +54,7 @@ public class CalorieVisualizer extends IVisualizer {
     }
 
     @Override
-    //Same as above but for pie chart
+    // Logic works the same as the "buildBarGraphDataset" method above, however instead this method will create a Pie Chart
     public DefaultPieDataset<String> buildPiechartDataset(String expandInfo, Date fromDate, Date toDate) {
 
         Map<String, Integer> calorieData = calorieCalculator.getCaloriesPerDay(fromDate, toDate);
@@ -70,9 +70,10 @@ public class CalorieVisualizer extends IVisualizer {
     @Override
     // Method called when the date range is updated by user
     public void onDateRangeUpdate(String type, String expandData, Date newFromDate, Date newToDate) {
-
+        // If the user has multiple visualizers open, and they want to update one visualizer,
+        // this will ensure that the program is not going to update the wrong visualizer
         if (!type.equals(this.getChartName())) return;
-
+        //Otherwise, this will update the pie chart
         if (getDataset() instanceof DefaultCategoryDataset) {
             ((DefaultCategoryDataset) getDataset()).clear();
             this.buildBargraphDataset(expandData, newFromDate, newToDate);
