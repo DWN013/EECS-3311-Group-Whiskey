@@ -45,7 +45,7 @@ public class NFDatabase implements INFDatabase {
 
         Below are implementations for the "INFDatabase" interface and subsequently
         the "IDatabase" (which "INFDatabase" extends). Specific details about the purpose
-        of each method can be found in it's respective interfacce class
+        of each method can be found in its respective interface class
 
      */
 
@@ -58,7 +58,7 @@ public class NFDatabase implements INFDatabase {
             return false;
         }
 
-        // Try/catch for connecting to your Ddatabase
+        // Try/catch for connecting to your Database
         try {
             Class.forName("org.sqlite.JDBC");
             // Attempt to establish a connection to the Database (nfdatabase.db file)
