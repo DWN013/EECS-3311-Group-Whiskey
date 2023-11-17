@@ -77,7 +77,7 @@ public class DailyTotalEnergyExpenditureVisualizer extends IVisualizer {
     	//If the user has multiple visualizers open, and they want to update one visualizer, this will ensure that the program is not going to update the wrong visualizer
         if (!type.equals(this.getChartName())) return;
 
-        //If user selected Bar Graph - will update the chart as a bar graph
+        ///If current dataset type for this visualizer is a bar graph
         if (getDataset() instanceof DefaultCategoryDataset) {
             ((DefaultCategoryDataset) getDataset()).clear();
             this.buildBargraphDataset(expandData, newFromDate, newToDate); //rebuild bar graph

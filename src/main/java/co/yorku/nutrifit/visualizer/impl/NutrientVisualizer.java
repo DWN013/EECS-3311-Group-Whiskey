@@ -85,7 +85,7 @@ public class NutrientVisualizer extends IVisualizer {
                 ((DefaultCategoryDataset) getDataset()).setValue(dayTotal, "Day", day); //Add the day total of average nutrients to the chart
             }
         }
-        return ((DefaultCategoryDataset) getDataset()); //return Bar Chart
+        return ((DefaultCategoryDataset) getDataset()); //return the dataset of the Bar Graph
     }
 
     @Override
@@ -123,7 +123,7 @@ public class NutrientVisualizer extends IVisualizer {
             }
         }
 
-        return ((DefaultPieDataset<String>) getDataset()); //return Pie Chart
+        return ((DefaultPieDataset<String>) getDataset()); //return the dataset of the Pie Chart
     }
 
     //If the user has clicked on the "Update Date Range" button in the UI, will take new date values and create the graphs again
@@ -133,7 +133,7 @@ public class NutrientVisualizer extends IVisualizer {
     	//If the user has multiple visualizers open, and they want to update one visualizer, this will ensure that the program is not going to update the wrong visualizer
         if (!type.equals(this.getChartName())) return;
 
-        //If user selected Bar Graph - will update the chart as a bar graph
+        //If current dataset type for this visualizer is a bar graph
         if (getDataset() instanceof DefaultCategoryDataset) {
             ((DefaultCategoryDataset) getDataset()).clear();
             this.buildBargraphDataset(expandData, newFromDate, newToDate); //build new bar graph

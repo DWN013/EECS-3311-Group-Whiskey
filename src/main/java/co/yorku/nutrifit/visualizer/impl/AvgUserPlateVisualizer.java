@@ -74,7 +74,7 @@ public class AvgUserPlateVisualizer extends IVisualizer {
             //Use percentage value and append this to the bar graph
             ((DefaultCategoryDataset) getDataset()).setValue(stringIntegerEntry.getValue(), "Food Group Category", stringIntegerEntry.getKey() + " (" + getDecimalFormat().format(asPercentage) + "%)");
         }
-        return ((DefaultCategoryDataset) getDataset()); //Return the bar graph
+        return ((DefaultCategoryDataset) getDataset()); //Return the dataset of the Bar Graph
     }
 
     //Will build a pie chart with the data (upon users request)
@@ -96,7 +96,7 @@ public class AvgUserPlateVisualizer extends IVisualizer {
             //Use percentage value and append this to the pie chart
             ((DefaultPieDataset<String>) getDataset()).setValue(stringIntegerEntry.getKey() + " (" + getDecimalFormat().format(asPercentage) + "%)", stringIntegerEntry.getValue() * 100);
         }
-        return ((DefaultPieDataset<String>) getDataset()); //return the pie chart
+        return ((DefaultPieDataset<String>) getDataset()); //return the dataset of the Pie Chart
     }
 
     //If the user has clicked on the "Update Date Range" button in the UI, will take new date values and create the graphs again
@@ -106,7 +106,7 @@ public class AvgUserPlateVisualizer extends IVisualizer {
     	//If the user has multiple visualizers open, and they want to update one visualizer, this will ensure that the program is not going to update the wrong visualizer
         if (!type.equals(this.getChartName())) return;
 
-        //If user selected Bar Graph - will update the chart as a bar graph
+        //If current dataset type for this visualizer is a bar graph
         if (getDataset() instanceof DefaultCategoryDataset) {
             ((DefaultCategoryDataset) getDataset()).clear();
             this.buildBargraphDataset(expandData, newFromDate, newToDate); //rebuild bar graph
