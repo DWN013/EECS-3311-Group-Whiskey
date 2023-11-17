@@ -14,7 +14,7 @@ public class MainMealMenu extends NutrifitWindow {
     // Method to retrieve a singleton instance of MainMealMenu
     public static MainMealMenu getInstance() {
         if (instance == null) {
-            instance = new MainMealMenu();
+            instance = new MainMealMenu(); //Create new instance of meal menu if does not exist
         }
         return instance;
     }
@@ -24,11 +24,13 @@ public class MainMealMenu extends NutrifitWindow {
         super("Meal Menu", new GridLayout());
 
         // Add buttons for logging a meal and showing meal logs
+        // Log Meal button
         addButton("Log Meal", event -> {
             this.hideWindow(); // Hide the current window
             MealInputUI.getInstance().reset(); // Reset the MealInputUI instance
             MealInputUI.getInstance().showWindow(); // Show the MealInputUI window
         });
+        // Meal menu button
         addButton("Show Meal Log", event -> {
             this.hideWindow(); // Hide the current window
             new MealDisplayUI().showWindow(); // Show the MealDisplayUI window
