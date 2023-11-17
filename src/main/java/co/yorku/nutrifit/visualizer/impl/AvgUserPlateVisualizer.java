@@ -47,8 +47,7 @@ public class AvgUserPlateVisualizer extends IVisualizer {
     @Override
     public DefaultCategoryDataset buildBargraphDataset(String expandInfo, Date fromDate, Date toDate) {
 
-        boolean expand = expandInfo != null;
-        Map<String, Double> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(expand, fromDate, toDate);
+        Map<String, Double> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(expandInfo, fromDate, toDate);
 
         for(Map.Entry<String, Double> stringIntegerEntry : avgUserFoodPlate.entrySet()){
 
@@ -63,8 +62,7 @@ public class AvgUserPlateVisualizer extends IVisualizer {
     @Override
     public DefaultPieDataset<String> buildPiechartDataset(String expandInfo, Date fromDate, Date toDate) {
 
-        boolean expand = expandInfo != null;
-        Map<String, Double> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(expand, fromDate, toDate);
+        Map<String, Double> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(expandInfo, fromDate, toDate);
 
         for(Map.Entry<String, Double> stringIntegerEntry : avgUserFoodPlate.entrySet()){
 
