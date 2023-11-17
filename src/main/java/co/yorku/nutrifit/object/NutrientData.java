@@ -48,4 +48,16 @@ public class NutrientData {
     public String getTag() {
         return tag;
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof NutrientData)) return false;
+        return ((NutrientData) obj).getNutrientID() == this.getNutrientID();
+    }
+
+    @Override
+    public int hashCode() {
+        return + this.nutrientID * this.nutrientCode * this.symbolText.hashCode() * this.unit.hashCode() * this.name.hashCode() * this.tag.hashCode();
+    }
 }

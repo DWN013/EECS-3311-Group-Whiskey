@@ -62,9 +62,9 @@ public class NutrientCalculator {
 
                     // Check if the unit is mg, convert it to g
                     if (nutrientData.getUnit().equals("mg")) {
-                        sum+=(integerDoubleEntry.getValue()/1000); // Add it to the sum
+                        sum+=((integerDoubleEntry.getValue()/1000) * integerIntegerEntry.getValue()); // Add it to the sum and multiply by the meal quantity
                     } else {
-                        sum+=integerDoubleEntry.getValue(); // Add it to the sum
+                        sum+=(integerDoubleEntry.getValue() * integerIntegerEntry.getValue()); // Add it to the sum and multiply by the meal quantity
                     }
 
                     nutrientsPerDay.put(nutrientData.getName(), sum); // Update our nutrient map with new sum
