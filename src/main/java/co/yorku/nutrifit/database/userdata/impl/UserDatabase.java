@@ -111,7 +111,8 @@ public class UserDatabase implements IUserDatabase {
             try {
                 dbFile.createNewFile(); // Create the file if it does not exist
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
+                return false;
             }
         }
 
