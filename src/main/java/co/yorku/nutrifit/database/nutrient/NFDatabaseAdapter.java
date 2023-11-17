@@ -8,13 +8,31 @@ import co.yorku.nutrifit.object.FoodNutrientInfo;
 import java.util.List;
 import java.util.Map;
 
-public class NFDatabaseAdapter implements INFDatabase {
+/*
 
+    This NFDatabaseAdapter wraps an implementation for the INFDatabase interface
+    so that we can pass whatever implementation of INFDatabase into it.
+    This also uses the "Adapter" design pattern
+
+ */
+public class NFDatabaseAdapter implements INFDatabase
+{
+
+    // This variable holds the instance of INFDatabase
     private INFDatabase nfDatabaseInterface;
 
+    // Constructor for NFDatabaseAdapter
     public NFDatabaseAdapter(INFDatabase nfDatabaseInterface) {
         this.nfDatabaseInterface = nfDatabaseInterface;
     }
+
+    /*
+
+        Below are methods used to interact with the NFDatabase
+        Specific comments about these methods can be found
+        in the respective interface classes
+
+     */
 
     @Override
     public boolean connect() {
@@ -32,8 +50,8 @@ public class NFDatabaseAdapter implements INFDatabase {
     }
 
     @Override
-    public FoodInfo getFoodInfo(String ingredient) {
-        return this.nfDatabaseInterface.getFoodInfo(ingredient);
+    public FoodInfo getFoodInfo(String food) {
+        return this.nfDatabaseInterface.getFoodInfo(food);
     }
 
     @Override

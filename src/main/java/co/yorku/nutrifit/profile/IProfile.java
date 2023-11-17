@@ -1,7 +1,13 @@
 package co.yorku.nutrifit.profile;
 
-public interface IProfile {
+/*
+ * Interface Class for User Profiles. This will allow us to hold the instance of the loaded user profile 
+ */
 
+public interface IProfile {
+	
+	//IProfile Getter and Setter Methods 
+	
     int getId();
 
     String getName();
