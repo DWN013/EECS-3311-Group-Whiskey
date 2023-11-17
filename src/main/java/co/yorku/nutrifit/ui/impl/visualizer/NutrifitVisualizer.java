@@ -64,12 +64,21 @@ public class NutrifitVisualizer extends NutrifitWindow {
                 if (NutrifitVisualizer.this.expanded) return; // Check to see if our chart is currently expanded
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMM dd yyyy"); // Create a simple date format for parsing dates
-                String dateText = chartMouseEvent.getEntity().getToolTipText(); // Get the text of the bar or pie slice the user clicked
+                String data; // Name of Bar/Pie slice that user clicked
+
+                if (chartMouseEvent.getEntity() instanceof PieSectionEntity) { // If the user clicked a Pie Slice (In a Pie Chart)
+                    data = ((PieSectionEntity) chartMouseEvent.getEntity()).getSectionKey().toString().split("\\(")[0].trim(); // Get and Cleanup the name of the pie slice the user clicked
+                } else if (chartMouseEvent.getEntity() instanceof CategoryItemEntity) { // If the user clicked a CategoryItemEntity (or Bar in a Bar Graph)
+                    data = ((CategoryItemEntity) chartMouseEvent.getEntity()).getColumnKey().toString().split("\\(")[0].trim(); // Get and Cleanup the name of the bar the user clicked
+                } else {
+                    return; // do nothing
+                }
+
 
                 try {
                     // Parse the dateText into a date, if we thrown an exception (if we cannot parse a date) we will sanitize and pass in the name of the clicked bar or pie slice
-                    Date fromDate = simpleDateFormat.parse(dateText);
-                    Date toDate = simpleDateFormat.parse(dateText);
+                    Date fromDate = simpleDateFormat.parse(data);
+                    Date toDate = simpleDateFormat.parse(data);
 
                     // Set the fromDate to be the start of the day
                     fromDate.setHours(0);
@@ -82,25 +91,14 @@ public class NutrifitVisualizer extends NutrifitWindow {
                     toDate.setSeconds(59);
 
                     // Call the Event and notify it's subscribers (Observer Pattern)
-                    NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName(), fromDate + ":" + toDate, fromDate, toDate);
+                    NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName(), data.split("\\(")[0].replace(":", "").trim(), fromDate, toDate);
                     NutrifitVisualizer.this.expanded = true; // Set the chart to expanded
-                } catch (Exception e) {
+                    return;
+                } catch (Exception e) {} // Do nothing as it's not a date range
 
-                    String expandData;
-
-                    if (chartMouseEvent.getEntity() instanceof PieSectionEntity) { // If the user clicked a Pie Slice (In a Pie Chart)
-                        expandData = ((PieSectionEntity) chartMouseEvent.getEntity()).getSectionKey().toString().split("\\(")[0].trim(); // Get and Cleanup the name of the pie slice the user clicked
-                    } else if (chartMouseEvent.getEntity() instanceof CategoryItemEntity) { // If the user clicked a CategoryItemEntity (or Bar in a Bar Graph)
-                        expandData = ((CategoryItemEntity) chartMouseEvent.getEntity()).getColumnKey().toString().split("\\(")[0].trim(); // Get and Cleanup the name of the bar the user clicked
-                    } else {
-                        return; // do nothing
-                    }
-
-                    // Call the Event and notify it's subscribers (Observer Pattern)
-                    NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName(), expandData, NutrifitVisualizer.this.fromDate, NutrifitVisualizer.this.toDate);
-                    NutrifitVisualizer.this.expanded = true; // Set the chart to expanded
-                }
-
+                // Call the Event and notify it's subscribers (Observer Pattern)
+                NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName(), data, NutrifitVisualizer.this.fromDate, NutrifitVisualizer.this.toDate);
+                NutrifitVisualizer.this.expanded = true; // Set the chart to expanded
             }
 
             @Override

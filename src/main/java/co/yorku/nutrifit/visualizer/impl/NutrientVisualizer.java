@@ -60,6 +60,8 @@ public class NutrientVisualizer extends IVisualizer {
         //Traverse the Hash Map of data
         for (Map.Entry<String, Map<String, Double>> stringMapEntry : data.entrySet()) {
 
+            if (expand && !stringMapEntry.getKey().equals(expandInfo)) continue;
+
         	//get the day of the logged nutrient (which is the key to the hash map)
             String day = stringMapEntry.getKey(); 
             //Will hold the value for the total nutrients of that day 
@@ -96,6 +98,8 @@ public class NutrientVisualizer extends IVisualizer {
 
         //Traverse the Hash Map of Data
         for (Map.Entry<String, Map<String, Double>> stringMapEntry : data.entrySet()) {
+
+            if (expand && !stringMapEntry.getKey().equals(expandInfo)) continue;
 
         	//get the day of the logged nutrient (which is the key to the hash map)
             String day = stringMapEntry.getKey();
