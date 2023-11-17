@@ -29,7 +29,7 @@ public abstract class NutrifitWindow extends JFrame {
         //Add the given window to the main page
         this.mainJPanel = new JPanel(mainJPanel);
 
-        //method to ass window listener - incase the user wants to exit the window by clicking the "X" at the top right of the window
+        //method to add window listener - incase the user wants to exit the window by clicking the "X" at the top right of the window
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
