@@ -2,12 +2,9 @@ package co.yorku.nutrifit.ui.impl.main;
 
 import co.yorku.nutrifit.ui.NutrifitWindow;
 import co.yorku.nutrifit.NutriFit;
-import co.yorku.nutrifit.profile.IProfile;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
 
 /*
  * Settings page that will allow user to view their profile information as well as make changes to their information
@@ -73,7 +70,7 @@ public class SettingsUI extends NutrifitWindow {
 				{
 					NutriFit.getInstance().getLoadedProfile().setName(newName); //Set the new name given by the user to the Profile loaded (stored instance in Nutrifit)
 					nameLabel.setText("Name: " + newName); //Change the Label shown the the user to the new name 
-					NutriFit.getInstance().editProfile(NutriFit.getInstance().getLoadedProfile()); //Using the Edit Profile method to change the Database 
+					NutriFit.getInstance().getUserDatabase().updateProfile(NutriFit.getInstance().getLoadedProfile()); //Using the Edit Profile method to change the Database
 					showMessageDialog("Profile Successfully Edited"); //Show the user a message that the profile was successfully loaded
 				}
 			}
@@ -87,7 +84,7 @@ public class SettingsUI extends NutrifitWindow {
 						int numNewAge = Integer.valueOf(newAge); //Stirng to Integer conversion
 						NutriFit.getInstance().getLoadedProfile().setAge(numNewAge); //Set new value for Age in Profile Instance
 						ageLabel.setText("Age: " + newAge); //Change Label text to new age value for the user
-						NutriFit.getInstance().editProfile(NutriFit.getInstance().getLoadedProfile()); //Change to Database with new Age value
+						NutriFit.getInstance().getUserDatabase().updateProfile(NutriFit.getInstance().getLoadedProfile()); //Change to Database with new Age value
 						showMessageDialog("Profile Successfully Edited"); //Tell user edit was successful 
 					}
 					catch (NumberFormatException e) //Assuming user enters non-integer value
@@ -103,7 +100,7 @@ public class SettingsUI extends NutrifitWindow {
 				{
 					NutriFit.getInstance().getLoadedProfile().setGender(newGender.equals("Male")); //The new gender will depend on which value they choose. True = Male, False = Female 
 					genderLabel.setText("Gender: " + newGender); //Show user new gender in Label
-					NutriFit.getInstance().editProfile(NutriFit.getInstance().getLoadedProfile()); //Update database with new value 
+					NutriFit.getInstance().getUserDatabase().updateProfile(NutriFit.getInstance().getLoadedProfile()); //Update database with new value
 					showMessageDialog("Profile Successfully Edited"); //Show user confirmation message 
 				}
 			}
@@ -117,7 +114,7 @@ public class SettingsUI extends NutrifitWindow {
 						NutriFit.getInstance().getLoadedProfile().setHeight(numNewHeight); //Set new Height in Profile Instance
 						String userHeightUnit = (unit==true) ? " cm" : " in"; //Figure out the proper units to add for the height according to user settings for unit of measurement 
 						heightLabel.setText("Height: " + newHeight + userHeightUnit); //Show user new Height value in Label on the UI
-						NutriFit.getInstance().editProfile(NutriFit.getInstance().getLoadedProfile()); //Edit Database with New height value
+						NutriFit.getInstance().getUserDatabase().updateProfile(NutriFit.getInstance().getLoadedProfile()); //Edit Database with New height value
 						showMessageDialog("Profile Successfully Edited"); //confirmation message shown to user
 					}
 					catch (NumberFormatException e) //if user inputs non-integer value 
@@ -136,8 +133,8 @@ public class SettingsUI extends NutrifitWindow {
 						NutriFit.getInstance().getLoadedProfile().setWeight(numNewWeight); //Set new Weight value in Profile Instance 
 						String userWeightUnit = (NutriFit.getInstance().getLoadedProfile().isMetric()) ? " Kg" : " lbs"; //Based on unit of measurement, figure out which unit to add to the weight value (for the UI)
 						weightLabel.setText("Weight: " + newWeight + userWeightUnit); //Change weight label for user to new value of weight
-						NutriFit.getInstance().editProfile(NutriFit.getInstance().getLoadedProfile()); //Update database with new weight value
-						showMessageDialog("Profile Successfully Edited"); //show confirmation message to user
+						NutriFit.getInstance().getUserDatabase().updateProfile(NutriFit.getInstance().getLoadedProfile()); //Update database with new weight value
+						showMessageDialog("Profile Successfully Edited"); //show confimration message to user
 					}
 					catch (NumberFormatException e) //f user inputs non-integer value 
 					{
@@ -186,7 +183,7 @@ public class SettingsUI extends NutrifitWindow {
 						NutriFit.getInstance().getLoadedProfile().setWeight(newWeight);
 						NutriFit.getInstance().getLoadedProfile().setUnit(false);						
 					}
-					NutriFit.getInstance().editProfile(NutriFit.getInstance().getLoadedProfile()); //Update Database wit new Values
+					NutriFit.getInstance().getUserDatabase().updateProfile(NutriFit.getInstance().getLoadedProfile()); //Update Database wit new Values
 					showMessageDialog("Profile Successfully Edited"); //show confirmation of action to user 
 				}
 			}

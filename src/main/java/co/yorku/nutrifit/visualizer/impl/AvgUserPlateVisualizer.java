@@ -59,11 +59,7 @@ public class AvgUserPlateVisualizer extends IVisualizer {
     @Override
     public DefaultCategoryDataset buildBargraphDataset(String expandInfo, Date fromDate, Date toDate) {
 
-    	//check if the chart has been expanded by user
-        boolean expand = expandInfo != null;
-        
-        //Get Hash map of the data (calculated values (from calculator class))
-        Map<String, Double> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(expand, fromDate, toDate);
+        Map<String, Double> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(expandInfo, fromDate, toDate);
 
         //Traverse the Hash Map
         for(Map.Entry<String, Double> stringIntegerEntry : avgUserFoodPlate.entrySet()){
@@ -81,11 +77,7 @@ public class AvgUserPlateVisualizer extends IVisualizer {
     @Override
     public DefaultPieDataset<String> buildPiechartDataset(String expandInfo, Date fromDate, Date toDate) {
 
-    	//Check is the chart has been expanded by the user
-    	
-    	//Get hash map of the data (calculated values (from calculator class))
-        boolean expand = expandInfo != null;
-        Map<String, Double> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(expand, fromDate, toDate);
+        Map<String, Double> avgUserFoodPlate = avgUserFoodPlateCalculator.getPlate(expandInfo, fromDate, toDate);
 
         //Traverse the Hash Map
         for(Map.Entry<String, Double> stringIntegerEntry : avgUserFoodPlate.entrySet()){
