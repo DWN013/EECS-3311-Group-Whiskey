@@ -50,14 +50,16 @@ public class NutrientData {
     }
 
 
+    // Override equal method
     @Override
     public boolean equals(Object obj) {
-        if (!(obj instanceof NutrientData)) return false;
-        return ((NutrientData) obj).getNutrientID() == this.getNutrientID();
+        if (!(obj instanceof NutrientData)) return false; // Check if the object we are comparing to is NutrientData
+        return ((NutrientData) obj).getNutrientID() == this.getNutrientID(); // cast it and check the nutrient ids
     }
 
+    // Override the hashCode method
     @Override
     public int hashCode() {
-        return + this.nutrientID * this.nutrientCode * this.symbolText.hashCode() * this.unit.hashCode() * this.name.hashCode() * this.tag.hashCode();
+        return + this.nutrientID * this.nutrientCode * this.symbolText.hashCode() * this.unit.hashCode() * this.name.hashCode() * this.tag.hashCode(); // Calculate hash code by multiplying everything
     }
 }

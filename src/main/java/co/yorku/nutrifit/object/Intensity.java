@@ -11,12 +11,14 @@ public enum Intensity {
     HIGH("High"),     // High intensity
     VERY_HIGH("Very High"); // Very high intensity
 
-    String displayName;
+    String displayName; // Display name variable
 
+    // Constructor
     Intensity(String displayName) {
         this.displayName = displayName;
     }
 
+    // Get display name method
     public String getDisplayName() {
         return displayName;
     }
