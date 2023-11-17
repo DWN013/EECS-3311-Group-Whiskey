@@ -34,9 +34,9 @@ public class MainMealMenu extends NutrifitWindow {
             MealInputUI.getInstance().showWindow(); // Show the MealInputUI window
         });
         // Meal menu button
-        addButton("Show Meal Log", event -> {
+        addButton("Meal Journal View", event -> {
             this.hideWindow(); // Hide the current window
-            new MealDisplayUI().showWindow(); // Show the MealDisplayUI window
+            new MealJournalUI().showWindow(); // Show the MealJournalUI window
         });
 
         // Add a back button to return to the main NutriFit UI

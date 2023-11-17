@@ -5,10 +5,22 @@ package co.yorku.nutrifit.object;
  */
 
 public enum Intensity {
-    VERY_LOW, // Very low intensity
-    LOW,      // Low intensity
-    MEDIUM,   // Medium intensity
-    HIGH,     // High intensity
-    VERY_HIGH // Very high intensity
+    VERY_LOW("Very Low"), // Very low intensity
+    LOW("Low"),      // Low intensity
+    MEDIUM("Medium"),   // Medium intensity
+    HIGH("High"),     // High intensity
+    VERY_HIGH("Very High"); // Very high intensity
+
+    String displayName; // Display name variable
+
+    // Constructor
+    Intensity(String displayName) {
+        this.displayName = displayName;
+    }
+
+    // Get display name method
+    public String getDisplayName() {
+        return displayName;
+    }
 }
 
