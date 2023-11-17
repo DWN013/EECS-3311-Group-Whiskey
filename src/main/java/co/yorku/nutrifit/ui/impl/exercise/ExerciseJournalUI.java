@@ -3,18 +3,12 @@ package co.yorku.nutrifit.ui.impl.exercise;
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Exercise;
-import co.yorku.nutrifit.logs.impl.Meal;
 import co.yorku.nutrifit.ui.NutrifitWindow;
-import co.yorku.nutrifit.ui.impl.meal.MealDisplayUI;
-import co.yorku.nutrifit.ui.impl.meal.MealJournalUI;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.text.SimpleDateFormat;
-import java.time.Duration;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
