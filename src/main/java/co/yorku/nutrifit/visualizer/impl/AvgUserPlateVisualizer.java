@@ -109,12 +109,12 @@ public class AvgUserPlateVisualizer extends IVisualizer {
         //If current dataset type for this visualizer is a bar graph
         if (getDataset() instanceof DefaultCategoryDataset) {
             ((DefaultCategoryDataset) getDataset()).clear();
-            this.buildBargraphDataset(expandData, newFromDate, newToDate); //rebuild bar graph
+            this.buildBargraphDataset(expandData, newFromDate, newToDate); //rebuild bar graph data
         } 
         //Otherwise, this will update the pie chart
         else if (getDataset() instanceof DefaultPieDataset) {
             ((DefaultPieDataset<String>) getDataset()).clear();
-            this.buildPiechartDataset(expandData, newFromDate, newToDate); //rebuild pie chart
+            this.buildPiechartDataset(expandData, newFromDate, newToDate); //rebuild pie chart data
         }
     }
 }
