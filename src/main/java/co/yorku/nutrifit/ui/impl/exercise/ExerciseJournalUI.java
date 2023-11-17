@@ -62,7 +62,6 @@ public class ExerciseJournalUI extends NutrifitWindow {
             Exercise meal = (Exercise) exercises.getNext();
             // Format the day
             String day = dateFormat.format(meal.getDate());
-            System.out.println(meal.getTimeSpentInSeconds());
 
             int totalSeconds = meal.getTimeSpentInSeconds();
             long hours = totalSeconds / 3600;
