@@ -1,6 +1,9 @@
 package co.yorku.nutrifit.object;
 
-// Class NutrientData for storing information related to nutrients
+/*
+ * Class NutrientData for storing information related to nutrients
+ */
+
 public class NutrientData {
 
     // Private instance variables representing nutrient data

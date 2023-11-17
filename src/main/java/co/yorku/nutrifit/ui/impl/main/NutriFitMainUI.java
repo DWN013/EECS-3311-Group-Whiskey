@@ -2,11 +2,7 @@ package co.yorku.nutrifit.ui.impl.main;
 
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.ui.NutrifitWindow;
-import co.yorku.nutrifit.ui.impl.exercise.ExerciseDisplayUI;
-import co.yorku.nutrifit.ui.impl.exercise.ExerciseInputUI;
 import co.yorku.nutrifit.ui.impl.meal.MainMealMenu;
-import co.yorku.nutrifit.ui.impl.meal.MealDisplayUI;
-import co.yorku.nutrifit.ui.impl.meal.MealInputUI;
 import co.yorku.nutrifit.ui.impl.visualizer.MainVisualizerSelectionUI;
 import co.yorku.nutrifit.ui.impl.exercise.MainExerciseMenu;
 
@@ -57,7 +53,7 @@ public class NutriFitMainUI extends NutrifitWindow {
             SettingsUI.getInstance().showWindow();
         });
         
-        // Button for users to log out of thier profile and go to main page (log in / sign up page)
+        // Button for users to log out of their profile and go to main page (log in / sign up page)
         addButton("Logout", event -> {
             NutriFit.getInstance().setLoadedProfile(null);
             this.hideWindow();

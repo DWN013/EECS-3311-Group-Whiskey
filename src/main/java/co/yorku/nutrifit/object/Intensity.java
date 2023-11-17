@@ -1,6 +1,9 @@
 package co.yorku.nutrifit.object;
 
-// Enum Intensity representing different levels of intensity
+/*
+ * Enum Intensity representing different levels of intensity
+ */
+
 public enum Intensity {
     VERY_LOW, // Very low intensity
     LOW,      // Low intensity

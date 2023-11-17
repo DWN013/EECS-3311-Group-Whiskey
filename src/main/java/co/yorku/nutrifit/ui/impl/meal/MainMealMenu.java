@@ -5,7 +5,10 @@ import co.yorku.nutrifit.ui.impl.main.NutriFitMainUI;
 
 import java.awt.*;
 
-// MainMealMenu class handling the meal menu UI
+/*
+ * MainMealMenu class handling the meal menu UI
+ */
+
 public class MainMealMenu extends NutrifitWindow {
 
     // Singleton instance

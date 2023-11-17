@@ -9,12 +9,10 @@ import org.jfree.data.general.DefaultPieDataset;
 
 import java.util.Date;
 /*
-
     This is the PieChartUI interface.
     It implements the VisualizerUI interface (Factory Method).
     This class builds all the related objects required for
     constructing a PieChart.
-
  */
 public class PieChartUI implements VisualizerUI {
 

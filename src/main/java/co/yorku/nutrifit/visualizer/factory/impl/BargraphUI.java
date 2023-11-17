@@ -10,12 +10,10 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import java.util.Date;
 
 /*
-
     This is the BarGraphUI interface.
     It implements the VisualizerUI interface (Factory Method).
     This class builds all the related objects required for
     constructing a BarGraph.
-
  */
 public class BargraphUI implements VisualizerUI {
 

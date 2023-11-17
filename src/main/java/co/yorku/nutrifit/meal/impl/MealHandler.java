@@ -1,10 +1,6 @@
 package co.yorku.nutrifit.meal.impl;
 
-import co.yorku.nutrifit.database.nutrient.INFDatabase;
-import co.yorku.nutrifit.logs.impl.Meal;
 import co.yorku.nutrifit.meal.IMeal;
-import co.yorku.nutrifit.object.FoodInfo;
-
 import java.util.Map;
 
 // MealHandler class implementing the IMeal interface

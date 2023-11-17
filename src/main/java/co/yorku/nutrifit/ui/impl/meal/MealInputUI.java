@@ -1,6 +1,5 @@
 package co.yorku.nutrifit.ui.impl.meal;
 
-// Import necessary classes and libraries
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Meal;
@@ -19,7 +18,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-// Class responsible for meal input UI
+/*
+ * Class responsible for meal input UI
+ * Takes input from user for their meals
+ */
+
 public class MealInputUI extends NutrifitWindow {
 
     // Singleton instance

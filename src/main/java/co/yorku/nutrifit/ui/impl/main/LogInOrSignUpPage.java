@@ -14,7 +14,7 @@ public class LogInOrSignUpPage extends NutrifitWindow {
 
 	private static LogInOrSignUpPage instance; //store instance of the created LogInOrSignUpPage
 
-	//Implementation fo the Singleton Design Pattern - allows us to keep instance of this UI page
+	//Implementation of the Singleton Design Pattern - allows us to keep instance of this UI page
 	public static LogInOrSignUpPage getInstance() {
 		if (instance == null) {
 			instance = new LogInOrSignUpPage();

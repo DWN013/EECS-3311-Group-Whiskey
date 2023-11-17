@@ -4,17 +4,14 @@ import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.object.FoodGroupData;
 import com.google.common.collect.Maps;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 /*
-
     This is the CFGPlateCalculator.
     It's purpose is to calculate the average food groups
     in accordance with the CFG (Canada Food Guide)
-
  */
 public class CFGPlateCalculator {
 

@@ -12,6 +12,10 @@ import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
+/*
+ * MealDisplayUI will show all the meal logs existing in the database to the user 
+ */
+
 public class MealDisplayUI extends NutrifitWindow {
 
     public MealDisplayUI() {

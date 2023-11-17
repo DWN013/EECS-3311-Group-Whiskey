@@ -1,9 +1,10 @@
 package co.yorku.nutrifit.meal;
 
-import co.yorku.nutrifit.logs.impl.Meal;
-import co.yorku.nutrifit.object.FoodInfo;
-
 import java.util.Map;
+
+/*
+ * Interface to calculate total meal calories based on foods (given by user) 
+ */
 
 public interface IMeal {
 

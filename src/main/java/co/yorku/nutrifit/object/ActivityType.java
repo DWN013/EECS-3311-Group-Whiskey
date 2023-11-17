@@ -1,6 +1,9 @@
 package co.yorku.nutrifit.object;
 
-// Enum ActivityType representing Activity types
+/*
+ *  Enum ActivityType representing Activity types
+ */
+
 public enum ActivityType {
     // Enum constants representing various types of activities
     ZUMBA("Zumba"),

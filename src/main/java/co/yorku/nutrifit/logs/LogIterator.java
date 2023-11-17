@@ -4,7 +4,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-// LogIterator class for iterating through a list of logs
+/*
+ * LogIterator class for iterating through a list of logs
+ * Implementation of Iterator Design Pattern
+ */
+
 public class LogIterator {
     // Private instance variables
     private int currentPosition;

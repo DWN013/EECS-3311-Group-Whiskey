@@ -14,12 +14,10 @@ import org.jfree.data.general.DefaultPieDataset;
 import java.text.DecimalFormat;
 import java.util.Date;
 /*
-
     This is the IVisualizer interface.
     It holds methods related to Visualizer methods
     It extends the IListener interface for listening to events.
     This class uses the "Template" method
-
  */
 public abstract class IVisualizer implements IListener {
 
