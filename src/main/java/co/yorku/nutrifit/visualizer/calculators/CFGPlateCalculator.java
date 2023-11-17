@@ -12,7 +12,8 @@ import java.util.stream.Collectors;
 /*
 
     This is the CFGPlateCalculator.
-    It's purpose is to calculate the average food groups.
+    It's purpose is to calculate the average food groups
+    in accordance with the CFG (Canada Food Guide)
 
  */
 public class CFGPlateCalculator {

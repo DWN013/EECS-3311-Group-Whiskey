@@ -123,20 +123,22 @@ public class NutrifitVisualizer extends NutrifitWindow {
     // By Default we will show the last 7 days
     public void addFromToButtons(Date defaultFromDate, Date defaultToDate) {
 
-        addLabel("Date From To:");
-        JDateChooser fromDate = new JDateChooser();
-        fromDate.setDateFormatString("yyyy-MM-dd");
-        fromDate.setDate(defaultFromDate);
-        this.addComponent(fromDate);
+        addLabel("Date From To:"); // Add a "Date From To" label
+        JDateChooser fromDate = new JDateChooser(); // Create JDateChooser object so the user can input a fromDate
+        fromDate.setDateFormatString("yyyy-MM-dd"); // Set the date format
+        fromDate.setDate(defaultFromDate); // Set the default date
+        this.addComponent(fromDate); // Add the component
 
-        JDateChooser toDate = new JDateChooser();
-        toDate.setDateFormatString("yyyy-MM-dd");
-        toDate.setDate(defaultToDate);
-        this.addComponent(toDate);
-        addButton("Update Date Range", event -> {
-            NutrifitVisualizer.this.fromDate = fromDate.getDate();
-            NutrifitVisualizer.this.toDate = toDate.getDate();
-            NutrifitVisualizer.this.expanded = false;
+        JDateChooser toDate = new JDateChooser(); // Create JDateChooser object so the user can input a toDate
+        toDate.setDateFormatString("yyyy-MM-dd"); // Create JDateChooser object so the user can input a fromDate
+        toDate.setDate(defaultToDate); // Set the default date
+        this.addComponent(toDate);// Add the component
+        addButton("Update Date Range", event -> { // Add a button
+            NutrifitVisualizer.this.fromDate = fromDate.getDate(); // Set the fromDate to the date that the user input
+            NutrifitVisualizer.this.toDate = toDate.getDate(); // Set the toDate to the date that the user input
+            NutrifitVisualizer.this.expanded = false; // Set the chart to not be expanded
+
+            // Fire an event indicating that the user updated the date range (Observer Pattern)
             NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName(), null, NutrifitVisualizer.this.fromDate, NutrifitVisualizer.this.toDate);
         });
     }

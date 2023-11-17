@@ -39,7 +39,15 @@ public class DailyTotalEnergyExpenditureCalculator {
 
 		   /*
 		   		The below block of if-else statements calculates the TDEE (Total Daily Energy Expenditure)
+
+		   		TDEE is calculated by adding up the BMR (basic metabolic rate), TEF (thermic effect of food), neat (non exercise activity thermogenesis)
+		   		as well as calories burned during exercise. TEF is calculated as approximately 10% of the BMR value.
+		   		NEAT is calculated by getting users activity rating and seeing how active they are usually then assigning
+		   		a certain amount of calories (250-500) based on that value. BMR is calculated by using
+		   		the users profile data and the Mifflin-St. Jeor equation. TEF and NEAT are calculated below
+		   		and added up to make Total Daily Energy Expenditure
 		    */
+
         int neat = 0;
         if (activityR < 1.5) {
             neat = 250;
