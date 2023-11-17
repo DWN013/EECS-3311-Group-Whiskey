@@ -76,7 +76,7 @@ public class UserDatabase implements IUserDatabase {
 
 
     /*
-        Exercise Related SQL Statements
+        Meal Related SQL Statements
      */
 
     // SQL Statement for Creating the Meal logs table
