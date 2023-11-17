@@ -8,25 +8,30 @@ import java.awt.*;
 import java.util.Date;
 
 /*
-Basically, what this is class is doing is getting the "activity rating" (aka. how much the user actually moves/exercises)
-from class "DailyTotalEnergyExpenditureCalculator"
+ * Allow user to view their expected weight loss under current exercise and meal patterns (taking into account previous 2 weeks of exercise and meal)
  */
 
 public class ViewWeightLoss extends NutrifitWindow {
-    private WeightLossCalculator weightLossCalc;
+    private WeightLossCalculator weightLossCalc; //Store instance of weightLossCalculator to use to calculate the weight loss for user
     public ViewWeightLoss() {
         super("Weight Loss by X Date", new GridLayout());
 
-        //Date input
+        //Date input (to get date in future from user)
         addLabel("Date");
         JDateChooser dateChooser = new JDateChooser();
         dateChooser.setDateFormatString("yyyy-MM-dd");
         this.addComponent(dateChooser);
 
+        //A "Submit" button, once clicked will compute the calculations
         addButton("Calculate", event -> {
+        	
+        	//Get date inputed by user
             Date formattedDate = dateChooser.getDate();
+            
             //Initialize weight loss calculator
             this.weightLossCalc = new WeightLossCalculator();
+            
+            //Get project weight loss by using future date
             double kgGainedOrLost = weightLossCalc.getWeightLossForDate(formattedDate);
 
             //Decision tree for if the user gained or lost weight and what message will be displayed
@@ -39,6 +44,7 @@ public class ViewWeightLoss extends NutrifitWindow {
             }
         });
 
+        //Create back button that will take user to exercise main menu
         this.addBackButton(MainExerciseMenu.getInstance());
         this.build();
     }
