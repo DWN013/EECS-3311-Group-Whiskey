@@ -13,7 +13,6 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,7 +41,7 @@ public class MealInputUI extends NutrifitWindow {
     }
 
     // Map to store food and its quantity
-    private Map<String, Integer> foodMap = new HashMap<>();
+    private Map<String, Integer> foodMap = Maps.newHashMap();
 
 
     private MealInputUI() {
