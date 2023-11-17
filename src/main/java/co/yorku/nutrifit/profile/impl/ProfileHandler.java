@@ -2,8 +2,13 @@ package co.yorku.nutrifit.profile.impl;
 
 import co.yorku.nutrifit.profile.IProfile;
 
+/*
+ * Implementation of the IProfile class. Will allow us to create new profiles and instantiate the getter, setter methods
+ */
+
 public class ProfileHandler implements IProfile {
 
+	//Values being stored in a Profile
     private int id;
     private String name;
     private boolean isMale;
@@ -13,6 +18,7 @@ public class ProfileHandler implements IProfile {
     private boolean isMetric;
 
     public ProfileHandler(int id, String name, boolean isMale, float height, int age, float weight, boolean isMetric) {
+    	//Take user inputed values for the profile and set these values for the profile instance
         this.id = id;
         this.name = name;
         this.isMale = isMale;
@@ -22,6 +28,10 @@ public class ProfileHandler implements IProfile {
         this.isMetric = isMetric;
     }
 
+    /*
+     * Getter and Setter Methods for the Data
+     */
+    
     @Override
     public int getId() {
         return this.id;
