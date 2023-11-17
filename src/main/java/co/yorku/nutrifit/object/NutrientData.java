@@ -4,12 +4,12 @@ package co.yorku.nutrifit.object;
 public class NutrientData {
 
     // Private instance variables representing nutrient data
-    private int nutrientID;
-    private int nutrientCode;
-    private String symbolText;
-    private String unit;
-    private String name;
-    private String tag;
+    private int nutrientID;    // Unique ID for the nutrient
+    private int nutrientCode;  // Code representing the nutrient
+    private String symbolText; // Text symbolizing the nutrient
+    private String unit;       // Unit for the nutrient
+    private String name;       // Name of the nutrient
+    private String tag;        // Tag associated with the nutrient
 
     // Constructor to initialize NutrientData with specific attributes
     public NutrientData(int nutrientID, int nutrientCode, String symbolText, String unit, String name, String tag) {

@@ -6,9 +6,9 @@ import java.util.Map;
 public class FoodNutrientInfo {
 
     // Private instance variables representing nutrient information
-    private int foodID;
-    private int calories;
-    private int energy;
+    private int foodID; // Unique food Id
+    private int calories; // Instance for calories
+    private int energy; // Energy in KJoules
     private Map<Integer, Double> nutrientIDAndNutrientValue;
 
     // Constructor to initialize FoodNutrientInfo with specific attributes

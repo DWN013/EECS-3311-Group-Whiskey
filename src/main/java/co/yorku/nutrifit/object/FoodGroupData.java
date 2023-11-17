@@ -4,11 +4,11 @@ package co.yorku.nutrifit.object;
 public class FoodGroupData {
 
     // Private instance variables representing food group data
-    private int foodGroupID;
-    private int foodGroupCode;
-    private String foodGroupName;
-    private int parentFoodGroupID;
-    private int percentage;
+    private int foodGroupID;         // Unique ID for the food group
+    private int foodGroupCode;       // Code representing the food group
+    private String foodGroupName;    // Name of the food group
+    private int parentFoodGroupID;   // ID for the parent food group
+    private int percentage;          // Percentage associated with the food group
 
     // Constructor to initialize FoodGroupData with specific attributes
     public FoodGroupData(int foodGroupID, int foodGroupCode, String foodGroupName, int parentFoodGroupID, int percentage) {
