@@ -63,27 +63,27 @@ public class ExerciseJournalUI extends NutrifitWindow {
             // Format the day
             String day = dateFormat.format(meal.getDate());
 
-            int totalSeconds = meal.getTimeSpentInSeconds();
-            long hours = totalSeconds / 3600;
-            long minutes = (totalSeconds % 3600) / 60;
-            long seconds = totalSeconds % 60;
+            int totalSeconds = meal.getTimeSpentInSeconds(); // Get the total seconds
+            long hours = totalSeconds / 3600; // Calculate the hours
+            long minutes = (totalSeconds % 3600) / 60; // Calculate the minutes
+            long seconds = totalSeconds % 60; // Calculate the seconds
 
-            StringBuilder duration = new StringBuilder();
-            if (hours > 0) {
+            StringBuilder duration = new StringBuilder(); // Create a stringbuilder
+            if (hours > 0) { // Check and append hours to the stringbuilder
                 duration.append(hours).append(" hr");
                 if (hours > 1) {
                     duration.append("s");
                 }
                 duration.append(" ");
             }
-            if (minutes > 0) {
+            if (minutes > 0) { // Check and append minutes to the stringbuilder
                 duration.append(minutes).append(" min");
                 if (minutes > 1) {
                     duration.append("s");
                 }
                 duration.append(" ");
             }
-            if (seconds > 0) {
+            if (seconds > 0) { // Check and append seconds to the stringbuilder
                 duration.append(seconds).append(" sec");
             }
 
