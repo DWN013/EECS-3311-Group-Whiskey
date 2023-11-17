@@ -11,6 +11,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
+/*
+ * Sign In UI page - allow user to create a new profile
+ */
+
 public class SignUpPage extends NutrifitWindow {
 
     public SignUpPage(NutrifitWindow parent) {
@@ -60,6 +64,7 @@ public class SignUpPage extends NutrifitWindow {
                 return; // Stop processing if parsing fails
             }
 
+            //Add new profile to the Database
             int userid = NutriFit.getInstance().getUserDatabase().setupProfile(new ProfileHandler(
                     -1, name, isMale, height, age, weight, isMetric
             ));

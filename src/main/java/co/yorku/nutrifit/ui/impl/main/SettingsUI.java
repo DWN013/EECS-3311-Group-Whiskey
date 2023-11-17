@@ -6,6 +6,10 @@ import co.yorku.nutrifit.NutriFit;
 import javax.swing.*;
 import java.awt.*;
 
+/*
+ * Settings page that will allow user to view their profile information as well as make changes to their information
+ */
+
 public class SettingsUI extends NutrifitWindow {
 
 	private static SettingsUI instance;
@@ -46,7 +50,7 @@ public class SettingsUI extends NutrifitWindow {
 			weight = weight + " Kg";
 		}
 		
-		//Making Labels for the user to show them what thier current profile values are on the UI 
+		//Making Labels for the user to show them what their current profile values are on the UI 
 		JLabel nameLabel = this.addLabel(name);
 		JLabel ageLabel = this.addLabel(age);
 		JLabel genderLabel = this.addLabel(genderDisplay);
@@ -94,7 +98,7 @@ public class SettingsUI extends NutrifitWindow {
 				String newGender = openDropdownDialog("Choose Gender", "Please Choose Your Gender", 0, "Male", "Female"); //Combo Box choice for user to choose new Gender
 				if (newGender != null)
 				{
-					NutriFit.getInstance().getLoadedProfile().setGender(newGender.equals("Male")); //The new gender will depend on which vlaue they choose. True = Male, False = Female 
+					NutriFit.getInstance().getLoadedProfile().setGender(newGender.equals("Male")); //The new gender will depend on which value they choose. True = Male, False = Female 
 					genderLabel.setText("Gender: " + newGender); //Show user new gender in Label
 					NutriFit.getInstance().getUserDatabase().updateProfile(NutriFit.getInstance().getLoadedProfile()); //Update database with new value
 					showMessageDialog("Profile Successfully Edited"); //Show user confirmation message 
