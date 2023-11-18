@@ -12,15 +12,6 @@ import java.awt.*;
 
 public class SettingsUI extends NutrifitWindow {
 
-	private static SettingsUI instance;
-
-	public static SettingsUI getInstance() { //Singleton design pattern. Program holds one instance of the settings page - makes it such that we will not have to keep reloading this page when we want to show to user
-		if (instance == null) { //If no instance was created
-			instance = new SettingsUI(); //create an instance of settings UI
-		}
-		return instance; //return the instance of Settings UI 
-	}
-
 
 	public SettingsUI()
 	{
