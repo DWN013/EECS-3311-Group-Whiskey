@@ -108,7 +108,7 @@ public class MealInputUI extends NutrifitWindow {
         // Adding the Edit Food button
         addButton("Edit Food", event -> {
             // Get the food inputted in the text field
-            String inputtedFood = getFood(foodField.getText());
+            String inputtedFood = this.openDialogForAddedFood();
 
             // Check if the inputted food exists in the foodMap
             if (inputtedFood != null && foodMap.containsKey(inputtedFood)) {
@@ -148,7 +148,7 @@ public class MealInputUI extends NutrifitWindow {
         // Adding the Delete Food button
         addButton("Delete Food", event -> {
             // Get the selected food from the text field
-            String selectedFood = this.getFoodToDelete();
+            String selectedFood = this.openDialogForAddedFood();
 
             // Check if the selected food exists in the foodMap
             if (selectedFood != null && foodMap.containsKey(selectedFood)) {
@@ -264,7 +264,7 @@ public class MealInputUI extends NutrifitWindow {
         return openDropdownDialog("Select Food", "Select Food", 0, foodNames.toArray(new String[0]));
     }
 
-    private String getFoodToDelete() {
+    private String openDialogForAddedFood() {
         if (this.foodMap.isEmpty()) return null;
 
         return openDropdownDialog("Select Food", "Select Food", 0, this.foodMap.keySet().toArray(new String[0]));
