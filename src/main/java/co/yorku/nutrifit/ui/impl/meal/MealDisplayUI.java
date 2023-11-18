@@ -80,7 +80,7 @@ public class MealDisplayUI extends NutrifitWindow {
             maxEntries = Math.max(maxEntries, total); // Set maxEntries to the larger number
 
             sb.append("</html>");
-            foods.addRow(new Object[] { foodInfo.getFoodName() + " (Quantitity: " + integerIntegerEntry.getValue() + ")",  sb.toString()}); // Add the food name and nutrients to
+            foods.addRow(new Object[] { "<html>" + foodInfo.getFoodName() + " <br/>Quantity: " + integerIntegerEntry.getValue() + "</html>",  sb.toString()}); // Add the food name and nutrients to
         }
 
         foodsTable.setRowHeight(foodsTable.getRowHeight() * maxEntries); // Set the row height

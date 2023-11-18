@@ -4,6 +4,7 @@ import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.event.IListener;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryLabelPositions;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
@@ -76,6 +77,8 @@ public abstract class IVisualizer implements IListener {
                 this.buildBargraphDataset(null, fromDate, toDate),
                 PlotOrientation.VERTICAL,
                 true, true, false);
+
+        jFreeChart.getCategoryPlot().getDomainAxis().setCategoryLabelPositions(CategoryLabelPositions.DOWN_45);
 
         if (this.isBargraphShownInPercentage()) {
             CategoryPlot plot = (CategoryPlot) jFreeChart.getPlot();
