@@ -85,7 +85,7 @@ public class MealJournalUI extends NutrifitWindow {
         }
 
         this.addComponent(jScrollPane); // Add the scroller
-        this.addBackButton(NutriFitMainUI.getInstance()); // Add the back button
+        this.addBackButton(MainMealMenu.getInstance()); // Add the back button
         this.build(); // Build the window
     }
 }
