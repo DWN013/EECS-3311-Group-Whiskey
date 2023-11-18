@@ -50,7 +50,7 @@ public class NutriFitMainUI extends NutrifitWindow {
       //Button to allow users to see Settings
         addButton("Settings", event -> {
             this.hideWindow();
-            SettingsUI.getInstance().showWindow();
+            new SettingsUI().showWindow();
         });
         
         // Button for users to log out of their profile and go to main page (log in / sign up page)
