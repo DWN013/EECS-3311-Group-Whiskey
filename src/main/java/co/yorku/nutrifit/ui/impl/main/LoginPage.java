@@ -2,13 +2,11 @@ package co.yorku.nutrifit.ui.impl.main;
 
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.profile.IProfile;
-import co.yorku.nutrifit.profile.impl.ProfileHandler;
 import co.yorku.nutrifit.ui.NutrifitWindow;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 /*

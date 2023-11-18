@@ -1,6 +1,9 @@
 package co.yorku.nutrifit.object;
 
-// Enum MealType representing different meal types
+/*
+ * Enum MealType representing different meal types
+ */
+
 public enum MealType {
     // Enum constants representing meal types: BREAKFAST, LUNCH, DINNER, SNACK
     BREAKFAST("Breakfast"),

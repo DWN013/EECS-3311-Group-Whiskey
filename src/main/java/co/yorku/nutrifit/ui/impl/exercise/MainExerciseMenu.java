@@ -32,9 +32,9 @@ public class MainExerciseMenu extends NutrifitWindow {
         });
         
         //Show exercise button - allow user to see thier exercise logs
-        addButton("Show Exercise Log", event -> {
+        addButton("Exercise Journal View", event -> {
             this.hideWindow();
-            new ExerciseDisplayUI().showToUser();
+            new ExerciseJournalUI().showToUser();
         });
         
         //View projected weight loss button - allow user to see how much weight they will lose under current regime 

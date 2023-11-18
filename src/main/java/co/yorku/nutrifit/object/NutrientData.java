@@ -1,6 +1,9 @@
 package co.yorku.nutrifit.object;
 
-// Class NutrientData for storing information related to nutrients
+/*
+ * Class NutrientData for storing information related to nutrients
+ */
+
 public class NutrientData {
 
     // Private instance variables representing nutrient data
@@ -44,5 +47,19 @@ public class NutrientData {
 
     public String getTag() {
         return tag;
+    }
+
+
+    // Override equal method
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof NutrientData)) return false; // Check if the object we are comparing to is NutrientData
+        return ((NutrientData) obj).getNutrientID() == this.getNutrientID(); // cast it and check the nutrient ids
+    }
+
+    // Override the hashCode method
+    @Override
+    public int hashCode() {
+        return + this.nutrientID * this.nutrientCode * this.symbolText.hashCode() * this.unit.hashCode() * this.name.hashCode() * this.tag.hashCode(); // Calculate hash code by multiplying everything
     }
 }

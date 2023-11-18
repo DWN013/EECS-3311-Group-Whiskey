@@ -2,21 +2,23 @@ package co.yorku.nutrifit.exercise.impl;
 
 import co.yorku.nutrifit.exercise.IExercise;
 import co.yorku.nutrifit.exercise.calculators.ExerciseCalculator;
-import co.yorku.nutrifit.exercise.calculators.WeightLossCalculator;
 import co.yorku.nutrifit.object.ActivityType;
 import co.yorku.nutrifit.object.Intensity;
 import co.yorku.nutrifit.profile.IProfile;
-//Handler for calling exercise and weight loss calculators
+
+/*
+ * Handler for calculating total calories burned
+ */
+
 public class ExerciseHandler implements IExercise {
 
     private ExerciseCalculator exerciseCalculator;
-    private WeightLossCalculator weightLossCalculator;
 
-    public ExerciseHandler(ExerciseCalculator exerciseCalculator, WeightLossCalculator weightLossCalculator) {
+    public ExerciseHandler(ExerciseCalculator exerciseCalculator) {
         this.exerciseCalculator = exerciseCalculator;
-        this.weightLossCalculator = weightLossCalculator;
     }
 
+    //Get user exercise data and calculate calories burnt 
     @Override
     public int getTotalCaloriesBurned(ActivityType activityType, Intensity intensity, int durationInSeconds, IProfile profile) {
         return this.exerciseCalculator.calculateTotalCaloriesBurned(activityType, intensity, durationInSeconds, profile);

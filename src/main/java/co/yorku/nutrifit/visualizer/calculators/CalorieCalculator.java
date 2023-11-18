@@ -9,12 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 /*
-
     This is the CalorieCalculator.
     It's purpose is to calculate the total calories consumed
     over a specific time period.
-
-
  */
 public class CalorieCalculator {
 

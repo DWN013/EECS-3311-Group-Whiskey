@@ -3,13 +3,11 @@ package co.yorku.nutrifit.ui.impl.exercise;
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.exercise.IExercise;
 import co.yorku.nutrifit.exercise.calculators.ExerciseCalculator;
-import co.yorku.nutrifit.exercise.calculators.WeightLossCalculator;
 import co.yorku.nutrifit.exercise.impl.ExerciseHandler;
 import co.yorku.nutrifit.object.ActivityType;
 import co.yorku.nutrifit.logs.impl.Exercise;
 import co.yorku.nutrifit.object.Intensity;
 import co.yorku.nutrifit.ui.NutrifitWindow;
-import co.yorku.nutrifit.ui.impl.main.NutriFitMainUI;
 import com.toedter.calendar.JDateChooser;
 
 import java.util.Date;
@@ -17,10 +15,10 @@ import java.util.Date;
 import javax.swing.*;
 import java.awt.*;
 
-
 /*
  * Interface details to input user exercise information
  */
+
 public class ExerciseInputUI extends NutrifitWindow {
 
 
@@ -39,7 +37,7 @@ public class ExerciseInputUI extends NutrifitWindow {
         super("Exercise Input", new GridLayout(6, 2));
 
         //Create IExercise object to record exercises the user may input
-        IExercise exercise = new ExerciseHandler(new ExerciseCalculator(), new WeightLossCalculator());
+        IExercise exercise = new ExerciseHandler(new ExerciseCalculator());
 
         //Date input
         addLabel("Date");

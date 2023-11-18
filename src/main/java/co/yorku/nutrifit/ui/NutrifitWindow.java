@@ -13,7 +13,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /*
- * This class allows us to easily create JPanel elements - we use this class to create our UI elements easily and efficiently
+ * This class allows us to easily create windows - we use this class to create our UI elements easily and efficiently
  */
 
 public abstract class NutrifitWindow extends JFrame {
@@ -29,7 +29,7 @@ public abstract class NutrifitWindow extends JFrame {
         //Add the given window to the main page
         this.mainJPanel = new JPanel(mainJPanel);
 
-        //method to add window listener - incase the user wants to exit the window by clicking the "X" at the top right of the window
+        //method to add window listener - in case the user wants to exit the window by clicking the "X" at the top right of the window
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
             public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -123,7 +123,7 @@ public abstract class NutrifitWindow extends JFrame {
         }
     }
 
-  //Method allows us to create Dropdown Dialog - similar to combo box
+  //Method allows us to create Drop-down Dialog - similar to combo box
     public String openDropdownDialog(String windowName, String question, int defaultOption, String... options) {
         return (String) JOptionPane.showInputDialog(null, question,
                 windowName, JOptionPane.QUESTION_MESSAGE, null, // Use

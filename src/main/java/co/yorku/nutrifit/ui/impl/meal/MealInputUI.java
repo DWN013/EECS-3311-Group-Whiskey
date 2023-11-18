@@ -1,6 +1,5 @@
 package co.yorku.nutrifit.ui.impl.meal;
 
-// Import necessary classes and libraries
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Meal;
@@ -14,12 +13,15 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-// Class responsible for meal input UI
+/*
+ * Class responsible for meal input UI
+ * Takes input from user for their meals
+ */
+
 public class MealInputUI extends NutrifitWindow {
 
     // Singleton instance
@@ -39,7 +41,7 @@ public class MealInputUI extends NutrifitWindow {
     }
 
     // Map to store food and its quantity
-    private Map<String, Integer> foodMap = new HashMap<>();
+    private Map<String, Integer> foodMap = Maps.newHashMap();
 
 
     private MealInputUI() {

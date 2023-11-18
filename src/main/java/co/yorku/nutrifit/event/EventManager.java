@@ -1,5 +1,7 @@
 package co.yorku.nutrifit.event;
 
+import com.google.common.collect.Lists;
+
 import java.util.*;
 
 /*
@@ -13,7 +15,7 @@ import java.util.*;
 public class EventManager {
 
     // List of listeners
-    private List<IListener> listeners = new ArrayList<>();
+    private List<IListener> listeners = Lists.newArrayList();
 
     public void subscribe(IListener listener) { // This method is used to subscribe a listener
         listeners.add(listener);

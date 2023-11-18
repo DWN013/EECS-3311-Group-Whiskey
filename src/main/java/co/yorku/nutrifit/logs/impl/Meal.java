@@ -6,7 +6,10 @@ import co.yorku.nutrifit.object.MealType;
 import java.util.Date;
 import java.util.Map;
 
-//  Meal class extending ILog
+/*
+ * Meal object for holding meal data - extending ILog (Iterator)
+ */
+
 public class Meal extends ILog {
 
     // Private instance variables

@@ -3,8 +3,10 @@ package co.yorku.nutrifit.object;
 import co.yorku.nutrifit.visualizer.IVisualizer;
 import org.jfree.chart.JFreeChart;
 
+/*
+ * Class VisualizerData for storing chart and visualizer information
+ */
 
-// Class VisualizerData for storing chart and visualizer information
 public class VisualizerData {
     // Private instance variables representing chart and visualizer
     private JFreeChart jFreeChart;

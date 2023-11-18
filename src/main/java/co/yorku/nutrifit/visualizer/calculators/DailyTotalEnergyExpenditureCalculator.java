@@ -13,10 +13,8 @@ import co.yorku.nutrifit.exercise.calculators.BMRCalculator;
 import co.yorku.nutrifit.exercise.calculators.ActivityRatingCalculator;
 
 /*
-
     This is the DailyTotalEnergyExpenditureCalculator.
     It's purpose is to calculate daily total expenditure over a time period.
-
  */
 public class DailyTotalEnergyExpenditureCalculator {
 

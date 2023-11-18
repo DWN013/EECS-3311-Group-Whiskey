@@ -1,6 +1,9 @@
 package co.yorku.nutrifit.object;
 
-// Class FoodInfo for storing information related to food items
+/*
+ * Class FoodInfo for storing information related to food items
+ */
+
 public class FoodInfo {
 
     // Private instance variables representing food item data

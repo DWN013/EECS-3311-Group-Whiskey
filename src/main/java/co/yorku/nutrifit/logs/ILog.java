@@ -2,7 +2,11 @@ package co.yorku.nutrifit.logs;
 
 import java.util.Date;
 
-// Abstract class ILog
+/*
+ * ILog Interface holds the date, which is generic for all logs
+ * Implementation of the Iterator Design Pattern
+ */
+
 public abstract class ILog {
 
     // Private instance variable to store the date

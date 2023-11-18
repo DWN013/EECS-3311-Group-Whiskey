@@ -5,7 +5,10 @@ import co.yorku.nutrifit.object.FoodNutrientInfo;
 
 import java.util.Map;
 
-// MealCalculator class responsible for calculating total calories of a meal
+/*
+ * MealCalculator class responsible for calculating total calories of a meal
+ */
+
 public class MealCalculator {
 
     // Method to calculate total calories based on a map of food information
