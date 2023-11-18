@@ -95,6 +95,11 @@ public class MealInputUI extends NutrifitWindow {
                 return;
             }
 
+            if (quantity <= 0) {
+                showMessageDialog("You must input a quantity larger than 0!");
+                return;
+            }
+
             foodMap.put(food, quantity);
             quantityDropdown.setValue(1);
             updateFoodsTable();
@@ -119,6 +124,12 @@ public class MealInputUI extends NutrifitWindow {
                         // Parse the new quantity
                         int newQuantity = Integer.parseInt(input);
 
+
+                        if (newQuantity <= 0) {
+                            showMessageDialog("You must input a quantity larger than 0!");
+                            return;
+                        }
+
                         // Update the quantity for the selected food in the foodMap
                         foodMap.put(inputtedFood, newQuantity);
 
@@ -137,7 +148,7 @@ public class MealInputUI extends NutrifitWindow {
         // Adding the Delete Food button
         addButton("Delete Food", event -> {
             // Get the selected food from the text field
-            String selectedFood = getFood(foodField.getText());
+            String selectedFood = this.getFoodToDelete();
 
             // Check if the selected food exists in the foodMap
             if (selectedFood != null && foodMap.containsKey(selectedFood)) {
@@ -153,7 +164,7 @@ public class MealInputUI extends NutrifitWindow {
                     updateFoodsTable();
                 }
             } else {
-                showMessageDialog("Please add the food before deleting.");
+                showMessageDialog("Please add food before deleting.");
             }
         });
 
@@ -251,6 +262,12 @@ public class MealInputUI extends NutrifitWindow {
         }
 
         return openDropdownDialog("Select Food", "Select Food", 0, foodNames.toArray(new String[0]));
+    }
+
+    public String getFoodToDelete() {
+        if (this.foodMap.isEmpty()) return null;
+
+        return openDropdownDialog("Select Food", "Select Food", 0, this.foodMap.keySet().toArray(new String[0]));
     }
 
     // Method to create a map of food info and quantity
