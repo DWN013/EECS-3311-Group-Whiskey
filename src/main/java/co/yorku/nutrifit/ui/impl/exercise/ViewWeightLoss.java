@@ -27,6 +27,13 @@ public class ViewWeightLoss extends NutrifitWindow {
         	
         	//Get date inputed by user
             Date formattedDate = dateChooser.getDate();
+            long now = System.currentTimeMillis();
+            long dateTime = formattedDate.getTime();
+
+            if (dateTime < now) {
+                showMessageDialog("You cannot enter today's date or a date from the past.");
+                return;
+            }
             
             //Initialize weight loss calculator
             this.weightLossCalc = new WeightLossCalculator();
