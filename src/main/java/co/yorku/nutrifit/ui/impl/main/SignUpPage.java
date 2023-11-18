@@ -20,11 +20,11 @@ public class SignUpPage extends NutrifitWindow {
         // Create components for the new profile layout
         addLabel("Name:");
         JTextField nameField = addTextField(32);
-        addLabel("Height (cm):");
+        addLabel("Height (cm or inches):");
         JTextField heightField = addTextField(5);
         addLabel("Age:");
         JTextField ageField = addTextField(5);
-        addLabel("Weight:");
+        addLabel("Weight (Kg or lbs):");
         JTextField weightField = addTextField(5);
 
         JComboBox<String> metricOrImperalJComboBox = addComboBox("Metric", "Imperial");

@@ -264,7 +264,7 @@ public class MealInputUI extends NutrifitWindow {
         return openDropdownDialog("Select Food", "Select Food", 0, foodNames.toArray(new String[0]));
     }
 
-    public String getFoodToDelete() {
+    private String getFoodToDelete() {
         if (this.foodMap.isEmpty()) return null;
 
         return openDropdownDialog("Select Food", "Select Food", 0, this.foodMap.keySet().toArray(new String[0]));
