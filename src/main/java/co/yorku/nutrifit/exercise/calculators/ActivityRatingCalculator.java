@@ -3,6 +3,7 @@ package co.yorku.nutrifit.exercise.calculators;
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Exercise;
+import co.yorku.nutrifit.object.daterange.TwoWeekDateRange;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -19,8 +20,7 @@ public class ActivityRatingCalculator {
         //Gets the logs for 14 days worth of exercises or as many as possible up to 14 days
         LogIterator ex_iterator = NutriFit.getInstance().getUserDatabase().getUserExerciseLogs(
                     NutriFit.getInstance().getLoadedProfile().getId(),
-                    new Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(14)),
-                    new Date(System.currentTimeMillis())
+                    new TwoWeekDateRange()
             );
             //Sort data from oldest to newest log
             ex_iterator.sortByDateAscending();

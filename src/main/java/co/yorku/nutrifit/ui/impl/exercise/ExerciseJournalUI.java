@@ -3,6 +3,7 @@ package co.yorku.nutrifit.ui.impl.exercise;
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Exercise;
+import co.yorku.nutrifit.object.daterange.DateRange;
 import co.yorku.nutrifit.ui.NutrifitWindow;
 
 import javax.swing.*;
@@ -26,7 +27,7 @@ public class ExerciseJournalUI extends NutrifitWindow {
         Date toDate = new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(9999999));
 
         //Getting all exercise logs in the database for the user
-        LogIterator exercises = NutriFit.getInstance().getUserDatabase().getUserExerciseLogs(NutriFit.getInstance().getLoadedProfile().getId(), fromDate, toDate);
+        LogIterator exercises = NutriFit.getInstance().getUserDatabase().getUserExerciseLogs(NutriFit.getInstance().getLoadedProfile().getId(), new DateRange(fromDate, toDate));
         exercises.sortByDateAscending();
 
         DefaultTableModel defaultTableModel = new DefaultTableModel() // Create the default table model

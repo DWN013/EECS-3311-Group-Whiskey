@@ -2,6 +2,8 @@ package co.yorku.nutrifit.ui.impl.visualizer;
 
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.object.VisualizerData;
+import co.yorku.nutrifit.object.daterange.DateRange;
+import co.yorku.nutrifit.object.daterange.FullDayDateRange;
 import co.yorku.nutrifit.ui.NutrifitWindow;
 import co.yorku.nutrifit.visualizer.IVisualizer;
 import com.toedter.calendar.JDateChooser;
@@ -30,18 +32,16 @@ public class NutrifitVisualizer extends NutrifitWindow implements ChartMouseList
     private IVisualizer iVisualizer;
 
     // Below is the date range that we pass to our listener
-    private Date fromDate;
-    private Date toDate;
+    private DateRange dateRange;
 
     // Expanded boolean to tell class if the chart is expanded (ex. to view more specific data for a specific date)
     private boolean expanded;
 
-    public NutrifitVisualizer(String windowName, NutrifitWindow parent, VisualizerData data, Date fromDate, Date toDate) {
+    public NutrifitVisualizer(String windowName, NutrifitWindow parent, VisualizerData data, DateRange dateRange) {
         super(windowName, new GridLayout(1, 5)); // Call parent with parameters 
 
         this.iVisualizer = data.getVisualizer(); // Set visualizer object in class
-        this.fromDate = fromDate; // Set from date
-        this.toDate = toDate; // Set to date
+        this.dateRange = dateRange;
         this.expanded = false; // By default, we are not expanded
 
         // Construct and set the ChartPanel and it's parameters 
@@ -50,7 +50,7 @@ public class NutrifitVisualizer extends NutrifitWindow implements ChartMouseList
         this.setupChartPanel();
 
         // Add a Chart Mouse Listener (for when a user clicks a specific bar in the bar graph or pie slice in the pie chart)
-        this.addFromToButtons(this.fromDate, this.toDate); // Add the from and to buttons by default
+        this.addFromToButtons(); // Add the from and to buttons by default
 
         // Add the back button
         // Also add a listener to unsubscribe the Visualizer that is listening to the class when we exit this specific visulization
@@ -69,25 +69,24 @@ public class NutrifitVisualizer extends NutrifitWindow implements ChartMouseList
     }
 
     // By Default we will show the last 7 days
-    public void addFromToButtons(Date defaultFromDate, Date defaultToDate) {
+    public void addFromToButtons() {
 
         addLabel("Date From To:"); // Add a "Date From To" label
         JDateChooser fromDate = new JDateChooser(); // Create JDateChooser object so the user can input a fromDate
         fromDate.setDateFormatString("yyyy-MM-dd"); // Set the date format
-        fromDate.setDate(defaultFromDate); // Set the default date
+        fromDate.setDate(NutrifitVisualizer.this.dateRange.getFrom()); // Set the default date
         this.addComponent(fromDate); // Add the component
 
         JDateChooser toDate = new JDateChooser(); // Create JDateChooser object so the user can input a toDate
         toDate.setDateFormatString("yyyy-MM-dd"); // Create JDateChooser object so the user can input a fromDate
-        toDate.setDate(defaultToDate); // Set the default date
+        toDate.setDate(NutrifitVisualizer.this.dateRange.getTo()); // Set the default date
         this.addComponent(toDate);// Add the component
         addButton("Update Date Range", event -> { // Add a button
-            NutrifitVisualizer.this.fromDate = fromDate.getDate(); // Set the fromDate to the date that the user input
-            NutrifitVisualizer.this.toDate = toDate.getDate(); // Set the toDate to the date that the user input
+            NutrifitVisualizer.this.dateRange = new DateRange(fromDate.getDate(), toDate.getDate());
             NutrifitVisualizer.this.expanded = false; // Set the chart to not be expanded
 
             // Fire an event indicating that the user updated the date range (Observer Pattern)
-            NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName(), null, NutrifitVisualizer.this.fromDate, NutrifitVisualizer.this.toDate);
+            NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName(), null, NutrifitVisualizer.this.dateRange);
         });
     }
 
@@ -116,27 +115,16 @@ public class NutrifitVisualizer extends NutrifitWindow implements ChartMouseList
 
         try {
             // Parse the dateText into a date, if we thrown an exception (if we cannot parse a date) we will sanitize and pass in the name of the clicked bar or pie slice
-            Date fromDate = simpleDateFormat.parse(data);
-            Date toDate = simpleDateFormat.parse(data);
-
-            // Set the fromDate to be the start of the day
-            fromDate.setHours(0);
-            fromDate.setMinutes(0);
-            fromDate.setSeconds(0);
-
-            // Set the toDate to be the end of the day
-            toDate.setHours(23);
-            toDate.setMinutes(59);
-            toDate.setSeconds(59);
+            Date date = simpleDateFormat.parse(data);
 
             // Call the Event and notify it's subscribers (Observer Pattern)
-            NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName(), data.split("\\(")[0].replace(":", "").trim(), fromDate, toDate);
+            NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName(), data.split("\\(")[0].replace(":", "").trim(), new FullDayDateRange(date.getTime()));
             NutrifitVisualizer.this.expanded = true; // Set the chart to expanded
             return;
         } catch (Exception e) {} // Do nothing as it's not a date range
 
         // Call the Event and notify it's subscribers (Observer Pattern)
-        NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName(), data, NutrifitVisualizer.this.fromDate, NutrifitVisualizer.this.toDate);
+        NutriFit.getInstance().getEventManager().notify(iVisualizer.getChartName(), data, NutrifitVisualizer.this.dateRange);
         NutrifitVisualizer.this.expanded = true; // Set the chart to expanded
     }
 

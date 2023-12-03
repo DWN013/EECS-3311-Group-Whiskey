@@ -3,6 +3,7 @@ package co.yorku.nutrifit.exercise.calculators;
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Meal;
+import co.yorku.nutrifit.object.daterange.TwoWeekDateRange;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -18,20 +19,12 @@ public class WeightLossCalculator {
     private BMRCalculator bmr;
 
     public double getWeightLossForDate(Date selectedDate){
-        Date today = new Date(System.currentTimeMillis());
-        Date twoWeeksAgo = new Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(14));
-        //---------------------------------
-        //Sets time from morning of very oldest day to midnight of current day so that we do not exclude logs by accident
-        twoWeeksAgo.setHours(0);
-        twoWeeksAgo.setMinutes(0);
-        twoWeeksAgo.setSeconds(0);
-        today.setHours(23);
-        today.setMinutes(59);
-        today.setSeconds(59);
-        //---------------------------------
+
+        TwoWeekDateRange twoWeekDateRange = new TwoWeekDateRange();
+
         LogIterator diet_iterator = NutriFit.getInstance().getUserDatabase().getUserMealLogs(
                 NutriFit.getInstance().getLoadedProfile().getId(),
-                twoWeeksAgo, today
+                twoWeekDateRange
         );
 
         // Sorts by oldest to newest dates
@@ -61,7 +54,7 @@ public class WeightLossCalculator {
         selectedDate.setMinutes(0);
         selectedDate.setSeconds(0);
         // Calculate the time difference in milliseconds
-        long timeDifference = selectedDate.getTime() - today.getTime();
+        long timeDifference = selectedDate.getTime() - twoWeekDateRange.getTo().getTime();
         // Calculate the difference in days, casts to an int
         int daysApart = (int) (timeDifference / (1000 * 60 * 60 * 24));
 

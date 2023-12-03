@@ -5,6 +5,7 @@ import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Meal;
 import co.yorku.nutrifit.object.NutrientData;
 import co.yorku.nutrifit.object.FoodNutrientInfo;
+import co.yorku.nutrifit.object.daterange.DateRange;
 import co.yorku.nutrifit.visualizer.calculators.helper.AggregateHelper;
 import co.yorku.nutrifit.visualizer.calculators.helper.AverageHelper;
 import com.google.common.collect.Maps;
@@ -21,13 +22,12 @@ public class NutrientCalculator {
 
     // This method returns a LinkedHashMap of type String, Map<String, Double> which contain
     // a day and a map of nutrients and percentages consumed that day
-    public LinkedHashMap<String, Map<String, Double>> getNutrientInfoPerDate(Date dateFrom, Date dateTo) {
+    public LinkedHashMap<String, Map<String, Double>> getNutrientInfoPerDate(DateRange dateRange) {
 
         // Query The Database for the specific date range
         LogIterator logIterator = NutriFit.getInstance().getUserDatabase().getUserMealLogs(
                 NutriFit.getInstance().getLoadedProfile().getId(),
-                dateFrom,
-                dateTo
+                dateRange
         );
         logIterator.sortByDateAscending(); // Sort data by ascending
 

@@ -3,6 +3,7 @@ package co.yorku.nutrifit.visualizer.calculators;
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Meal;
+import co.yorku.nutrifit.object.daterange.DateRange;
 import com.google.common.collect.Maps;
 
 import java.text.SimpleDateFormat;
@@ -17,13 +18,12 @@ public class CalorieCalculator {
 
     // This method returns a LinkedHashMap of type String, String which contain
     // a day and the total number of calories consumed for that day
-    public LinkedHashMap<String, Integer> getCaloriesPerDay(Date dateFrom, Date dateTo) {
+    public LinkedHashMap<String, Integer> getCaloriesPerDay(DateRange dateRange) {
 
         // Query The Database for the specific date range
         LogIterator logIterator = NutriFit.getInstance().getUserDatabase().getUserMealLogs(
                 NutriFit.getInstance().getLoadedProfile().getId(),
-                dateFrom,
-                dateTo
+                dateRange
         );
         logIterator.sortByDateAscending(); // Sort data by ascending
 

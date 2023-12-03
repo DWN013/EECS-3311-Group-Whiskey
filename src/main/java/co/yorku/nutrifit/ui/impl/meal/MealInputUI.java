@@ -5,6 +5,7 @@ import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Meal;
 import co.yorku.nutrifit.object.FoodInfo;
 import co.yorku.nutrifit.object.MealType;
+import co.yorku.nutrifit.object.daterange.FullDayDateRange;
 import co.yorku.nutrifit.ui.NutrifitWindow;
 import com.google.common.collect.Maps;
 import com.toedter.calendar.JDateChooser;
@@ -172,19 +173,9 @@ public class MealInputUI extends NutrifitWindow {
 
             // Get selected date and set time boundaries for the day
             Date formattedDateTime = dateChooser.getDate();
-            Date startOfDay = new Date(formattedDateTime.getTime());
-            Date endOfDay = new Date(formattedDateTime.getTime());
-
-            startOfDay.setHours(0);
-            startOfDay.setMinutes(0);
-            startOfDay.setSeconds(0);
-
-            endOfDay.setHours(23);
-            endOfDay.setMinutes(59);
-            endOfDay.setSeconds(59);
 
 
-            if (checkIfMealTypeIsLoggedForRange(mealType, startOfDay, endOfDay)) {
+            if (checkIfMealTypeIsLoggedForRange(mealType, formattedDateTime.getTime())) {
                 showMessageDialog("You can only log one " + mealType.getDisplayName() + " once per day!");
                 return;
             }
@@ -228,10 +219,10 @@ public class MealInputUI extends NutrifitWindow {
                 Collectors.toMap(e -> e.getKey().getFoodID(), Map.Entry::getValue));
     }
 
-    private boolean checkIfMealTypeIsLoggedForRange(MealType mealType, Date from, Date to) {
+    private boolean checkIfMealTypeIsLoggedForRange(MealType mealType, Long time) {
         // Retrieve meal logs for the selected day
         LogIterator logIterator = NutriFit.getInstance().getUserDatabase().getUserMealLogs(
-                NutriFit.getInstance().getLoadedProfile().getId(), from, to);
+                NutriFit.getInstance().getLoadedProfile().getId(), new FullDayDateRange(time));
 
         // Ensure only one type of meal is logged per day
         while (mealType != MealType.SNACK && logIterator.hasNext()) {

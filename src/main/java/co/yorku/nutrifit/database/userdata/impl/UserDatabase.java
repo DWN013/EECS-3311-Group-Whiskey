@@ -7,6 +7,7 @@ import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Exercise;
 import co.yorku.nutrifit.logs.impl.Meal;
 import co.yorku.nutrifit.object.*;
+import co.yorku.nutrifit.object.daterange.DateRange;
 import co.yorku.nutrifit.profile.IProfile;
 import co.yorku.nutrifit.profile.impl.ProfileHandler;
 import com.google.common.collect.Lists;
@@ -301,7 +302,7 @@ public class UserDatabase implements IUserDatabase {
     }
 
     @Override
-    public LogIterator getUserExerciseLogs(int userId, java.util.Date fromDate, java.util.Date toDate) {
+    public LogIterator getUserExerciseLogs(int userId, DateRange dateRange) {
 
         List<ILog> logs = Lists.newArrayList();
 
@@ -311,8 +312,8 @@ public class UserDatabase implements IUserDatabase {
 
             // Set the parameters required for the sql statement
             preparedStatement.setInt(1, userId);
-            preparedStatement.setDate(2, new Date(fromDate.getTime()));
-            preparedStatement.setDate(3, new Date(toDate.getTime()));
+            preparedStatement.setDate(2, new Date(dateRange.getFrom().getTime()));
+            preparedStatement.setDate(3, new Date(dateRange.getTo().getTime()));
 
             ResultSet results = preparedStatement.executeQuery(); // Execute the query
 
@@ -369,7 +370,7 @@ public class UserDatabase implements IUserDatabase {
     }
 
     @Override
-    public LogIterator getUserMealLogs(int userId, java.util.Date fromDate, java.util.Date toDate) {
+    public LogIterator getUserMealLogs(int userId, DateRange dateRange) {
 
         List<ILog> logs = Lists.newArrayList();
 
@@ -379,8 +380,8 @@ public class UserDatabase implements IUserDatabase {
 
             // Set the parameters required for the sql statement
             preparedStatement.setInt(1, userId);
-            preparedStatement.setDate(2, new Date(fromDate.getTime()));
-            preparedStatement.setDate(3, new Date(toDate.getTime()));
+            preparedStatement.setDate(2, new Date(dateRange.getFrom().getTime()));
+            preparedStatement.setDate(3, new Date(dateRange.getTo().getTime()));
 
             ResultSet results = preparedStatement.executeQuery(); // Execute the query
 

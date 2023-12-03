@@ -2,6 +2,7 @@ package co.yorku.nutrifit.visualizer;
 
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.event.IListener;
+import co.yorku.nutrifit.object.daterange.DateRange;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryLabelPositions;
@@ -63,18 +64,18 @@ public abstract class IVisualizer implements IListener {
     public abstract String getBarGraphValueAxisLabel();
 
     // Abstract method implemented by children classes that will return a DefaultCategorySet for Bar Graphs
-    public abstract DefaultCategoryDataset buildBargraphDataset(String expandInfo, Date fromDate, Date toDate);
+    public abstract DefaultCategoryDataset buildBargraphDataset(String expandInfo, DateRange dateRange);
 
     // Abstract method implemented by children classes that will return a DefaultPieDataSet for PieCharts
-    public abstract DefaultPieDataset<String> buildPiechartDataset(String expandInfo, Date fromDate, Date toDate);
+    public abstract DefaultPieDataset<String> buildPiechartDataset(String expandInfo, DateRange dateRange);
 
     // This method constructs the JFreeChart object for a bargraph and uses abstract methods defined in this class (Template Method)
-    public JFreeChart buildBarGraph(Date fromDate, Date toDate) {
+    public JFreeChart buildBarGraph(DateRange dateRange) {
         JFreeChart jFreeChart = ChartFactory.createBarChart(
                 this.getChartName(),
                 this.getBarGraphCategoryAxisLabel(),
                 this.getBarGraphValueAxisLabel(),
-                this.buildBargraphDataset(null, fromDate, toDate),
+                this.buildBargraphDataset(null, dateRange),
                 PlotOrientation.VERTICAL,
                 true, true, false);
 
@@ -91,10 +92,30 @@ public abstract class IVisualizer implements IListener {
     }
 
     // This method constructs the JFreeChart object for a piechart and uses abstract methods defined in this class (Template Method)
-    public JFreeChart buildPieChart(Date fromDate, Date toDate) {
+    public JFreeChart buildPieChart(DateRange dateRange) {
         return ChartFactory.createPieChart(
                 this.getChartName(),
-                this.buildPiechartDataset(null, fromDate, toDate)
+                this.buildPiechartDataset(null, dateRange)
         );
+    }
+
+
+    //If the user has clicked on the "Update Date Range" button in the UI, will take new date values and create the graphs again
+    @Override
+    public void onDateRangeUpdate(String type, String expandData, DateRange dateRange) {
+
+        //If the user has multiple visualizers open, and they want to update one visualizer, this will ensure that the program is not going to update the wrong visualizer
+        if (!type.equals(this.getChartName())) return;
+
+        //If current dataset type for this visualizer is a bar graph
+        if (getDataset() instanceof DefaultCategoryDataset) {
+            ((DefaultCategoryDataset) getDataset()).clear();
+            this.buildBargraphDataset(expandData, dateRange); //build new bar graph data
+        }
+        //Otherwise, this will update the pie chart
+        else if (getDataset() instanceof DefaultPieDataset) {
+            ((DefaultPieDataset<String>) getDataset()).clear();
+            this.buildPiechartDataset(expandData, dateRange); //build new pie chart data
+        }
     }
 }

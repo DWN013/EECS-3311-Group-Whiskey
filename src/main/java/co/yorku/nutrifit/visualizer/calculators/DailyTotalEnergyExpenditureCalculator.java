@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedHashMap;
 
+import co.yorku.nutrifit.object.daterange.DateRange;
 import com.google.common.collect.Maps;
 
 import co.yorku.nutrifit.NutriFit;
@@ -20,12 +21,11 @@ public class DailyTotalEnergyExpenditureCalculator {
 
     // This method returns a LinkedHashMap of type String, Integer which contain
     // a Day and the total calories burned for that day
-    public LinkedHashMap<String, Integer> getTDEE(Date dateFrom, Date dateTo) {
+    public LinkedHashMap<String, Integer> getTDEE(DateRange dateRange) {
         // Query the database for all the logs for the specific time period
         LogIterator logIterator = NutriFit.getInstance().getUserDatabase().getUserExerciseLogs(
                 NutriFit.getInstance().getLoadedProfile().getId(),
-                dateFrom,
-                dateTo
+                dateRange
         );
         logIterator.sortByDateAscending(); // Sort by ascending
 

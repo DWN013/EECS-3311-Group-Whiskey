@@ -1,5 +1,7 @@
 package co.yorku.nutrifit.event;
 
+import co.yorku.nutrifit.object.daterange.DateRange;
+
 import java.util.Date;
 
 /*
@@ -13,6 +15,6 @@ public interface IListener {
 
     // This method listens for a date range update and is implemented in specific classes that want to
     // listen for an event
-    void onDateRangeUpdate(String type, String expandData, Date newFromDate, Date newToDate);
+    void onDateRangeUpdate(String type, String expandData, DateRange dateRange);
 
 }

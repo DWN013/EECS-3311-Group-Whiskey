@@ -5,6 +5,7 @@ import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Meal;
 import co.yorku.nutrifit.object.FoodGroupData;
 import co.yorku.nutrifit.object.FoodInfo;
+import co.yorku.nutrifit.object.daterange.DateRange;
 import com.google.common.collect.Maps;
 
 import java.util.Date;
@@ -22,11 +23,11 @@ public class AvgUserFoodPlateCalculator {
 
     // This method returns a LinkedHashMap of Type String and double
     // Which contain either a Food Group and Percentage
-    public LinkedHashMap<String, Double> getPlate(String parentFoodGroupName, Date dateFrom, Date dateTo) {
+    public LinkedHashMap<String, Double> getPlate(String parentFoodGroupName, DateRange dateRange) {
 
         // Query Database for all logs for the date range
         LogIterator logIterator = NutriFit.getInstance().getUserDatabase().getUserMealLogs(
-                NutriFit.getInstance().getLoadedProfile().getId(), dateFrom, dateTo
+                NutriFit.getInstance().getLoadedProfile().getId(), dateRange
         );
         logIterator.sortByDateAscending(); // Short by ascending
 

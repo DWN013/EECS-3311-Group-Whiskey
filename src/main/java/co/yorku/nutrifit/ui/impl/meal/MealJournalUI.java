@@ -3,6 +3,7 @@ package co.yorku.nutrifit.ui.impl.meal;
 import co.yorku.nutrifit.NutriFit;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Meal;
+import co.yorku.nutrifit.object.daterange.DateRange;
 import co.yorku.nutrifit.ui.NutrifitWindow;
 import co.yorku.nutrifit.ui.impl.main.NutriFitMainUI;
 import com.google.common.collect.Maps;
@@ -31,7 +32,7 @@ public class MealJournalUI extends NutrifitWindow {
         Date fromDate = new Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis(9999999));
         Date toDate = new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(9999999));
         // Retrieve meal logs for the user within the specified date range
-        LogIterator meals = NutriFit.getInstance().getUserDatabase().getUserMealLogs(NutriFit.getInstance().getLoadedProfile().getId(), fromDate, toDate);
+        LogIterator meals = NutriFit.getInstance().getUserDatabase().getUserMealLogs(NutriFit.getInstance().getLoadedProfile().getId(), new DateRange(fromDate, toDate));
         meals.sortByDateAscending(); // Sort
 
         DefaultTableModel defaultTableModel = new DefaultTableModel() // Create the default table model

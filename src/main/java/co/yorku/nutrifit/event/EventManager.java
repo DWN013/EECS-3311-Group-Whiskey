@@ -1,5 +1,6 @@
 package co.yorku.nutrifit.event;
 
+import co.yorku.nutrifit.object.daterange.DateRange;
 import com.google.common.collect.Lists;
 
 import java.util.*;
@@ -26,10 +27,10 @@ public class EventManager {
     }
 
     // This method is used to notify all the subscribed listeners of an event
-    public void notify(String type, String expandData, Date newFromDate, Date newToDate) {
+    public void notify(String type, String expandData, DateRange dateRange) {
         for (IListener listener : listeners) { // Loop through every listener
             // Notify the listener of some event and pass in all the data
-            listener.onDateRangeUpdate(type, expandData, newFromDate, newToDate);
+            listener.onDateRangeUpdate(type, expandData, dateRange);
         }
     }
 }

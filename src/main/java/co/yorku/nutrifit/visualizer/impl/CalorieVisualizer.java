@@ -1,5 +1,6 @@
 package co.yorku.nutrifit.visualizer.impl;
 
+import co.yorku.nutrifit.object.daterange.DateRange;
 import co.yorku.nutrifit.visualizer.IVisualizer;
 import co.yorku.nutrifit.visualizer.calculators.CalorieCalculator;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -42,9 +43,9 @@ public class CalorieVisualizer extends IVisualizer {
 
     @Override
     // Method to build the dataset for bar graph
-    public DefaultCategoryDataset buildBargraphDataset(String expandInfo, Date fromDate, Date toDate) {
+    public DefaultCategoryDataset buildBargraphDataset(String expandInfo, DateRange dateRange) {
         // Get food group data from calculator
-        Map<String, Integer> calorieData = calorieCalculator.getCaloriesPerDay(fromDate, toDate);
+        Map<String, Integer> calorieData = calorieCalculator.getCaloriesPerDay(dateRange);
         // Populate bar graph dataset
         for (Map.Entry<String, Integer> stringIntegerEntry : calorieData.entrySet()) {
             ((DefaultCategoryDataset) getDataset()).setValue(stringIntegerEntry.getValue(), "Calories Consumed", stringIntegerEntry.getKey());
@@ -55,31 +56,15 @@ public class CalorieVisualizer extends IVisualizer {
 
     @Override
     // Logic works the same as the "buildBarGraphDataset" method above, however instead this method will create a Pie Chart
-    public DefaultPieDataset<String> buildPiechartDataset(String expandInfo, Date fromDate, Date toDate) {
+    public DefaultPieDataset<String> buildPiechartDataset(String expandInfo, DateRange dateRange) {
 
-        Map<String, Integer> calorieData = calorieCalculator.getCaloriesPerDay(fromDate, toDate);
+        Map<String, Integer> calorieData = calorieCalculator.getCaloriesPerDay(dateRange);
 
         for (Map.Entry<String, Integer> stringIntegerEntry : calorieData.entrySet()) {
             ((DefaultPieDataset<String>) getDataset()).setValue(stringIntegerEntry.getKey(), stringIntegerEntry.getValue());
         }
 
-
         return ((DefaultPieDataset<String>) getDataset());
     }
 
-    @Override
-    // Method called when the date range is updated by user
-    public void onDateRangeUpdate(String type, String expandData, Date newFromDate, Date newToDate) {
-        // If the user has multiple visualizers open, and they want to update one visualizer,
-        // this will ensure that the program is not going to update the wrong visualizer
-        if (!type.equals(this.getChartName())) return;
-        //Otherwise, this will update the pie chart
-        if (getDataset() instanceof DefaultCategoryDataset) {
-            ((DefaultCategoryDataset) getDataset()).clear();
-            this.buildBargraphDataset(expandData, newFromDate, newToDate);
-        } else if (getDataset() instanceof DefaultPieDataset) {
-            ((DefaultPieDataset<String>) getDataset()).clear();
-            this.buildPiechartDataset(expandData, newFromDate, newToDate);
-        }
-    }
 }

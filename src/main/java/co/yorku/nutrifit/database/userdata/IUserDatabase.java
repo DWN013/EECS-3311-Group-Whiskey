@@ -4,6 +4,7 @@ import co.yorku.nutrifit.database.IDatabase;
 import co.yorku.nutrifit.logs.LogIterator;
 import co.yorku.nutrifit.logs.impl.Exercise;
 import co.yorku.nutrifit.logs.impl.Meal;
+import co.yorku.nutrifit.object.daterange.DateRange;
 import co.yorku.nutrifit.profile.IProfile;
 
 import java.util.Date;
@@ -32,7 +33,7 @@ public interface IUserDatabase extends IDatabase {
 
     // This method returns a LogIterator of all the user exercise logs given
     // A userid and a date range
-    LogIterator getUserExerciseLogs(int userId, Date fromDate, Date toDate);
+    LogIterator getUserExerciseLogs(int userId, DateRange dateRange);
 
     // This method returns a true/false based on if adding an exercise log to the database
     // for a specific userId was successful
@@ -40,7 +41,7 @@ public interface IUserDatabase extends IDatabase {
 
     // This method returns a LogIterator of all the user meal logs given
     // A userid and a date range
-    LogIterator getUserMealLogs(int userId, Date fromDate, Date toDate);
+    LogIterator getUserMealLogs(int userId, DateRange dateRange);
 
     // This method returns a true/false based on if adding a meal log to the database
     // for a specific userId was successful
