@@ -43,6 +43,12 @@ public class MealInputUI extends NutrifitWindow {
     // Map to store food and its quantity
     private Map<String, Integer> foodMap = Maps.newHashMap();
 
+    private JDateChooser dateChooser;
+    private JTextField timeField;
+    private JComboBox<Enum<?>> mealTypeDropdown;
+    private JTextField foodField;
+    private JSpinner quantityDropdown;
+
 
     private MealInputUI() {
         // Invoke superclass constructor with title and layout
@@ -52,25 +58,25 @@ public class MealInputUI extends NutrifitWindow {
 
         //Date selection drop down  menu
         addLabel("Date");
-        JDateChooser dateChooser = new JDateChooser();
+        dateChooser = new JDateChooser();
         dateChooser.setDateFormatString("yyyy-MM-dd");
         this.addComponent(dateChooser);
 
         //Time selection label
         addLabel("Time (24:00)");
-        JTextField timeField = addTextField(5);
+        this.timeField = addTextField(5);
 
         //Meal Type selection drop down  menu
         addLabel("Meal Type:");
-        JComboBox<Enum<?>> mealTypeDropdown = addComboBox(MealType.values());
+        this.mealTypeDropdown = addComboBox(MealType.values());
 
         //Food selection label
         addLabel("Food:");
-        JTextField foodField = addTextField(20);
+        this.foodField = addTextField(20);
 
         //Quantity selection drop down  menu
         addLabel("Quantity:");
-        JSpinner quantityDropdown = addSpinner();
+        this.quantityDropdown = addSpinner();
 
         // Setting up the table for foods and quantities
         tableModel = new DefaultTableModel();
@@ -84,19 +90,20 @@ public class MealInputUI extends NutrifitWindow {
 
         addComponent(jScrollPane);
 
+        this.addButtons();
+        // build UI
+        this.build();
+    }
+
+    private void addButtons() {
         // Adding the Add Food button
         addButton("Add Food", event -> {
             String food = getFood(foodField.getText());
             int quantity = Integer.parseInt(quantityDropdown.getValue().toString());
 
             // Validate input
-            if (food == null) {
-                showMessageDialog( "Could not find food specified. Please try again.");
-                return;
-            }
-
-            if (quantity <= 0) {
-                showMessageDialog("You must input a quantity larger than 0!");
+            if (food == null || quantity <= 0) {
+                showMessageDialog( "Your input was not valid.");
                 return;
             }
 
@@ -109,62 +116,44 @@ public class MealInputUI extends NutrifitWindow {
         addButton("Edit Food", event -> {
             // Get the food inputted in the text field
             String inputtedFood = this.openDialogForAddedFood();
+            String quantityInput = openTextInputDialog("Enter the new quantity for " + inputtedFood);
 
-            // Check if the inputted food exists in the foodMap
-            if (inputtedFood != null && foodMap.containsKey(inputtedFood)) {
-                // Retrieve the current quantity of the selected food
-                int currentQuantity = foodMap.get(inputtedFood);
-
-                // Prompt the user to enter a new quantity for the selected food
-                String input = openTextInputDialog("Enter the new quantity for " + inputtedFood + " (current: " + currentQuantity + ")");
-
-                // Check if a new quantity is provided and not empty
-                if (input != null && !input.isEmpty()) {
-                    try {
-                        // Parse the new quantity
-                        int newQuantity = Integer.parseInt(input);
-
-
-                        if (newQuantity <= 0) {
-                            showMessageDialog("You must input a quantity larger than 0!");
-                            return;
-                        }
-
-                        // Update the quantity for the selected food in the foodMap
-                        foodMap.put(inputtedFood, newQuantity);
-
-                        // Update the foods table in the UI
-                        updateFoodsTable();
-                    } catch (NumberFormatException e) {
-                        showMessageDialog("Please enter a valid integer for the quantity.");
-                    }
-                }
-            } else {
-                showMessageDialog("Please add the food before editing.");
+            if (!this.verifyFood(inputtedFood) || quantityInput == null || quantityInput.isEmpty()) {
+                showMessageDialog("Your input was not valid.");
+                return;
             }
-        });
 
+            // Parse the new quantity
+            int newQuantity = Integer.parseInt(quantityInput);
+
+            if (newQuantity <= 0) {
+                showMessageDialog("You must input a quantity larger than 0!");
+                return;
+            }
+
+            // Update the quantity for the selected food in the foodMap
+            foodMap.put(inputtedFood, newQuantity);
+
+            // Update the foods table in the UI
+            updateFoodsTable();
+        });
 
         // Adding the Delete Food button
         addButton("Delete Food", event -> {
             // Get the selected food from the text field
             String selectedFood = this.openDialogForAddedFood();
 
-            // Check if the selected food exists in the foodMap
-            if (selectedFood != null && foodMap.containsKey(selectedFood)) {
-                // Ask for confirmation before deleting the selected food
-                int option = showConfirmationDialog("Do you want to delete " + selectedFood + " from the food list?");
-
-                // Check if the user confirmed deletion
-                if (option == JOptionPane.YES_OPTION) {
-                    // Remove the selected food from the foodMap
-                    foodMap.remove(selectedFood);
-
-                    // Update the foods table in the UI
-                    updateFoodsTable();
-                }
-            } else {
+            if (!this.verifyFood(selectedFood)) {
                 showMessageDialog("Please add food before deleting.");
+                return;
+            }
+
+            if (showConfirmationDialog("Do you want to delete " + selectedFood + " from the food list?") == JOptionPane.YES_OPTION) {
+                // Remove the selected food from the foodMap
+                foodMap.remove(selectedFood);
+
+                // Update the foods table in the UI
+                updateFoodsTable();
             }
         });
 
@@ -173,14 +162,8 @@ public class MealInputUI extends NutrifitWindow {
         addButton("Submit", event -> {
 
             // Validation: Check if time field is empty
-            if (timeField.getText().isEmpty()) {
-                showMessageDialog("Please enter a valid time.");
-                return;
-            }
-
-            // Validation: Check if date is not selected
-            if (dateChooser.getDate() == null) {
-                showMessageDialog("Please enter a valid date.");
+            if (timeField.getText().isEmpty() || dateChooser.getDate() == null) {
+                showMessageDialog("Please maks sure all inputs are filled in.");
                 return;
             }
 
@@ -200,19 +183,11 @@ public class MealInputUI extends NutrifitWindow {
             endOfDay.setMinutes(59);
             endOfDay.setSeconds(59);
 
-            // Retrieve meal logs for the selected day
-            LogIterator logIterator = NutriFit.getInstance().getUserDatabase().getUserMealLogs(
-                    NutriFit.getInstance().getLoadedProfile().getId(), startOfDay, endOfDay);
 
-            // Ensure only one type of meal is logged per day
-            while (mealType != MealType.SNACK && logIterator.hasNext()) {
-                Meal meal = (Meal) logIterator.getNext();
-                if (meal.getMealType() == mealType) {
-                    showMessageDialog("You can only log one " + mealType.getDisplayName() + " once per day!");
-                    return;
-                }
+            if (checkIfMealTypeIsLoggedForRange(mealType, startOfDay, endOfDay)) {
+                showMessageDialog("You can only log one " + mealType.getDisplayName() + " once per day!");
+                return;
             }
-
 
             try {
                 // Parse the time input
@@ -222,8 +197,8 @@ public class MealInputUI extends NutrifitWindow {
 
                 // Create a map of food info and their quantities
                 Map<FoodInfo, Integer> foodInfo = createFoodMap();
-                Map<Integer, Integer> foodIDToFoodAmountMap = foodInfo.entrySet().stream().collect(
-                        Collectors.toMap(e -> e.getKey().getFoodID(), Map.Entry::getValue));
+                Map<Integer, Integer> foodIDToFoodAmountMap = this.mapFoodInfoToIds(foodInfo);
+                int totalMealCalories = NutriFit.getInstance().getMeal().calculateTotalMealCalories(foodIDToFoodAmountMap);
 
                 // Log the meal in the database
                 NutriFit.getInstance().getUserDatabase().addUserMealLog(
@@ -232,7 +207,7 @@ public class MealInputUI extends NutrifitWindow {
                                 formattedDateTime,
                                 mealType,
                                 foodIDToFoodAmountMap,
-                                NutriFit.getInstance().getMeal().calculateTotalMealCalories(foodIDToFoodAmountMap)
+                                totalMealCalories
                         )
                 );
 
@@ -240,17 +215,36 @@ public class MealInputUI extends NutrifitWindow {
                 foodField.setText("");
                 clearFoodsTable();
                 showMessageDialog("Meal Logging Successful!");
-            } catch (NumberFormatException e) {
-                showMessageDialog("Please enter a valid time in the format HH:mm.");
-            } catch (NullPointerException e) {
-                showMessageDialog("Please enter a valid date and time.");
+            } catch (Exception e) {
+                showMessageDialog("Please make sure all inputs are valid.");
             }
-
         });
 
-        // Adding the Back button and build UI
         this.addBackButton(MainMealMenu.getInstance());
-        this.build();
+    }
+
+    private Map<Integer, Integer> mapFoodInfoToIds(Map<FoodInfo, Integer> foodInfo) {
+        return foodInfo.entrySet().stream().collect(
+                Collectors.toMap(e -> e.getKey().getFoodID(), Map.Entry::getValue));
+    }
+
+    private boolean checkIfMealTypeIsLoggedForRange(MealType mealType, Date from, Date to) {
+        // Retrieve meal logs for the selected day
+        LogIterator logIterator = NutriFit.getInstance().getUserDatabase().getUserMealLogs(
+                NutriFit.getInstance().getLoadedProfile().getId(), from, to);
+
+        // Ensure only one type of meal is logged per day
+        while (mealType != MealType.SNACK && logIterator.hasNext()) {
+            Meal meal = (Meal) logIterator.getNext();
+            if (meal.getMealType() == mealType) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean verifyFood(String food) {
+        return food != null && this.foodMap.containsKey(food);
     }
 
     // Method to get food based on user input
