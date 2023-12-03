@@ -68,7 +68,6 @@ public class ExerciseInputUI extends NutrifitWindow {
             ActivityType activityType = (ActivityType) exerciseComboBox.getSelectedItem();
             Intensity intensity = (Intensity) intensityComboBox.getSelectedItem();
             int durationInSeconds = Integer.parseInt(secondsField.getText());
-            int totalCaloriesBurned = exercise.getTotalCaloriesBurned(activityType, intensity, durationInSeconds, NutriFit.getInstance().getLoadedProfile());
 
             //Format the date entered by user 
             Date formattedDateTime = dateChooser.getDate();
@@ -77,7 +76,8 @@ public class ExerciseInputUI extends NutrifitWindow {
             formattedDateTime.setMinutes(Integer.parseInt(timeSplit[1]));
 
             //Create object for exercise with the data inputted by the user
-            Exercise exerciseObj = new Exercise(formattedDateTime, durationInSeconds, activityType, intensity, totalCaloriesBurned);
+            Exercise exerciseObj = new Exercise(formattedDateTime, durationInSeconds, activityType, intensity, 0);
+            exercise.updateTotalCaloriesBurned(exerciseObj);
 
             //Store new exercise log into the database
             NutriFit.getInstance().getUserDatabase().addUserExerciseLog(NutriFit.getInstance().getLoadedProfile().getId(), exerciseObj);

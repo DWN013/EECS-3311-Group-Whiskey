@@ -45,4 +45,12 @@ public class Exercise extends ILog {
     public int getTotalCaloriesBurned() {
         return totalCaloriesBurned;
     }
+
+    /*
+     * Setter Methods
+     */
+
+    public void setTotalCaloriesBurned(int totalCaloriesBurned) {
+        this.totalCaloriesBurned = totalCaloriesBurned;
+    }
 }

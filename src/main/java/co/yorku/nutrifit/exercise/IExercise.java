@@ -1,8 +1,6 @@
 package co.yorku.nutrifit.exercise;
 
-import co.yorku.nutrifit.object.ActivityType;
-import co.yorku.nutrifit.object.Intensity;
-import co.yorku.nutrifit.profile.IProfile;
+import co.yorku.nutrifit.logs.impl.Exercise;
 
 /*This is the interface for the exercise class
   The purpose of this interface is to handle interaction
@@ -10,6 +8,6 @@ import co.yorku.nutrifit.profile.IProfile;
 */
 public interface IExercise {
 
-    int getTotalCaloriesBurned(ActivityType activityType, Intensity intensity, int durationInSeconds, IProfile profile);
+    void updateTotalCaloriesBurned(Exercise exercise);
 
 }
