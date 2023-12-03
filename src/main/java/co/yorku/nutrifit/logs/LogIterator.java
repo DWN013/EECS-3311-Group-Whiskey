@@ -40,21 +40,11 @@ public class LogIterator {
     public int getTotalEntries() {
         return this.logs.size();
     }
-
-    // Method to reset the iterator to the initial position
-    public void reset() {
-        this.currentPosition = 0;
-    }
-
+    
     // Method to sort logs by date in ascending order
     public void sortByDateAscending() {
         this.logs.sort(Comparator.comparing(ILog::getDate));
     }
 
-    // Method to sort logs by date in descending order
-    public void sortByDateDescending() {
-        this.sortByDateAscending(); // Sort logs in ascending order
-        Collections.reverse(this.logs); // Reverse the list to get descending order
-    }
 }
 
