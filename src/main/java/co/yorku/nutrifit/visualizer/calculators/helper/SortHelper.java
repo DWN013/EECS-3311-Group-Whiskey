@@ -3,7 +3,11 @@ package co.yorku.nutrifit.visualizer.calculators.helper;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+/*
 
+    This class is used to sort a map
+
+ */
 public class SortHelper {
 
     public Map<String, Double> sort(Map<String, Double> data) {

@@ -5,7 +5,11 @@ import com.google.common.collect.Maps;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+/*
 
+    This class is used help calculate averages
+
+ */
 public class AverageHelper {
 
     public LinkedHashMap<String, Map<String, Double>> averageOutDataPerDay(LinkedHashMap<String, Map<String, Double>> data, Map<String, Integer> totalKV) {

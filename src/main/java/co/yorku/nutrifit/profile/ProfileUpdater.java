@@ -6,46 +6,48 @@ public class ProfileUpdater {
 
     public boolean updateName(String newName) {
 
-        if (newName == null) {
+        if (newName == null) { // Check if null
             return false;
         }
         NutriFit.getInstance().getLoadedProfile().setName(newName); //Set the new name given by the user to the Profile loaded (stored instance in Nutrifit)
-        return this.updateProfile();
+        return this.updateProfile(); // Return the result of updateProfile()
     }
     public boolean updateAge(String newAge) {
 
-        if (newAge == null) {
+        if (newAge == null) { // Check if null
             return false;
         }
 
         int age = -1;
 
+        // Attempt to parse
         try {
             age = Integer.parseInt(newAge);
         } catch (Exception e) {
             return false;
         }
 
-        NutriFit.getInstance().getLoadedProfile().setAge(age);
-        return this.updateProfile();
+        NutriFit.getInstance().getLoadedProfile().setAge(age); // Set the age of the profile
+        return this.updateProfile(); // Return the result of updateProfile()
     }
     public boolean updateGender(String newGender) {
 
-        if (newGender == null) {
+        if (newGender == null) { // Check if null
             return false;
         }
 
         NutriFit.getInstance().getLoadedProfile().setGender(newGender.equals("Male")); //The new gender will depend on which value they choose. True = Male, False = Female
-        return this.updateProfile();
+        return this.updateProfile(); // Return the result of updateProfile()
     }
     public boolean updateHeight(String newHeight) {
 
-        if (newHeight == null) {
+        if (newHeight == null) { // Check if null
             return false;
         }
 
         int height = -1;
 
+        // Attempt to parse
         try {
             height = Integer.parseInt(newHeight);
         } catch (Exception e) {
@@ -53,16 +55,17 @@ public class ProfileUpdater {
         }
 
         NutriFit.getInstance().getLoadedProfile().setHeight(height);
-        return this.updateProfile();
+        return this.updateProfile(); // Return the result of updateProfile()
     }
     public boolean updateWeight(String newWeight) {
 
-        if (newWeight == null) {
+        if (newWeight == null) { // Check if null
             return false;
         }
 
         int weight = -1;
 
+        // Attempt to parse
         try {
             weight = Integer.parseInt(newWeight);
         } catch (Exception e) {
@@ -70,11 +73,11 @@ public class ProfileUpdater {
         }
 
         NutriFit.getInstance().getLoadedProfile().setWeight(weight);
-        return this.updateProfile();
+        return this.updateProfile(); // Return the result of updateProfile()
     }
     public boolean updateUnitOfMeasure(String newUnit) {
 
-        if (newUnit == null) {
+        if (newUnit == null) { // Check if null
             return false;
         }
 
@@ -96,9 +99,10 @@ public class ProfileUpdater {
             return true;
         }
 
-        return this.updateProfile();
+        return this.updateProfile(); // Return the result of updateProfile()
     }
     public boolean updateProfile() {
+        // This method updates the database and returns if it was successful or not
         return NutriFit.getInstance().getUserDatabase().updateProfile(NutriFit.getInstance().getLoadedProfile());
     }
 }

@@ -4,7 +4,11 @@ import com.google.common.collect.Maps;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+/*
 
+    This class is used to aggregate data
+
+ */
 public class AggregateHelper {
 
     public LinkedHashMap<String, Map<String, Double>> aggregateData(String otherCategory, LinkedHashMap<String, Map<String, Double>> data) {
